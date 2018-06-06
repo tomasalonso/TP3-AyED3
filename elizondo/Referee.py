@@ -49,7 +49,7 @@ class Referee:
         self.update_canvas()
 
         for step in range(self.steps):
-            print("Step: ", step)
+            print("Step: " + str(step))
             board_state_A = self.logicalBoard.getState()
             board_state_B = self.logicalBoard.getState()
             moves_A = self.team_A.move(board_state_A)

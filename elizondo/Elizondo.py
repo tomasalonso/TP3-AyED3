@@ -12,9 +12,9 @@ from GeneticTeam import GeneticTeam
 def main(args):
 
     print("----- Parámetros -----")
-    print("columnas: \t", args.columns)
-    print("filas: \t\t", args.rows)
-    print("duración: \t\t", args.steps)
+    print("columnas: \t" + str(args.columns))
+    print("filas: \t\t" + str(args.rows))
+    print("duración: \t" + str(args.steps))
     print("----------------------")
 
     assert len(args.quites_A) == 3
