@@ -307,8 +307,8 @@ class LogicalBoard:
         if last_state is None:
             return
 
-        self.team_A = last_state['players'][A]
-        self.team_B = last_state['players'][B]
+        self.team_A = list(last_state['players'][A])
+        self.team_B = list(last_state['players'][B])
 
         self.free_ball = None
         if last_state['ball'] is not None:
@@ -359,11 +359,11 @@ class LogicalBoard:
         self.free_ball = None
 
         # Coloco los jugadores en las posiciones correctas
-        for p, (i, j) in position_A.iteritems():
+        for p, (i, j) in position_A.items():
             self.team_A[p].i = i
             self.team_A[p].j = j
 
-        for p, (i, j) in position_B.iteritems():
+        for p, (i, j) in position_B.items():
             self.team_B[p].i = i
             self.team_B[p].j = j
 
