@@ -6,6 +6,7 @@ struct Posicion {
 struct Jugador {
     int id;
     Pos p;
+    Pos inicial;
     int prob_quite;
     // bool pelota;
 };
@@ -20,6 +21,7 @@ struct Equipo {
     Jugador j2;
     Jugador j3;
     bool en_derecha;
+    // Pos inicial: Array de 3 tuplas
 };
 
 struct Tablero {
@@ -33,10 +35,8 @@ struct Tablero {
 
     Equipo eq_der;
     int goles_der;
-    Equipo eq_der_inicial; // necesito saber las posiciones iniciales luego de un gol
 
     Equipo eq_izq;
     int goles_izq;
-    Equipo eq_izq_inicial; // necesito saber las posiciones iniciales luego de un gol
 };
 
