@@ -14,7 +14,7 @@ public:
     void actualizar(vector<Movimiento> movs); // va a tener que saber si hubo gol
     void mover();
     void reiniciar(bool enDerecha);
-    bool enPosesion() const;
+    bool pelotaEnPosesion() const;
 
     int puntaje(bool enDerecha) const;
     Jugador& jugadorPelota() const;

@@ -57,7 +57,7 @@ vector<vector<Movimiento>> genJugadas1() {  // Prueba TODAS las jugadas
                 if(esJugadaValida(jugada)) {
                     jugadas.push_back(jugada);
                 }
-                if(_tablero.enPosesion() && k > 0) {
+                if(_tablero.pelotaEnPosesion() && k > 0) {
 
                     int idJugadorPelota = (_tablero.jugadorPelota()).id;
                     if(idJugadorPelota < 4) {   // es de mi equipo
