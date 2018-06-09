@@ -13,6 +13,10 @@ unsigned int Jugador::probabilidad() const {
     return _probabilidad_quite;
 }
 
+const Posicion& Jugador::pos() const {
+    return _actual;
+}
+
 void Jugador::mover(const Movimiento &m) {
     _siguiente = _actual;
     _siguiente.mover(m);
