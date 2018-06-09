@@ -23,11 +23,11 @@ public:
 
     // Para entrenador
     Jugador& jugador(size_t i);
-    bool en_derecha() const;
+    bool en_derecha();
     void reiniciar();
 
 private:
-    Genoma genoma;
+    Genoma _genoma;
     bool _en_derecha;
     Tablero _tablero;
 };
