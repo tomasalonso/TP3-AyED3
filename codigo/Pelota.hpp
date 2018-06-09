@@ -1,8 +1,6 @@
 #ifndef __PELOTA__
 #define __PELOTA__
 
-#include "Jugador.hpp"
-#include "Movimiento.hpp"
 #include "Posicion.hpp"
 
 

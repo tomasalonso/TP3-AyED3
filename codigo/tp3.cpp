@@ -3,9 +3,6 @@
 using namespace std;
 
 
-#include "Pelota.hpp"
-#include "Jugador.hpp"
-// #include "Tablero.hpp"
 #include "Equipo.hpp"
 
 

@@ -1,7 +1,7 @@
 #ifndef __JUGADOR__
 #define __JUGADOR__
 
-#include "Movimiento.hpp"
+
 #include "Posicion.hpp"
 
 

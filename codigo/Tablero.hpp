@@ -1,9 +1,10 @@
 #ifndef __TABLERO__
 #define __TABLERO__
 
-#include "Equipo.hpp"
+
 #include "Jugador.hpp"
 #include "Pelota.hpp"
+
 #include <tuple>
 #include <vector>
 using namespace std;
