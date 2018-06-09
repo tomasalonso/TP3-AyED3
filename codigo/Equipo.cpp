@@ -138,3 +138,93 @@ int Equipo::evaluarTablero(vector<Movimiento> posiblesMovs) { // evalua tablero 
 
     return puntaje;
 }
+
+bool Equipo::esJugadaValida(vector<Movimiento> posiblesMovs) { // evalua tablero dado posible combinacion de movs
+    // me hago copia del equipo para modificarlos
+    vector<Jugador> equipo = _tablero.verJugadores(_en_derecha);
+    vector<Posicion> nuevasPos(3, Posicion(-1,-1));
+
+
+
+// TO_DO: contemplar posición dentro del arco
+
+
+
+    for (int i = 0; i < 3; i++) {
+        Movimiento& movActual = posiblesMovs[i];
+        int pos_x;
+        int pos_y;
+        int n = _tablero.N();
+        int m = _tablero.M();
+
+        // si tira la pelota tengo que chequear parámetros
+        if (!movActual.moverse) {
+            Posicion pelota = _tablero.posPelota();
+
+            // restricción del enunciado
+            if(movActual.intensidad > m/2) {
+                return false;
+            }
+
+            // muevo la pelota (simulo movimiento)
+            for(int j = 0; j < movActual.intensidad; j++) {
+                pelota.mover(movActual);
+                pelota.mover(movActual);  // por cada "turno" avanza dos casilleros
+            }
+            // coloco resultados en esas variables, voy a chequearlo mas abajo
+            pos_x = pelota.x();
+            pos_y = pelota.y();
+
+        } else {
+
+            // se mueve el jugador con o sin pelota
+            equipo[i].mover(movActual);
+            equipo[i].actualizar();     // les pongo la nueva dirección
+
+            pos_x = equipo[i].pos().x();
+            pos_y = equipo[i].pos().y();
+
+            if(_tablero.pelotaEnPosesion() &&   // si alguien tiene la pelota
+               _tablero.jugadorPelota().id() != equipo[i].id() && // y no soy yo
+               enArco(n,m,equipo[i].pos())) {               // y entré al arco como une gile
+                return false;
+            }
+
+        }
+
+
+        // chequeo que la posicion final de la pelota/jugadore sea válida
+        if ( !(0 <= pos_x && pos_x < n &&
+                 0 <= pos_x && pos_y < m)) { // se va de cancha
+            return false;
+        }
+    }
+
+    // acá chequeo que no haya dos jugadores de un mismo equipo en la misma celda
+    for (auto jugadorA : equipo) {
+        for (auto jugadorB : equipo) {
+            if (jugadorA.id() != jugadorB.id() &&
+                            jugadorA.pos() == jugadorB.pos()) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
+bool enArco(int n, int m, const Posicion& pos) {
+    vector<Posicion> posDeArco(6,Posicion(-1,-1));
+
+    int mitadArco = (m/2)+1;  // celda del medio, el arco mide tres celdas
+
+    posDeArco[0] = Posicion(-1, mitadArco +1);
+    posDeArco[1] = Posicion(-1, mitadArco);
+    posDeArco[2] = Posicion(-1, mitadArco -1);
+    posDeArco[3] = Posicion(m, mitadArco +1);
+    posDeArco[4] = Posicion(m, mitadArco);
+    posDeArco[5] = Posicion(m, mitadArco -1);
+
+    return 1 == count(posDeArco.begin(), posDeArco.end(), pos);
+}
