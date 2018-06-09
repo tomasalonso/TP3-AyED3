@@ -6,7 +6,7 @@
 Equipo::Equipo(Genoma genoma, const vector<Jugador> jugadores,
                 const unsigned int &M, const unsigned int &N,
                 const unsigned int &total, bool enDerecha)
- : _tablero(Tablero(M,N,total)){
+ : _tablero(Tablero(M,N,total)) {
     _genoma = genoma;
     _en_derecha = enDerecha;
  }
@@ -19,7 +19,7 @@ Equipo::Equipo(Genoma genoma, const vector<Jugador> jugadores,
     // return _tablero._jugadoresI[i%3];
 // }
 
-bool Equipo::en_derecha(){
+bool Equipo::en_derecha() {
     return _en_derecha;
 }
 
@@ -30,7 +30,7 @@ bool Equipo::en_derecha(){
 // }
 
 vector<Movimiento> Equipo::turno(vector<Movimiento> movs,
-                                 function<vector<vector<Movimiento>> (void) > generarPosiblesJugadas ){
+                                 function<vector<vector<Movimiento>> (void) > generarPosiblesJugadas) {
     _tablero.actualizar(movs);
     vector<Movimiento> mejorJugada;
     // generamos de manera todos los movimientos
@@ -54,18 +54,25 @@ vector<vector<Movimiento>> Equipo::genJugadas1() {  // Prueba TODAS las jugadas
 
     int filas = _tablero.M();   // esto no lo puedo acceder
     int totalDirs = 10;
+
     // Por cada jugada jugador 1
     for (int i = 0; i < totalDirs; ++i) {
+
         // Por cada jugada jugador 2
         for (int j = 0; j < totalDirs; ++j) {
+
             // Por cada jugada jugador 3
             for (int k = 0; k < totalDirs; ++k) {
                 // Todos se mueven
-                vector<Movimiento> jugada = {Movimiento((Direccion)i), Movimiento((Direccion)j) , Movimiento((Direccion)k)};
+                vector<Movimiento> jugada = { Movimiento((Direccion)i),
+                                              Movimiento((Direccion)j),
+                                              Movimiento((Direccion)k)  };
 
                 if(esJugadaValida(jugada)) {
                     jugadas.push_back(jugada);
                 }
+
+                // Si alguno tiene la pelota, considero los posibles pases
                 if(_tablero.pelotaEnPosesion() && k > 0) {
 
                     int idJugadorPelota = (int)(_tablero.jugadorPelota()).id();
