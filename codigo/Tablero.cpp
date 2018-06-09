@@ -32,3 +32,15 @@ iostream& operator<< (iostream& os, Tablero &j) {
 void Tablero::actualizar(vector<Movimiento> movs) {
     // logica del tablero
 }
+
+
+vector<int> Tablero::distJugadorAlArco(bool enDerecha) { vector<int>  v; return v;}
+int Tablero::distPelotaArco(bool enDerecha) {return -1;}
+int Tablero::cercaniaARival(Jugador&) {return -1;}
+int Tablero::areaCubierta(bool enDerecha) {return -1;}
+bool Tablero::pelotaEnPosesion() const {return false;}
+
+int Tablero::puntaje(bool enDerecha) const {return -1;}
+const Jugador& Tablero::jugadorPelota() const {return _jugadoresI[0];}
+int Tablero::N(){return _N;}
+int Tablero::M(){return _M;}

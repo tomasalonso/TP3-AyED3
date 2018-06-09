@@ -24,7 +24,7 @@ public:
     bool pelotaEnPosesion() const;
 
     int puntaje(bool enDerecha) const;
-    Jugador& jugadorPelota() const;
+    const Jugador& jugadorPelota() const;
 
 
 
