@@ -12,7 +12,7 @@ unsigned int Posicion::y() const {
 }
 
 void Posicion::mover(const Movimiento &movimiento) {
-    switch(movimiento) {
+    switch((int)movimiento.dir) {
     case QUIETO: break;
     case ARRIBA:
         _y++; break;
@@ -32,4 +32,5 @@ void Posicion::mover(const Movimiento &movimiento) {
         _y--; _x++; break;
     }
 }
+
 
