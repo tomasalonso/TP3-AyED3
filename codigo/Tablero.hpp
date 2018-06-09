@@ -6,6 +6,7 @@
 #include "Pelota.hpp"
 
 #include <tuple>
+#include <cassert>
 #include <vector>
 using namespace std;
 
@@ -22,11 +23,12 @@ public:
     void mover();
     void reiniciar(bool enDerecha);
     bool pelotaEnPosesion() const;
+    Posicion posPelota() const;
 
     int puntaje(bool enDerecha) const;
     const Jugador& jugadorPelota() const;
 
-
+    const vector<Jugador>& verJugadores(bool enDerecha) const;
 
     friend ostream& operator>> (ostream& os, Tablero &j); // toma movimientos
     friend ostream& operator<< (ostream& os, Tablero &j); // imprime estado

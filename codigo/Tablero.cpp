@@ -2,9 +2,14 @@
 
 Tablero::Tablero(const unsigned int &M, const unsigned int &N,
                  const unsigned int &total) : _M(M), _N(N), _total(total) {
+    assert(N%2==0 && N >= 2*M);
     // equipoI = make_pair(I, 0);
     // equipoD = make_pair(D, 0);
 
+}
+
+Posicion Tablero::posPelota() const {
+    return _pelota.posicion();
 }
 
 // Jugador* Pelota::jugador() const {
@@ -18,6 +23,14 @@ Tablero::Tablero(const unsigned int &M, const unsigned int &N,
 // }
 
 // void Tablero::mover();
+
+const vector<Jugador>& Tablero::verJugadores(bool enDerecha) const {
+    if (enDerecha) {
+        return _jugadoresD;
+    }
+    return _jugadoresI;
+}
+
 
 iostream& operator>> (iostream& os, Tablero &j) {
     // tomar movimientos
