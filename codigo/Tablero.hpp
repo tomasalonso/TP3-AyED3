@@ -4,12 +4,18 @@
 #include "Equipo.hpp"
 #include "Jugador.hpp"
 #include "Pelota.hpp"
-#include <pair>
+#include <tuple>
+#include <vector>
+using namespace std;
+
 
 class Tablero {
 public:
-    Juego(const unsigned int &M, const unsigned int &N,
+    Tablero(const unsigned int &M, const unsigned int &N,
             const unsigned int &total);
+
+    int N();
+    int M();
 
     void actualizar(vector<Movimiento> movs); // va a tener que saber si hubo gol
     void mover();
@@ -20,8 +26,9 @@ public:
     Jugador& jugadorPelota() const;
 
 
-    friend ostream& operator>> (ostream& os, Juego &j); // toma movimientos
-    friend ostream& operator<< (ostream& os, Juego &j); // imprime estado
+
+    friend ostream& operator>> (ostream& os, Tablero &j); // toma movimientos
+    friend ostream& operator<< (ostream& os, Tablero &j); // imprime estado
 
     // Metodos para evaluarTablero
     vector<int> distJugadorAlArco(bool enDerecha);

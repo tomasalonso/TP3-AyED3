@@ -2,8 +2,8 @@
 
 Tablero::Tablero(const unsigned int &M, const unsigned int &N,
                  const unsigned int &total) : _M(M), _N(N), _total(total) {
-    equipoI = make_pair(I, 0);
-    equipoD = make_pair(D, 0);
+    // equipoI = make_pair(I, 0);
+    // equipoD = make_pair(D, 0);
 
 }
 
@@ -21,12 +21,14 @@ Tablero::Tablero(const unsigned int &M, const unsigned int &N,
 
 iostream& operator>> (iostream& os, Tablero &j) {
     // tomar movimientos
+    return os;
 }
 
 iostream& operator<< (iostream& os, Tablero &j) {
     // imprime estado
+    return os;
 }
 
-void Tablero::actualizar() {
+void Tablero::actualizar(vector<Movimiento> movs) {
     // logica del tablero
 }
