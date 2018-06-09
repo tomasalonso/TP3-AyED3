@@ -46,7 +46,15 @@ vector<Movimiento> Equipo::turno(vector<Movimiento> movs,
     return mejorJugada;
 }
 
-
+void Equipo::imprimirMovs (vector<Movimiento>& movs) {
+    for (int i = 0; i < (int)movs.size(); i++) {
+        if (movs[i].moverse) {
+            printf("%d %s %d\n", i, "MOVIMIENTO", (int)movs[i].dir);
+        } else {
+            printf("%d %s %d %d\n", i, "PASE", (int)movs[i].dir, movs[i].intensidad);
+        }
+    }
+}
 
 vector<vector<Movimiento>> Equipo::genJugadas1() {  // Prueba TODAS las jugadas
 
