@@ -24,7 +24,7 @@ public:
     friend ostream& operator<< (ostream& os, Juego &j); // imprime estado
 
     // Metodos para evaluarTablero
-    int distJugadorAlArco(Jugador&);
+    vector<int> distJugadorAlArco(bool enDerecha);
     int distPelotaArco(bool enDerecha);
     int cercaniaARival(Jugador&);
     int areaCubierta(bool enDerecha);
