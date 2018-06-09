@@ -3,25 +3,34 @@
 #include <cassert>
 
 
-Equipo::Equipo(const vector<Jugador> jugadores) {}
+Equipo::Equipo(Genoma genoma, const vector<Jugador> jugadores,
+                const unsigned int &M, const unsigned int &N,
+                const unsigned int &total, bool enDerecha)
+ : _tablero(Tablero(M,N,total)){
+    _genoma = genoma;
+    _en_derecha = enDerecha;
+ }
 
-Jugador& Equipo::jugador(size_t i) {
-    assert(i < _jugadores.size());
+// Jugador& Equipo::jugador(size_t i) {
+//     assert(i < 6);
+    // if(i/3) {
+    //     return _tablero._jugadoresD[i%3];
+    // }
+    // return _tablero._jugadoresI[i%3];
+// }
 
-    return _jugadores[i];
-}
-
-bool Equipo::en_derecha() const {
+bool Equipo::en_derecha(){
     return _en_derecha;
 }
 
-void Equipo::reiniciar() {
-    for (Jugador& j : _jugadores) {
-        j.reiniciar();
-    }
-}
+// void Equipo::reiniciar() {
+//     for (Jugador& j : _jugadores) {
+//         j.reiniciar();
+//     }
+// }
 
-vector<Movimiento> Equipo::turno(vector<Movimiento> movs, function<vector<Movimiento> > generarPosiblesJugadas ){
+vector<Movimiento> Equipo::turno(vector<Movimiento> movs,
+                                 function<vector<vector<Movimiento>> (void) > generarPosiblesJugadas ){
     _tablero.actualizar(movs);
     vector<Movimiento> mejorJugada;
     // generamos de manera todos los movimientos
@@ -30,7 +39,7 @@ vector<Movimiento> Equipo::turno(vector<Movimiento> movs, function<vector<Movimi
     // @TO-DO: algo que pruebe menos jugadas de manera inteligente
 
     for (auto &j : jugadas) {       // Devuelve todas válidas
-        if (_tablero.evaluarTablero(en_derecha(), genoma, j)) {
+        if (evaluarTablero(j)) {
             mejorJugada = j;
         }
     }
@@ -39,7 +48,7 @@ vector<Movimiento> Equipo::turno(vector<Movimiento> movs, function<vector<Movimi
 
 
 
-vector<vector<Movimiento>> genJugadas1() {  // Prueba TODAS las jugadas
+vector<vector<Movimiento>> Equipo::genJugadas1() {  // Prueba TODAS las jugadas
 
     vector<vector<Movimiento>> jugadas;
 
@@ -52,19 +61,19 @@ vector<vector<Movimiento>> genJugadas1() {  // Prueba TODAS las jugadas
             // Por cada jugada jugador 3
             for (int k = 0; k < totalDirs; ++k) {
                 // Todos se mueven
-                vector<Movimiento> jugada = {Movimiento(i), Movimiento(j) , Movimiento(k)}
+                vector<Movimiento> jugada = {Movimiento((Direccion)i), Movimiento((Direccion)j) , Movimiento((Direccion)k)};
 
                 if(esJugadaValida(jugada)) {
                     jugadas.push_back(jugada);
                 }
                 if(_tablero.pelotaEnPosesion() && k > 0) {
 
-                    int idJugadorPelota = (_tablero.jugadorPelota()).id;
+                    int idJugadorPelota = (int)(_tablero.jugadorPelota()).id();
                     if(idJugadorPelota < 4) {   // es de mi equipo
 
                         // Por cada posible intensidad
                         for (int inten = 0; inten < filas/2; ++inten) {
-                            jugada[idJugadorPelota] = Movimiento(k,inten);
+                            jugada[idJugadorPelota] = Movimiento((Direccion)k,inten);
                             if(esJugadaValida(jugada)) {
                                 jugadas.push_back(jugada);
                             }
@@ -76,7 +85,7 @@ vector<vector<Movimiento>> genJugadas1() {  // Prueba TODAS las jugadas
         }
     }
     return jugadas;
-}}
+}
 
 int Equipo::evaluarTablero(vector<Movimiento> posiblesMovs) { // evalua tablero dado posible combinacion de movs
     vector<int> mediciones(10);     // puede variar el 10
