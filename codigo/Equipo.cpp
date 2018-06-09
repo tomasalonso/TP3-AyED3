@@ -6,7 +6,7 @@
 Equipo::Equipo(Genoma genoma, const vector<Jugador> jugadores,
                 const unsigned int &M, const unsigned int &N,
                 const unsigned int &total, bool enDerecha)
- : _tablero(Tablero(M,N,total)) {
+ : _tablero(M,N,total) {
     _genoma = genoma;
     _en_derecha = enDerecha;
  }
