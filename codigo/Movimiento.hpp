@@ -15,18 +15,20 @@ enum Direccion {
 };
 
 struct Movimiento {
-    Movimiento(Direccion d);
-    Movimiento(Direccion d, int intensidad);
+    Movimiento(Direccion d) : moverse(1), dir(d), intensidad(-1) {};
+    Movimiento(Direccion d, int i) : moverse(0), dir(d), intensidad(i) {
+        assert(d != QUIETO);
+    }
 
     bool moverse;   // 0-> movimiento, 1-> tirar
     Direccion dir;
     int intensidad;
 };
 // Constructores
-Movimiento::Movimiento(Direccion d) : moverse(1), dir(d), intensidad(-1) {}
-Movimiento::Movimiento(Direccion d, int i) : moverse(0), dir(d), intensidad(i) {
-    assert(d != QUIETO);
-}
+// Movimiento::Movimiento(Direccion d) : moverse(1), dir(d), intensidad(-1) {}
+// Movimiento::Movimiento(Direccion d, int i) : moverse(0), dir(d), intensidad(i) {
+//     assert(d != QUIETO);
+// }
 
 
 #endif
