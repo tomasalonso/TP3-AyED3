@@ -12,8 +12,8 @@ public:
     unsigned int id() const;
     unsigned int probabilidad() const;
 
-    void mover(const Movimiento &m);
-    void actualizar();
+    void mover(const Movimiento &m);    // cambia "_siguiente"
+    void actualizar();                  // modifica "_actual" al valor de "_siguiente"
     void reiniciar();
 private:
     const unsigned int _id;

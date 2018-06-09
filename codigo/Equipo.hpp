@@ -10,15 +10,24 @@ using namespace std;
 
 class Equipo {
 public:
-    Equipo(const vector<Jugador> jugadores);
+    Equipo(Genoma genoma, const vector<Jugador> jugadores);
+    // Equipo(const vector<Jugador> jugadores);
+
+    // Para el equipo
+    vector<Movimiento> turno(vector<Movimiento> movs); // actualiza tablero, prueba jugadas y devuelve la mejor
+
+
+    bool esJugadaValida(vector<Movimiento> posiblesMovs);
+
+    // Para entrenador
     Jugador& jugador(size_t i);
     bool en_derecha() const;
     void reiniciar();
-    Equipo& equipo() const;
+
 private:
-    vector<Jugador> _jugadores;
+    Genoma genoma;
     bool _en_derecha;
-    Equipo &_equipo;
+    Tablero _tablero;
 };
 
 #endif

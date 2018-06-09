@@ -1,8 +1,8 @@
 #ifndef __MOVIMIENTO__
 #define __MOVIMIENTO__
+#include <cassert>
 
-
-enum Movimiento {
+enum Direccion {
     QUIETO = 0,
     ARRIBA = 2,
     ABAJO = 6,
@@ -13,5 +13,20 @@ enum Movimiento {
     ABAJO_IZQUIERDA = 7,
     ABAJO_DERECHA = 5
 };
+
+struct Movimiento {
+    Movimiento(Direccion d);
+    Movimiento(Direccion d, int intensidad);
+
+    bool moverse;   // 0-> movimiento, 1-> tirar
+    Direccion dir;
+    int intensidad;
+};
+// Constructores
+Movimiento::Movimiento(Direccion d) : moverse(1), dir(d), intensidad(-1) {}
+Movimiento::Movimiento(Direccion d, int i) : moverse(0), dir(d), intensidad(i) {
+    assert(d != QUIETO);
+}
+
 
 #endif
