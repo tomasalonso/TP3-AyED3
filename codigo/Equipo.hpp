@@ -8,6 +8,8 @@ class Jugador;
 using namespace std;
 
 
+typedef vector<int> Genoma ;
+
 class Equipo {
 public:
     Equipo(Genoma genoma, const vector<Jugador> jugadores);
