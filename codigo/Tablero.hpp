@@ -8,6 +8,8 @@
 #include <tuple>
 #include <cassert>
 #include <vector>
+#include <iostream>
+
 using namespace std;
 
 
@@ -19,7 +21,7 @@ public:
     int N();
     int M();
 
-    void actualizar(vector<Movimiento> movs); // va a tener que saber si hubo gol
+    void actualizar(vector<Movimiento> movs, bool enDerecha); // va a tener que saber si hubo gol
     void mover();
     void reiniciar(bool enDerecha);
     bool pelotaEnPosesion() const;
@@ -30,7 +32,7 @@ public:
 
     const vector<Jugador>& verJugadores(bool enDerecha) const;
 
-    friend ostream& operator>> (ostream& os, Tablero &j); // toma movimientos
+    void tomarJugadas(bool enDerecha);      // toma movimientos y llama a actualizar
     friend ostream& operator<< (ostream& os, Tablero &j); // imprime estado
 
     // Metodos para evaluarTablero

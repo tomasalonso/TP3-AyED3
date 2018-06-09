@@ -31,10 +31,22 @@ const vector<Jugador>& Tablero::verJugadores(bool enDerecha) const {
     return _jugadoresI;
 }
 
-
-iostream& operator>> (iostream& os, Tablero &j) {
-    // tomar movimientos
-    return os;
+void Tablero::tomarJugadas(bool enDerecha) {
+    int id;
+    string tipoMov;
+    int direccion;
+    vector<Movimiento> movs(3, Movimiento(QUIETO));
+    for (int i = 0; i < 3; i++) {
+        cin >> id >> tipoMov >> direccion;
+        if(tipoMov == "MOVIMIENTO") {
+            movs[i] = Movimiento((Direccion)direccion);
+        } else if(tipoMov == "PASE") {
+            int intensidad;
+            cin >> intensidad;
+            movs[i] = Movimiento((Direccion)direccion, intensidad);
+        }
+    }
+    actualizar(movs,enDerecha);
 }
 
 iostream& operator<< (iostream& os, Tablero &j) {
