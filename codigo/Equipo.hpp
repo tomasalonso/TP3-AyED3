@@ -14,6 +14,7 @@ using namespace std;
 
 
 typedef vector<int> Genoma ;
+bool enArco(int n, int m, const Posicion& pos);
 
 class Equipo {
 public:
@@ -26,6 +27,7 @@ public:
     vector<Movimiento> turno(vector<Movimiento> movs, // actualiza tablero, prueba jugadas y devuelve la mejor
                              function<vector<vector<Movimiento>> (void) > generarPosiblesJugadas );
 
+    void imprimirMovs (vector<Movimiento>& movs);
 
     bool esJugadaValida(vector<Movimiento> posiblesMovs);
 
