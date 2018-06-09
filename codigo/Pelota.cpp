@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-Pelota(): _posicion(Posicion(0,0)), _tiempo(0), _movimiento(Movimiento((Direccion)0){}
+Pelota::Pelota(): _posicion(Posicion(0,0)), _tiempo(0), _movimiento(Movimiento((Direccion)0)){}
 
 Posicion Pelota::posicion() const {
     return _posicion;
