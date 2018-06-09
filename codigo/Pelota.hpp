@@ -8,6 +8,7 @@
 
 class Pelota {
 public:
+    Pelota();
     Posicion posicion() const;
     void mover(const Movimiento &movimiento, const unsigned int tiempo);
     void actualizar1();
