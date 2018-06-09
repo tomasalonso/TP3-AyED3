@@ -1,8 +1,15 @@
 #include<iostream>
+#include<vector>
 using namespace std;
 
-int main(int argc, char const *argv[])
-{
+
+#include "Pelota.hpp"
+#include "Jugador.hpp"
+// #include "Tablero.hpp"
+#include "Equipo.hpp"
+
+
+int main() {
     cout<<"AndaPiola\n";
     return 0;
 }
