@@ -76,4 +76,49 @@ vector<vector<Movimiento>> genJugadas1() {  // Prueba TODAS las jugadas
         }
     }
     return jugadas;
+}}
+
+int Equipo::evaluarTablero(vector<Movimiento> posiblesMovs) { // evalua tablero dado posible combinacion de movs
+    vector<int> mediciones(10);     // puede variar el 10
+    int puntaje = 0;
+
+    // para cada jugador mío
+        vector<int> dist = _tablero.distJugadorAlArco(_en_derecha);
+        mediciones[0] = dist[0];
+        mediciones[1] = dist[1];
+        mediciones[2] = dist[2];
+
+
+    // if(_en_derecha){
+
+
+    //     mediciones[0] = _tablero.distJugadorAlArco(_jugadoresD[0]);
+    //     mediciones[1] = _tablero.distJugadorAlArco(_jugadoresD[1]);
+    //     mediciones[2] = _tablero.distJugadorAlArco(_jugadoresD[2]);
+    // } else {
+    //     mediciones[0] = _tablero.distJugadorAlArco(_jugadoresI[0]);
+    //     mediciones[1] = _tablero.distJugadorAlArco(_jugadoresI[1]);
+    //     mediciones[2] = _tablero.distJugadorAlArco(_jugadoresI[2]);
+
+    // }
+    mediciones[3] = _tablero.distPelotaArco(_en_derecha);
+    int pose = 0;
+    // cercanía rival cambia si tengo o no la pelota
+    if(_tablero.pelotaEnPosesion() &&
+                        ((!_en_derecha && _tablero.jugadorPelota().id() < 3) ||
+                         (_en_derecha && _tablero.jugadorPelota().id() >= 3)    )) {  // Tengo la pelota
+        pose = _genoma.size()/2;
+        // mediciones[4] = cercaniaARival(Jugador&, true);
+    } else {
+        pose = 0;
+        // mediciones[4] = cercaniaARival(Jugador&, false);
+    }
+
+    // mediciones[5] = areaCubierta(bool _en_derecha);
+
+    for (int i = 0 ; i < (int)_genoma.size()/2; i++) {      // asume misma longitud
+        puntaje += _genoma[i+pose] * mediciones[i];
+    }
+
+    return puntaje;
 }

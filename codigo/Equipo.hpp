@@ -21,6 +21,9 @@ public:
 
     bool esJugadaValida(vector<Movimiento> posiblesMovs);
 
+    int evaluarTablero(vector<Movimiento> posiblesMovs); // evalua tablero dado posible combinacion de movs
+
+    // Posibles jugadas para evaluar
     // Para entrenador
     Jugador& jugador(size_t i);
     bool en_derecha();

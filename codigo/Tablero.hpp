@@ -19,7 +19,6 @@ public:
     int puntaje(bool enDerecha) const;
     Jugador& jugadorPelota() const;
 
-    int evaluarTablero(bool enDerecha, Genoma genoma, vector<Movimiento> posiblesMovs); // evalua tablero dado posible combinacion de movs
 
     friend ostream& operator>> (ostream& os, Juego &j); // toma movimientos
     friend ostream& operator<< (ostream& os, Juego &j); // imprime estado
