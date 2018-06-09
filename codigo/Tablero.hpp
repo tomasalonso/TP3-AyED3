@@ -1,5 +1,5 @@
-#ifndef __JUEGO__
-#define __JUEGO__
+#ifndef __TABLERO__
+#define __TABLERO__
 
 #include "Equipo.hpp"
 #include "Jugador.hpp"

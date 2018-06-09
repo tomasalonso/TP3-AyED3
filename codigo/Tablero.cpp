@@ -1,6 +1,6 @@
-#include "Juego.hpp"
+#include "Tablero.hpp"
 
-Juego::Juego(const unsigned int &M, const unsigned int &N,
+Tablero::Tablero(const unsigned int &M, const unsigned int &N,
                  const unsigned int &total) : _M(M), _N(N), _total(total) {
     equipoI = make_pair(I, 0);
     equipoD = make_pair(D, 0);
@@ -17,21 +17,21 @@ Juego::Juego(const unsigned int &M, const unsigned int &N,
 //     return _j != nullptr;
 // }
 
-// void Juego::mover();
+// void Tablero::mover();
 
-iostream& operator>> (iostream& os, Juego &j) {
+iostream& operator>> (iostream& os, Tablero &j) {
     // tomar movimientos
 }
 
-iostream& operator<< (iostream& os, Juego &j) {
+iostream& operator<< (iostream& os, Tablero &j) {
     // imprime estado
 }
 
-void Juego::actualizar() {
+void Tablero::actualizar() {
     // logica del tablero
 }
 
-int Juego::evaluarTablero(bool enDerecha, Genoma genoma, vector<Movimiento> posiblesMovs) { // evalua tablero dado posible combinacion de movs
+int Tablero::evaluarTablero(bool enDerecha, Genoma genoma, vector<Movimiento> posiblesMovs) { // evalua tablero dado posible combinacion de movs
     vector<int> mediciones(10);     // puede variar el 10
     int puntaje = 0;
 
