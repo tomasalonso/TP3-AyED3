@@ -49,9 +49,53 @@ void Tablero::tomarJugadas(bool enDerecha) {
     actualizar(movs,enDerecha);
 }
 
-iostream& operator<< (iostream& os, Tablero &j) {
-    // imprime estado
-    return os;
+void Tablero::imprimirEstado(bool paraEquipoDer) {
+    const vector<Jugador>& eqIzq = verJugadores(false);;
+    const vector<Jugador>& eqDer = verJugadores(true);;
+    vector<pair<Posicion,unsigned int> > jugadores;
+
+    int i = 0;
+    if (paraEquipoDer) {
+        for (i = 0; i < 3; i++) {
+            jugadores.push_back(make_pair(eqDer[i].pos(),eqDer[i].id()));
+
+            // [i] = eqDer[i];
+        }
+        for (i = 3; i < 6; i++) {
+            jugadores.push_back(make_pair(eqIzq[i].pos(),eqIzq[i].id()));
+            // jugadores[i] = eqIzq[i%3];
+        }
+    } else {
+        for (i = 0; i < 3; i++) {
+            jugadores.push_back(make_pair(eqIzq[i].pos(),eqIzq[i].id()));
+            // jugadores[i] = eqIzq[i%3];
+
+        }
+        for (i = 3; i < 6; i++) {
+            jugadores.push_back(make_pair(eqDer[i].pos(),eqDer[i].id()));
+            // [i] = eqDer[i];
+        }
+    }
+
+    if(pelotaEnPosesion()) {
+        const Jugador& jugPelota = jugadorPelota();
+        int j = 0;
+        for (auto jugador : jugadores) {
+            if (jugador.second == jugPelota.id()) {
+                printf("%i %i %i %s\n", j, jugador.first.y(), jugador.first.x(),"CON_PELOTA" );
+            } else {
+                printf("%i %i %i %s\n", j, jugador.first.y(), jugador.first.x(),"SIN_PELOTA" );
+            }
+            j++;
+        }
+    } else {
+        int j = 0;
+        for (auto jugador : jugadores) {
+            printf("%i %i %i %s\n", j, jugador.first.y(), jugador.first.x(),"SIN_PELOTA" );
+            j++;
+        }
+        printf("%i %i\n", posPelota().y(), posPelota().x() );
+    }
 }
 
 void Tablero::actualizar(vector<Movimiento> movs, bool enDerecha) {

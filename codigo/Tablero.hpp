@@ -33,7 +33,7 @@ public:
     const vector<Jugador>& verJugadores(bool enDerecha) const;
 
     void tomarJugadas(bool enDerecha);      // toma movimientos y llama a actualizar
-    friend ostream& operator<< (ostream& os, Tablero &j); // imprime estado
+    void imprimirEstado(bool paraEquipoDer); // imprime estado
 
     // Metodos para evaluarTablero
     vector<int> distJugadorAlArco(bool enDerecha);
