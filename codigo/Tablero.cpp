@@ -142,7 +142,7 @@ unsigned int Tablero::distPelotaArco(const bool enDerecha) const {
 unsigned int Tablero::cercaniaARival(const Jugador &j) const {
     const float x = j.pos().x();
     const float y = j.pos().y();
-    vector<Jugador> rivales = (j.id() < _jugadoresI.size()) ?
+    const vector<Jugador> &rivales = (j.id() < _jugadoresI.size()) ?
         _jugadoresD : _jugadoresI;
 
     unsigned int min = distancia(x, y,
@@ -161,7 +161,7 @@ unsigned int Tablero::cercaniaARival(const Jugador &j) const {
 }
 
 float Tablero::areaCubierta(const bool enDerecha) const {
-    vector<Jugador> js = (enDerecha) ? _jugadoresD : _jugadoresI;
+    const vector<Jugador> &js = (enDerecha) ? _jugadoresD : _jugadoresI;
 
     const float b = distancia(js[0].pos().x(), js[0].pos().y(),
                                         js[1].pos().x(), js[1].pos().y());
