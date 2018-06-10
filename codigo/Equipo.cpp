@@ -31,7 +31,7 @@ bool Equipo::en_derecha() {
 
 vector<Movimiento> Equipo::turno(vector<Movimiento> movs,
                                  function<vector<vector<Movimiento>> (void) > generarPosiblesJugadas) {
-    _tablero.actualizar(movs);
+    _tablero.actualizar(movs, _en_derecha);
     vector<Movimiento> mejorJugada;
     // generamos de manera todos los movimientos
     // (asumimos que el oponente se queda quieto)

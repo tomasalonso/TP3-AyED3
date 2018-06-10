@@ -54,7 +54,7 @@ iostream& operator<< (iostream& os, Tablero &j) {
     return os;
 }
 
-void Tablero::actualizar(vector<Movimiento> movs) {
+void Tablero::actualizar(vector<Movimiento> movs, bool enDerecha) {
     // logica del tablero
 }
 
