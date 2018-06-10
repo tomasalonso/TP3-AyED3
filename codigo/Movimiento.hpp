@@ -24,11 +24,5 @@ struct Movimiento {
     Direccion dir;
     int intensidad;
 };
-// Constructores
-// Movimiento::Movimiento(Direccion d) : moverse(1), dir(d), intensidad(-1) {}
-// Movimiento::Movimiento(Direccion d, int i) : moverse(0), dir(d), intensidad(i) {
-//     assert(d != QUIETO);
-// }
-
 
 #endif

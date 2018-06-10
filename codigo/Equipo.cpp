@@ -107,7 +107,7 @@ int Equipo::evaluarTablero(vector<Movimiento> posiblesMovs) { // evalua tablero 
     int puntaje = 0;
 
     // para cada jugador mío
-        vector<int> dist = _tablero.distJugadorAlArco(_en_derecha);
+        vector<unsigned int> dist = _tablero.distJugadorAlArco(_en_derecha);
         mediciones[0] = dist[0];
         mediciones[1] = dist[1];
         mediciones[2] = dist[2];

@@ -8,21 +8,21 @@ Tablero::Tablero(const unsigned int &M, const unsigned int &N,
 
 }
 
+unsigned int Tablero::N() const {return _N;}
+unsigned int Tablero::M() const {return _M;}
+
+bool Tablero::pelotaEnPosesion() const {
+    return _jugPelota != nullptr;
+}
+
+const Jugador& Tablero::jugadorPelota() const {
+    assert(pelotaEnPosesion());
+    return *_jugPelota;
+}
+
 Posicion Tablero::posPelota() const {
     return _pelota.posicion();
 }
-
-// Jugador* Pelota::jugador() const {
-//     assert(enPosecion());
-
-//     return _j;
-// }
-
-// bool Pelota::enPosesion() const {
-//     return _j != nullptr;
-// }
-
-// void Tablero::mover();
 
 const vector<Jugador>& Tablero::verJugadores(bool enDerecha) const {
     if (enDerecha) {
@@ -77,7 +77,7 @@ void Tablero::imprimirEstado(bool paraEquipoDer) {
         }
     }
 
-    if(pelotaEnPosesion()) {
+    if (pelotaEnPosesion()) {
         const Jugador& jugPelota = jugadorPelota();
         int j = 0;
         for (auto jugador : jugadores) {
@@ -103,13 +103,53 @@ void Tablero::actualizar(vector<Movimiento> movs, bool enDerecha) {
 }
 
 
-vector<int> Tablero::distJugadorAlArco(bool enDerecha) { vector<int>  v; return v;}
-int Tablero::distPelotaArco(bool enDerecha) {return -1;}
-int Tablero::cercaniaARival(Jugador&) {return -1;}
-int Tablero::areaCubierta(bool enDerecha) {return -1;}
-bool Tablero::pelotaEnPosesion() const {return false;}
+vector<unsigned int> Tablero::distJugadorAlArco(const bool enDerecha) const {
+    const vector<Jugador> &js = (enDerecha) ? _jugadoresD : _jugadoresI;
+    const unsigned int xArco = (enDerecha) ? _N : -1;
+
+    vector<unsigned int> dist(_jugadoresI.size());
+
+    for (const Jugador &j : js) {
+        const Posicion actual = j.pos();
+
+        if (actual.y() > (unsigned int) (_M/2)) {
+            dist.push_back(distancia(actual, Posicion(xArco, (unsigned int) (_M/2+1))));
+        } else if (actual.y() == _M/2) {
+            dist.push_back(abs(int(actual.x()) - int(xArco)));
+        } else {
+            dist.push_back(distancia(actual, Posicion(xArco, (unsigned int) (_M/2-1))));
+        }
+    }
+
+    return dist;
+}
+
+unsigned int Tablero::distPelotaArco(const bool enDerecha) const {
+    const unsigned int xArco = (enDerecha) ? _N : -1;
+    const Posicion p = _pelota.posicion();
+
+    if (p.y() > (unsigned int) (_M/2)) {
+        return distancia(p, Posicion(xArco, (unsigned int) (_M/2+1)));
+    } else if (p.y() == _M/2) {
+        return abs(int(p.x()) - int(xArco));
+    } else {
+        return distancia(p, Posicion(xArco, (unsigned int) (_M/2-1)));
+    }
+}
+
+unsigned int Tablero::cercaniaARival(const Jugador &j) const {
+    // si es el izquierdo, chequear con 3, 4, 5
+    // si es el derecho, chequear con 0, 1, 2
+
+    // Por cada rival contrario, ver la distancia con el rival
+
+    // for ()
+
+    return -1;
+}
+
+unsigned int Tablero::areaCubierta(const bool enDerecha) const {
+    return -1;
+}
 
 int Tablero::puntaje(bool enDerecha) const {return -1;}
-const Jugador& Tablero::jugadorPelota() const {return _jugadoresI[0];}
-int Tablero::N(){return _N;}
-int Tablero::M(){return _M;}

@@ -13,7 +13,7 @@ unsigned int Jugador::probabilidad() const {
     return _probabilidad_quite;
 }
 
-const Posicion& Jugador::pos() const {
+Posicion Jugador::pos() const {
     return _actual;
 }
 

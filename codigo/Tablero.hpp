@@ -18,29 +18,28 @@ public:
     Tablero(const unsigned int &M, const unsigned int &N,
             const unsigned int &total);
 
-    int N();
-    int M();
+    unsigned int N() const;
+    unsigned int M() const;
+
+    bool pelotaEnPosesion() const;
+    const Jugador& jugadorPelota() const;
+    Posicion posPelota() const;
+    const vector<Jugador>& verJugadores(bool enDerecha) const;
 
     void actualizar(vector<Movimiento> movs, bool enDerecha); // va a tener que saber si hubo gol
     void mover();
     void reiniciar(bool enDerecha);
-    bool pelotaEnPosesion() const;
-    Posicion posPelota() const;
+    void tomarJugadas(bool enDerecha);      // toma movimientos y llama a actualizar
 
     int puntaje(bool enDerecha) const;
-    const Jugador& jugadorPelota() const;
 
-    const vector<Jugador>& verJugadores(bool enDerecha) const;
-
-    void tomarJugadas(bool enDerecha);      // toma movimientos y llama a actualizar
     void imprimirEstado(bool paraEquipoDer); // imprime estado
 
     // Metodos para evaluarTablero
-    vector<int> distJugadorAlArco(bool enDerecha);
-    int distPelotaArco(bool enDerecha);
-    int cercaniaARival(Jugador&);
-    int areaCubierta(bool enDerecha);
-
+    vector<unsigned int> distJugadorAlArco(const bool enDerecha) const;
+    unsigned int distPelotaArco(const bool enDerecha) const;
+    unsigned int cercaniaARival(const Jugador &j) const;
+    unsigned int areaCubierta(const bool enDerecha) const;
 
 private:
 

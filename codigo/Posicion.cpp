@@ -1,5 +1,7 @@
 #include "Posicion.hpp"
 
+#include <cmath>
+
 
 Posicion::Posicion(const unsigned int x, const unsigned int y) : _x(x), _y(y) {}
 
@@ -41,4 +43,6 @@ void Posicion::mover(const Movimiento &movimiento) {
     }
 }
 
-
+float distancia(const Posicion &p1, const Posicion &p2) {
+    return sqrt(pow(p1.y()-p2.y(), 2) + pow(p1.x() - p2.x(), 2));
+}
