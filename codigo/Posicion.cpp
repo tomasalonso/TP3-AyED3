@@ -43,6 +43,14 @@ void Posicion::mover(const Movimiento &movimiento) {
     }
 }
 
-float distancia(const Posicion &p1, const Posicion &p2) {
-    return sqrt(pow(p1.y()-p2.y(), 2) + pow(p1.x() - p2.x(), 2));
+float distancia(const float x1, const float y1, const float x2, const float y2) {
+    return sqrt(pow(y1 - y2, 2) + pow(x1 - x2, 2));
+}
+
+float altura(const Posicion &a, const Posicion &b, const Posicion &c) {
+    const Posicion b_a = Posicion(b.x() - a.x(), b.y() - a.y());
+    unsigned int d_x = a.x() + b_a.x()/2;
+    unsigned int d_y = a.y() + b_a.y()/2;
+
+    return distancia(c.x(), c.y(), d_x, d_y);
 }

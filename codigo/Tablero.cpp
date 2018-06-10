@@ -110,14 +110,15 @@ vector<unsigned int> Tablero::distJugadorAlArco(const bool enDerecha) const {
     vector<unsigned int> dist(_jugadoresI.size());
 
     for (const Jugador &j : js) {
-        const Posicion actual = j.pos();
+        const float x = j.pos().x();
+        const float y = j.pos().y();
 
-        if (actual.y() > (unsigned int) (_M/2)) {
-            dist.push_back(distancia(actual, Posicion(xArco, (unsigned int) (_M/2+1))));
-        } else if (actual.y() == _M/2) {
-            dist.push_back(abs(int(actual.x()) - int(xArco)));
+        if (y > _M/2) {
+            dist.push_back(distancia(x, y, xArco, _M/2+1));
+        } else if (y == _M/2) {
+            dist.push_back(abs(x - xArco));
         } else {
-            dist.push_back(distancia(actual, Posicion(xArco, (unsigned int) (_M/2-1))));
+            dist.push_back(distancia(x, y, xArco, _M/2-1));
         }
     }
 
@@ -126,30 +127,48 @@ vector<unsigned int> Tablero::distJugadorAlArco(const bool enDerecha) const {
 
 unsigned int Tablero::distPelotaArco(const bool enDerecha) const {
     const unsigned int xArco = (enDerecha) ? _N : -1;
-    const Posicion p = _pelota.posicion();
+    const float x = _pelota.posicion().x();
+    const float y = _pelota.posicion().y();
 
-    if (p.y() > (unsigned int) (_M/2)) {
-        return distancia(p, Posicion(xArco, (unsigned int) (_M/2+1)));
-    } else if (p.y() == _M/2) {
-        return abs(int(p.x()) - int(xArco));
+    if (y > (unsigned int) (_M/2)) {
+        return distancia(x, y, xArco, _M/2+1);
+    } else if (y == _M/2) {
+        return abs(x - xArco);
     } else {
-        return distancia(p, Posicion(xArco, (unsigned int) (_M/2-1)));
+        return distancia(x, y, xArco, _M/2-1);
     }
 }
 
 unsigned int Tablero::cercaniaARival(const Jugador &j) const {
-    // si es el izquierdo, chequear con 3, 4, 5
-    // si es el derecho, chequear con 0, 1, 2
+    const float x = j.pos().x();
+    const float y = j.pos().y();
+    vector<Jugador> rivales = (j.id() < _jugadoresI.size()) ?
+        _jugadoresD : _jugadoresI;
 
+    unsigned int min = distancia(x, y,
+                                 rivales[0].pos().x(), rivales[0].pos().y());
     // Por cada rival contrario, ver la distancia con el rival
+    for (size_t i = 1; i < rivales.size(); i++) {
+        unsigned int dist = distancia(x, y,
+                                      rivales[i].pos().x(), rivales[i].pos().y());
 
-    // for ()
+        if (dist < min) {
+            min = dist;
+        }
+    }
 
-    return -1;
+    return min;
 }
 
-unsigned int Tablero::areaCubierta(const bool enDerecha) const {
-    return -1;
+float Tablero::areaCubierta(const bool enDerecha) const {
+    vector<Jugador> js = (enDerecha) ? _jugadoresD : _jugadoresI;
+
+    const float b = distancia(js[0].pos().x(), js[0].pos().y(),
+                                        js[1].pos().x(), js[1].pos().y());
+
+    const float h = altura(js[0].pos(), js[1].pos(), js[2].pos());
+
+    return (b*h)/2;
 }
 
 int Tablero::puntaje(bool enDerecha) const {return -1;}

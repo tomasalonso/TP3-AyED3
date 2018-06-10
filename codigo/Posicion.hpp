@@ -17,6 +17,8 @@ private:
     unsigned int _y;
 };
 
-float distancia(const Posicion &p1, const Posicion &p2);
+float distancia(const float x1, const float y1, const float x2, const float y2);
+
+float altura(const Posicion &a, const Posicion &b, const Posicion &c);
 
 #endif
