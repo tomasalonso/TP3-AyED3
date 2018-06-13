@@ -22,6 +22,12 @@ void Jugador::mover(const Movimiento &m) {
     _siguiente.mover(m);
 }
 
+void Jugador::moverAlCentro(int n, int m) {
+    int medio_x = n/2;  // n es par por precondicion
+    int medio_y = m/2+1;// m es impar, asi que la celda del centro es mitad redondeada para arriba
+    _actual = Posicion(medio_x, medio_y);
+}
+
 void Jugador::actualizar() {
     _actual = _siguiente;
 }
