@@ -37,9 +37,9 @@ public:
     vector<vector<Movimiento>> genJugadas1();
 
     // Para entrenador
-    Jugador& jugador(size_t i);
+    const Jugador& jugador(size_t i) const;
     bool en_derecha();
-    void reiniciar();
+    // void reiniciar();
 
 private:
     Genoma _genoma;

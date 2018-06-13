@@ -11,22 +11,20 @@ Equipo::Equipo(Genoma genoma, const vector<Jugador> jugadores,
     _en_derecha = enDerecha;
  }
 
-// Jugador& Equipo::jugador(size_t i) {
-//     assert(i < 6);
-    // if(i/3) {
-    //     return _tablero._jugadoresD[i%3];
-    // }
-    // return _tablero._jugadoresI[i%3];
-// }
+const Jugador& Equipo::jugador(size_t i) const {
+    assert(i < 6);
+    if(i/3) {
+        return _tablero.verJugadores(false)[i%3];
+    }
+
+    return _tablero.verJugadores(true)[i%3];
+}
 
 bool Equipo::en_derecha() {
     return _en_derecha;
 }
 
-// void Equipo::reiniciar() {
-//     for (Jugador& j : _jugadores) {
-//         j.reiniciar();
-//     }
+// void Equipo::reiniciar(bool metiGol) {
 // }
 
 vector<Movimiento> Equipo::turno(vector<Movimiento> movs,

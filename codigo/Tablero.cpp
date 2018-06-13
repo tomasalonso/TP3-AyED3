@@ -1,4 +1,7 @@
 #include "Tablero.hpp"
+#define eqIZQ false
+#define eqDER true
+
 
 Tablero::Tablero(const unsigned int &M, const unsigned int &N,
                  const unsigned int &total) : _M(M), _N(N), _total(total) {
@@ -29,6 +32,25 @@ const vector<Jugador>& Tablero::verJugadores(bool enDerecha) const {
         return _jugadoresD;
     }
     return _jugadoresI;
+}
+
+void Tablero::huboGol(bool goleador) {
+    for (Jugador& j : _jugadoresI) {
+        j.reiniciar();
+    }
+    for (Jugador& j : _jugadoresD) {
+        j.reiniciar();
+    }
+    if (goleador == eqIZQ) {
+        goles_A++;
+        _jugadoresD[0].moverAlCentro(_N, _M);
+        _jugPelota = &_jugadoresD[0];
+    } else {
+        goles_B++;
+        _jugadoresI[0].moverAlCentro(_N, _M);
+        _jugPelota = &_jugadoresI[0];
+    }
+    _pelota.moverAlCentro(_N, _M);
 }
 
 void Tablero::tomarJugadas(bool enDerecha) {
