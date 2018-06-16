@@ -156,25 +156,36 @@ int Equipo::evaluarTablero(vector<Movimiento> posiblesMovs) { // evalua tablero 
 }
 
 bool Equipo::esJugadaValida(vector<Movimiento> posiblesMovs) { // evalua tablero dado posible combinacion de movs
-    // me hago copia del equipo para modificarlos
+    // me hago copia del equipo para modificarlos y ver como quedan las posiciones
     vector<Jugador> equipo = _tablero.verJugadores(_en_derecha);
     vector<Posicion> nuevasPos(3, Posicion(-1,-1));
+    int n = _tablero.N();
+    int m = _tablero.M();
 
-
-
-// TO_DO: contemplar posición dentro del arco
-
-
-
-    for (int i = 0; i < 3; i++) {
+   for (int i = 0; i < 3; i++) {
         Movimiento& movActual = posiblesMovs[i];
         int pos_x;
         int pos_y;
-        int n = _tablero.N();
-        int m = _tablero.M();
 
-        // si tira la pelota tengo que chequear parámetros
-        if (!movActual.moverse) {
+        if (movActual.moverse) {
+
+            // se mueve el jugador con o sin pelota
+            equipo[i].mover(movActual);
+            equipo[i].actualizar();     // les pongo la nueva dirección
+
+            pos_x = equipo[i].pos().x();
+            pos_y = equipo[i].pos().y();
+
+            if(_tablero.pelotaEnPosesion() &&   // si alguien tiene la pelota
+               _tablero.jugadorPelota().id() != equipo[i].id() && // y no soy yo
+               enArco(n,m,equipo[i].pos())) {               // y entré al arco como une gile
+                return false;
+            }
+
+        } else {
+
+            // si tira la pelota tengo que chequear parámetros
+
             Posicion pelota = _tablero.posPelota();
 
             // restricción del enunciado
@@ -190,28 +201,13 @@ bool Equipo::esJugadaValida(vector<Movimiento> posiblesMovs) { // evalua tablero
             // coloco resultados en esas variables, voy a chequearlo mas abajo
             pos_x = pelota.x();
             pos_y = pelota.y();
-
-        } else {
-
-            // se mueve el jugador con o sin pelota
-            equipo[i].mover(movActual);
-            equipo[i].actualizar();     // les pongo la nueva dirección
-
-            pos_x = equipo[i].pos().x();
-            pos_y = equipo[i].pos().y();
-
-            if(_tablero.pelotaEnPosesion() &&   // si alguien tiene la pelota
-               _tablero.jugadorPelota().id() != equipo[i].id() && // y no soy yo
-               enArco(n,m,equipo[i].pos())) {               // y entré al arco como une gile
-                return false;
-            }
-
         }
 
 
         // chequeo que la posicion final de la pelota/jugadore sea válida
-        if ( !(0 <= pos_x && pos_x < n &&
-                 0 <= pos_x && pos_y < m)) { // se va de cancha
+        // se va de cancha y no está en el arco
+        if ( !(0 <= pos_x && pos_x < n && 0 <= pos_x && pos_y < m) &&
+                                !enArco(n, m, Posicion(pos_x, pos_y))) {
             return false;
         }
     }
