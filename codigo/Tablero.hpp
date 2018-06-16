@@ -15,8 +15,9 @@ using namespace std;
 
 class Tablero {
 public:
+    // constructor para el árbitro (toma dos equipos)
     Tablero(const unsigned int &M, const unsigned int &N,
-            const unsigned int &total);
+            const unsigned int &total, const <Jugador> eqI, const <Jugador> eqD);
 
     unsigned int N() const;
     unsigned int M() const;

@@ -4,11 +4,23 @@
 
 
 Tablero::Tablero(const unsigned int &M, const unsigned int &N,
-                 const unsigned int &total) : _M(M), _N(N), _total(total) {
-    assert(N%2==0 && N >= 2*M);
-    // equipoI = make_pair(I, 0);
-    // equipoD = make_pair(D, 0);
+                 const unsigned int &total,
+                 const <Jugador> eqI, const <Jugador> eqD)
+                : _M(M), _N(N), _total(total) {
 
+    assert(M%2==1 && N%2==0 && M >= 3 && N >= 2*M);
+
+    _tiempo = 0;
+
+    goles_A = 0;
+    goles_B = 0;
+
+    _jugadoresI = eqI;
+    _jugadoresD = eqD;
+
+    _pelota.moverAlCentro(N, M, eqIZQ); // arranca el izq
+    _jugadoresI[0].moverAlCentro(N, M, eqIZQ); // arranca el izq
+    _jugPelota = &_jugadoresI[0];
 }
 
 unsigned int Tablero::N() const {return _N;}
