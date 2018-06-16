@@ -14,7 +14,10 @@ public:
     Posicion pos() const;
 
     void mover(const Movimiento &m);    // cambia "_siguiente"
-    void moverAlCentro(int n, int m);    // mover al centro de la cancha
+
+    void moverAlCentro(int n, int m, bool enDerecha);    // mover al centro de la cancha.
+    // el bool me dice de qué lado es el equipo y determina el lado del medio
+
     void actualizar();                  // modifica "_actual" al valor de "_siguiente"
     void reiniciar();
 private:

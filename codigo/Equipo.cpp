@@ -223,14 +223,14 @@ bool Equipo::esJugadaValida(vector<Movimiento> posiblesMovs) { // evalua tablero
 bool enArco(int n, int m, const Posicion& pos) {
     vector<Posicion> posDeArco(6,Posicion(-1,-1));
 
-    int mitadArco = (m/2)+1;  // celda del medio, el arco mide tres celdas
+    int mitadArco = (m/2);  // celda del medio, el arco mide tres celdas
 
     posDeArco[0] = Posicion(-1, mitadArco +1);
     posDeArco[1] = Posicion(-1, mitadArco);
     posDeArco[2] = Posicion(-1, mitadArco -1);
-    posDeArco[3] = Posicion(m, mitadArco +1);
-    posDeArco[4] = Posicion(m, mitadArco);
-    posDeArco[5] = Posicion(m, mitadArco -1);
+    posDeArco[3] = Posicion(n, mitadArco +1);
+    posDeArco[4] = Posicion(n, mitadArco);
+    posDeArco[5] = Posicion(n, mitadArco -1);
 
     return 1 == count(posDeArco.begin(), posDeArco.end(), pos);
 }

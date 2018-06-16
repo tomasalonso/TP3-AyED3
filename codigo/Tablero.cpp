@@ -43,14 +43,15 @@ void Tablero::huboGol(bool goleador) {
     }
     if (goleador == eqIZQ) {
         goles_A++;
-        _jugadoresD[0].moverAlCentro(_N, _M);
+        _jugadoresD[0].moverAlCentro(_N, _M, eqDER);
+        _pelota.moverAlCentro(_N, _M, eqDER);
         _jugPelota = &_jugadoresD[0];
     } else {
         goles_B++;
-        _jugadoresI[0].moverAlCentro(_N, _M);
+        _jugadoresI[0].moverAlCentro(_N, _M, eqIZQ);
         _jugPelota = &_jugadoresI[0];
+        _pelota.moverAlCentro(_N, _M, eqIZQ);
     }
-    _pelota.moverAlCentro(_N, _M);
 }
 
 void Tablero::tomarJugadas(bool enDerecha) {
