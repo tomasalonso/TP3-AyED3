@@ -58,8 +58,8 @@ vector<vector<Movimiento>> Equipo::genJugadas1() {  // Prueba TODAS las jugadas
 
     vector<vector<Movimiento>> jugadas;
 
-    int filas = _tablero.M();   // esto no lo puedo acceder
-    int totalDirs = 10;
+    int filas = _tablero.M();
+    int totalDirs = 9;
 
     // Por cada jugada jugador 1
     for (int i = 0; i < totalDirs; ++i) {
@@ -69,6 +69,7 @@ vector<vector<Movimiento>> Equipo::genJugadas1() {  // Prueba TODAS las jugadas
 
             // Por cada jugada jugador 3
             for (int k = 0; k < totalDirs; ++k) {
+
                 // Todos se mueven
                 vector<Movimiento> jugada = { Movimiento((Direccion)i),
                                               Movimiento((Direccion)j),
@@ -79,16 +80,25 @@ vector<vector<Movimiento>> Equipo::genJugadas1() {  // Prueba TODAS las jugadas
                 }
 
                 // Si alguno tiene la pelota, considero los posibles pases
-                if(_tablero.pelotaEnPosesion() && k > 0) {
+                if(_tablero.pelotaEnPosesion()) {
 
                     int idJugadorPelota = (int)(_tablero.jugadorPelota()).id();
                     if(idJugadorPelota < 4) {   // es de mi equipo
 
-                        // Por cada posible intensidad
-                        for (int inten = 0; inten < filas/2; ++inten) {
-                            jugada[idJugadorPelota] = Movimiento((Direccion)k,inten);
-                            if(esJugadaValida(jugada)) {
-                                jugadas.push_back(jugada);
+                        // Por cada posible direccion
+                        for (int dir = 1; dir < 9; ++dir) {
+
+                            // Pongo esto para no probar más intensidades de las necesarias en una misma dirección
+                            bool intensidadTope = false;
+                            // Por cada posible intensidad
+                            for (int inten = 0; inten < filas/2 && !intensidadTope ; ++inten) {
+
+                                jugada[idJugadorPelota] = Movimiento((Direccion)dir, inten);
+                                if(esJugadaValida(jugada)) {
+                                    jugadas.push_back(jugada);
+                                } else {
+                                    intensidadTope = true;
+                                }
                             }
                         }
                     }
