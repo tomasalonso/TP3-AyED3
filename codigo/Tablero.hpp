@@ -29,11 +29,7 @@ public:
     void actualizar(vector<Movimiento> movs, bool enDerecha); // va a tener que saber si hubo gol
     void mover();
 
-    // ALGUNO DE ESTOS DOS:
-    // void reiniciar(bool enDerecha);
-    // O ESTE
     void huboGol(bool goleador); // el bool me dice quién hizo gol;
-    //
 
     void tomarJugadas(bool enDerecha);      // toma movimientos y llama a actualizar
 

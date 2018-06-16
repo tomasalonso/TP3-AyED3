@@ -25,7 +25,7 @@ public:
 
     // Para el equipo
     vector<Movimiento> turno(vector<Movimiento> movs, // actualiza tablero, prueba jugadas y devuelve la mejor
-                             function<vector<vector<Movimiento>> (void) > generarPosiblesJugadas );
+                             function<vector<vector<Movimiento> > (void) > generarPosiblesJugadas );
 
     void imprimirMovs (vector<Movimiento>& movs);
 
@@ -34,7 +34,7 @@ public:
     int evaluarTablero(vector<Movimiento> posiblesMovs); // evalua tablero dado posible combinacion de movs
 
     // Posibles jugadas para evaluar
-    vector<vector<Movimiento>> genJugadas1();
+    vector<vector<Movimiento> > genJugadas1();
 
     // Para entrenador
     const Jugador& jugador(size_t i) const;

@@ -72,8 +72,8 @@ void Tablero::tomarJugadas(bool enDerecha) {
 }
 
 void Tablero::imprimirEstado(bool paraEquipoDer) {
-    const vector<Jugador>& eqIzq = verJugadores(false);;
-    const vector<Jugador>& eqDer = verJugadores(true);;
+    const vector<Jugador>& eqIzq = verJugadores(false);
+    const vector<Jugador>& eqDer = verJugadores(true);
     vector<pair<Posicion,unsigned int> > jugadores;
 
     int i = 0;
