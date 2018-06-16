@@ -27,8 +27,6 @@ public:
     vector<Movimiento> turno(vector<Movimiento> movs, // actualiza tablero, prueba jugadas y devuelve la mejor
                              function<vector<vector<Movimiento> > (void) > generarPosiblesJugadas );
 
-    void imprimirMovs (vector<Movimiento>& movs);
-
     bool esJugadaValida(vector<Movimiento> posiblesMovs);
 
     int evaluarTablero(vector<Movimiento> posiblesMovs); // evalua tablero dado posible combinacion de movs
@@ -41,6 +39,12 @@ public:
     bool en_derecha();
     // void reiniciar();
 
+    // COMUNICACION CON ARBITRO
+    //-- Toma estado --
+    vector<tuple<int, int, int, string> > leerEstadoArbitro(iostream in);
+
+    //-- Imprime su jugada --
+    void imprimirMovs (vector<Movimiento>& movs);
 private:
     Genoma _genoma;
     bool _en_derecha;

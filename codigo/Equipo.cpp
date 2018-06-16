@@ -135,10 +135,12 @@ int Equipo::evaluarTablero(vector<Movimiento> posiblesMovs) { // evalua tablero 
     // }
     mediciones[3] = _tablero.distPelotaArco(_en_derecha);
     int pose = 0;
+
     // cercanía rival cambia si tengo o no la pelota
+    // Si tengo la pelota
     if(_tablero.pelotaEnPosesion() &&
                         ((!_en_derecha && _tablero.jugadorPelota().id() < 3) ||
-                         (_en_derecha && _tablero.jugadorPelota().id() >= 3)    )) {  // Tengo la pelota
+                         (_en_derecha && _tablero.jugadorPelota().id() >= 3)    )) {
         pose = _genoma.size()/2;
         // mediciones[4] = cercaniaARival(Jugador&, true);
     } else {
@@ -240,3 +242,22 @@ bool enArco(int n, int m, const Posicion& pos) {
 
     return 1 == count(posDeArco.begin(), posDeArco.end(), pos);
 }
+
+
+vector<tuple<int, int, int, string> > leerEstadoArbitro(iostream& in) {
+    vector<tuple<int, int, int, string> > estados (6);
+    bool leerPelota = true;
+    int id, fila, col;
+    string posesion;
+    for (int i = 0; i < 6; ++i) {
+
+        in >> id >> fila >> col >> posesion;
+
+        leerPelota = leerPelota && (posesion == "SIN_PELOTA");
+    }
+    if (leerPelota) {
+        in >> fila >> col;
+        estados[i] = {-1, fila, col, "pelota"};
+    }
+}
+
