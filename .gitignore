@@ -3,6 +3,9 @@ codigo/tp3
 
 ## Elizondo ##
 elizondo/*.pyc
+elizondo/static_player
+elizondo/log/*
+
 
 
 ## C++ ##
