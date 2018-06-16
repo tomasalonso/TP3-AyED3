@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from subprocess import Popen, PIPE
-from constants import SIDE, IN_POSETION, FREE_PLAYER, EXIT, MOVIMIENTO
+from constants import *
 import os
-
 
 def parse_positions(positions):
     parsed_positions = {}
@@ -10,12 +9,10 @@ def parse_positions(positions):
 
     i = 0
     while i < len(positions):
-        parsed_positions[int(positions[i])] = (int(positions[i + 1]),
-                                               int(positions[i + 2]))
+        parsed_positions[int(positions[i])] = (int(positions[i+1]), int(positions[i+2]))
         i += 3
 
     return parsed_positions
-
 
 def parseMove(move):
     parsed_moves = {}
@@ -23,48 +20,48 @@ def parseMove(move):
     i = 0
     while i < len(moves):
         player_id = int(moves[i])
-        move_type = moves[i + 1]
+        move_type = moves[i+1]
         i += 2
         if move_type == MOVIMIENTO:
             val = int(moves[i])
             i += 1
         else:
-            val = (int(moves[i]), int(moves[i + 1]))
+            val = (int(moves[i]), int(moves[i+1]))
             i += 2
         parsed_moves[player_id] = {'move_type': move_type, 'value': val}
     return parsed_moves
 
-
 class PlayerCommunicator:
+
     def __init__(self, player_executable, params, team, oponent_team):
         self.team = team
         self.oponent_team = oponent_team
-        self.player_process = Popen(
-            [player_executable] + params, shell=False, stdout=PIPE, stdin=PIPE)
+        self.player_process = Popen([player_executable] + params, shell=False, stdout=PIPE, stdin=PIPE)
         self.players = None
 
         if not os.path.isdir('log'):
             os.mkdir('log')
-        self.log_file = open('log/player_communicator_' + self.team + '.log',
-                             'a')
+        self.log_file = open('log/player_communicator_' + self.team + '.log', 'a')
 
-    def startGame(self, columns, rows, steps, players, oponent_players):
-
+    def startGame(self, columns, rows, steps, side, players, oponent_players):
+        
         assert len(players) == len(oponent_players)
 
         self.log('\n/*************** Nueva partida *****************/' +
-                 '\ncolumnas: ' + str(columns) + '\nfilas: ' + str(rows) +
-                 '\nduración en movimientos: ' + str(steps) + '\nequipo: ' +
-                 str(self.team) + '\nequipo del oponente: ' + str(
-                     self.oponent_team) +
+                 '\ncolumnas: ' + str(columns) +
+                 '\nfilas: ' + str(rows) +
+                 '\nduración en movimientos: ' + str(steps) +
+                 '\nequipo: ' + str(self.team) +
+                 '\nequipo del oponente: ' + str(self.oponent_team) +
                  '\n/**********************************************/')
+        
 
         self.sendArray([columns, rows, steps])
-        self.send(SIDE[self.team])
-
+        self.send(side)
+        
         for player in players:
             self.sendArray(player)
-
+        
         for player in oponent_players:
             self.sendArray(player)
 
