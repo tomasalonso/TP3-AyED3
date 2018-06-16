@@ -1,6 +1,10 @@
 ## TP3 ##
 codigo/tp3
 
+## Elizondo ##
+elizondo/*.pyc
+
+
 ## C++ ##
 # Prerequisites
 *.d
