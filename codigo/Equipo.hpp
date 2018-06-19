@@ -18,7 +18,8 @@ bool enArco(int n, int m, const Posicion& pos);
 
 class Equipo {
 public:
-    Equipo(Genoma genoma, const vector<Jugador> jugadores,
+    Equipo(Genoma genoma, const vector<Jugador> misJugadores,
+            const vector<Jugador> otrosJugadores,
             const unsigned int &M, const unsigned int &N,
             const unsigned int &total, bool enDerecha);
     // Equipo(const vector<Jugador> jugadores);

@@ -14,13 +14,13 @@ void Pelota::mover(const Movimiento &movimiento, const unsigned int tiempo) {
 }
 
 void Pelota::moverAlCentro(int x, int y, bool enDerecha){    // la pongo en el centro, quieta
-    int medio_x = n/2;  // n es par por precondicion
+    int medio_x = x/2;  // n es par por precondicion
     if (!enDerecha) {      // arranca del lado izquierdo
         medio_x--;
     }
-
-    int medio_y = m/2;// m es impar, asi que la celda del centro es mitad redondeada para abajo
-    _actual = Posicion(medio_x, medio_y);
+    
+    int medio_y = y/2;// m es impar, asi que la celda del centro es mitad redondeada para abajo
+    _posicion = Posicion(medio_x, medio_y);
     _tiempo = 0;
     _movimiento = QUIETO;
 }

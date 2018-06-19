@@ -3,10 +3,11 @@
 #include <cassert>
 
 
-Equipo::Equipo(Genoma genoma, const vector<Jugador> jugadores,
+Equipo::Equipo(Genoma genoma, const vector<Jugador> misJugadores,
+                const vector<Jugador> otrosJugadores,
                 const unsigned int &M, const unsigned int &N,
                 const unsigned int &total, bool enDerecha)
- : _tablero(M,N,total) {
+ : _tablero(M,N,total, misJugadores, otrosJugadores) {
     _genoma = genoma;
     _en_derecha = enDerecha;
  }
@@ -35,9 +36,12 @@ vector<Movimiento> Equipo::turno(vector<Movimiento> movs,
     // (asumimos que el oponente se queda quieto)
     vector<vector<Movimiento>> jugadas = generarPosiblesJugadas();
     // @TO-DO: algo que pruebe menos jugadas de manera inteligente
-
-    for (auto &j : jugadas) {       // Devuelve todas válidas
-        if (evaluarTablero(j)) {
+    int puntajeMejor = -1;
+    int puntajeActual;
+    for (auto &j : jugadas) {  // Devuelve todas válidas
+        puntajeActual = evaluarTablero(j);
+        if(puntajeActual > puntajeMejor) {
+            puntajeMejor = puntajeActual;
             mejorJugada = j;
         }
     }
@@ -252,12 +256,13 @@ vector<tuple<int, int, int, string> > leerEstadoArbitro(iostream& in) {
     for (int i = 0; i < 6; ++i) {
 
         in >> id >> fila >> col >> posesion;
+        estados[i] = make_tuple(id, fila, col, posesion);
 
         leerPelota = leerPelota && (posesion == "SIN_PELOTA");
     }
     if (leerPelota) {
         in >> fila >> col;
-        estados[i] = {-1, fila, col, "pelota"};
+        estados[6] = make_tuple(-1, fila, col, "pelota");
     }
 }
 

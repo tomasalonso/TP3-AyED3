@@ -20,6 +20,7 @@ public:
 
     void actualizar();                  // modifica "_actual" al valor de "_siguiente"
     void reiniciar();
+    
 private:
     const unsigned int _id;
     unsigned int _probabilidad_quite;

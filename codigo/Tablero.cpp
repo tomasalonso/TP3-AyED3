@@ -3,9 +3,11 @@
 #define eqDER true
 
 
+using namespace std;
+
 Tablero::Tablero(const unsigned int &M, const unsigned int &N,
                  const unsigned int &total,
-                 const <Jugador> eqI, const <Jugador> eqD)
+                 const vector<Jugador> eqI, const vector<Jugador> eqD)
                 : _M(M), _N(N), _total(total) {
 
     assert(M%2==1 && N%2==0 && M >= 3 && N >= 2*M);
@@ -15,8 +17,8 @@ Tablero::Tablero(const unsigned int &M, const unsigned int &N,
     goles_A = 0;
     goles_B = 0;
 
-    _jugadoresI = eqI;
-    _jugadoresD = eqD;
+    _jugadoresI = vector<Jugador>(eqI);
+    _jugadoresD = vector<Jugador>(eqD);
 
     _pelota.moverAlCentro(N, M, eqIZQ); // arranca el izq
     _jugadoresI[0].moverAlCentro(N, M, eqIZQ); // arranca el izq
@@ -151,7 +153,7 @@ vector<unsigned int> Tablero::distJugadorAlArco(const bool enDerecha) const {
         if (y > _M/2) {
             dist.push_back(distancia(x, y, xArco, _M/2+1));
         } else if (y == _M/2) {
-            dist.push_back(abs(x - xArco));
+            dist.push_back(abs(int(x - xArco)));
         } else {
             dist.push_back(distancia(x, y, xArco, _M/2-1));
         }
@@ -168,7 +170,8 @@ unsigned int Tablero::distPelotaArco(const bool enDerecha) const {
     if (y > (unsigned int) (_M/2)) {
         return distancia(x, y, xArco, _M/2+1);
     } else if (y == _M/2) {
-        return abs(x - xArco);
+        int res = abs(int(x - xArco));
+        return res;
     } else {
         return distancia(x, y, xArco, _M/2-1);
     }

@@ -1,4 +1,4 @@
-#ifndef __TABLERO__
+ #ifndef __TABLERO__
 #define __TABLERO__
 
 
@@ -17,7 +17,7 @@ class Tablero {
 public:
     // constructor para el árbitro (toma dos equipos)
     Tablero(const unsigned int &M, const unsigned int &N,
-            const unsigned int &total, const <Jugador> eqI, const <Jugador> eqD);
+            const unsigned int &total, const vector<Jugador> eqI, const vector<Jugador> eqD);
 
     unsigned int N() const;
     unsigned int M() const;
@@ -27,12 +27,12 @@ public:
     Posicion posPelota() const;
     const vector<Jugador>& verJugadores(bool enDerecha) const;
 
-    void actualizar(vector<Movimiento> movs, bool enDerecha); // va a tener que saber si hubo gol
+    void actualizar(vector<Movimiento> movs, bool enDerecha); //va a tener que saber si hubo gol
     void mover();
 
     void huboGol(bool goleador); // el bool me dice quién hizo gol;
 
-    void tomarJugadas(bool enDerecha);      // toma movimientos y llama a actualizar
+    void tomarJugadas(bool enDerecha); // toma movimientos y llama a actualizar
 
     int puntaje(bool enDerecha) const;
 
