@@ -264,5 +264,5 @@ vector<tuple<int, int, int, string> > leerEstadoArbitro(iostream& in) {
         in >> fila >> col;
         estados[6] = make_tuple(-1, fila, col, "pelota");
     }
+    return estados;
 }
-
