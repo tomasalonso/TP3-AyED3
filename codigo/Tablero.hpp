@@ -28,6 +28,8 @@ public:
     const vector<Jugador>& verJugadores(bool enDerecha) const;
 
     void actualizar(vector<Movimiento> movs, bool enDerecha); //va a tener que saber si hubo gol
+    void actualizar(vector<Posicion> pos, bool enDerecha); //va a tener que saber si hubo gol
+
     void mover();
 
     void huboGol(bool goleador); // el bool me dice quién hizo gol;

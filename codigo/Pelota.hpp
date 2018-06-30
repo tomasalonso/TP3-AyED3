@@ -12,6 +12,7 @@ public:
     void moverAlCentro(int x, int y, bool enDerecha);    // la pongo en el centro, quieta
     void actualizar1();
     void actualizar2();
+    void actualizar(Posicion pose);
 private:
     Posicion _posicion;
     unsigned int _tiempo;

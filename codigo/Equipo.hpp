@@ -46,6 +46,11 @@ public:
 
     //-- Imprime su jugada --
     void imprimirMovs (vector<Movimiento>& movs);
+
+    friend std::ostream& operator<<(std::ostream& out, const Equipo &e);
+    friend std::istream& operator>>(std::istream& in, const Equipo &e);
+
+
 private:
     Genoma _genoma;
     bool _en_derecha;

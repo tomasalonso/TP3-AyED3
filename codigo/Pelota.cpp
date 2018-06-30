@@ -25,6 +25,10 @@ void Pelota::moverAlCentro(int x, int y, bool enDerecha){    // la pongo en el c
     _movimiento = QUIETO;
 }
 
+void Pelota::actualizar(Posicion &pose) {
+    _posicion = pose;
+}
+
 void Pelota::actualizar1() {
     if (_tiempo > 0) {
         _posicion.mover(_movimiento);

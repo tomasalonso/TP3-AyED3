@@ -23,6 +23,10 @@ public:
   bool quiteSuelta(Jugador izq, Jugador der);
   bool quitePoseida(Jugador sacador, Jugador posesor);
 
+  friend std::ostream& operator<<(std::ostream& out, const Arbitro &a);
+  friend std::istream& operator>>(std::istream& in, const Arbitro &a);
+
+
 private:
 	int _tiempo; //sobran?
 	int _total;

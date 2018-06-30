@@ -137,6 +137,10 @@ void Tablero::imprimirEstado(bool paraEquipoDer) {
 
 void Tablero::actualizar(vector<Movimiento> movs, bool enDerecha) {
     // logica del tablero
+    /*
+    e._t._jugPelota = (i < 3) ? &e._t._jugadoresI[i] : &e._t._jugadoresD[i];
+    e._t._pelota.pos(e._)
+    */
 }
 
 
