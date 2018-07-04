@@ -1,17 +1,19 @@
 #ifndef __JUGADOR__
 #define __JUGADOR__
 
-
 #include "Posicion.hpp"
+#include "Pelota.hpp"
 
 
 class Jugador {
 public:
     Jugador(const unsigned int &id, const Posicion &inicial,
-            const unsigned int &prob_quite);
+            const double &prob_quite);
     unsigned int id() const;
-    unsigned int probabilidad() const;
-    Posicion pos() const;
+    double probabilidad() const;
+
+    Posicion actual() const;
+    Posicion siguiente() const;
 
     void mover(const Movimiento &m);    // cambia "_siguiente"
 
@@ -19,12 +21,13 @@ public:
     // el bool me dice de qué lado es el equipo y determina el lado del medio
 
     void actualizar();                  // modifica "_actual" al valor de "_siguiente"
-    void reiniciar();
-    
+    void reiniciar();                   // vuelve a _inicial
+
 private:
     const unsigned int _id;
-    unsigned int _probabilidad_quite;
-    Posicion _inicial;
+    const double _probabilidad_quite;
+
+    const Posicion _inicial;
     Posicion _actual;
     Posicion _siguiente;
 };

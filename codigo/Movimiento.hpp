@@ -1,6 +1,8 @@
 #ifndef __MOVIMIENTO__
 #define __MOVIMIENTO__
+
 #include <cassert>
+#include <iostream>
 
 enum Direccion {
     QUIETO = 0,
@@ -14,15 +16,50 @@ enum Direccion {
     ABAJO_DERECHA = 5
 };
 
-struct Movimiento {
-    Movimiento(Direccion d) : moverse(1), dir(d), intensidad(-1) {};
-    Movimiento(Direccion d, int i) : moverse(0), dir(d), intensidad(i) {
+class Movimiento {
+public:
+    Movimiento() : _dir(QUIETO) {};
+    Movimiento(Direccion d) : _dir(d), _intensidad(0) {};
+    Movimiento(Direccion d, unsigned int i) : _dir(d), _intensidad(i) {
         assert(d != QUIETO);
     }
 
-    bool moverse;   // 0-> movimiento, 1-> tirar
-    Direccion dir;
-    int intensidad;
+    bool esPase() const {
+        return (_intensidad > 0);
+    }
+
+    Direccion dir() const {
+        return _dir;
+    }
+
+    void avanzar() {
+        if (_intensidad > 0) {
+            _intensidad--;
+        } else {
+            _dir = QUIETO;
+        }
+    }
+
+private:
+    Direccion _dir;
+    unsigned int _intensidad;
 };
+
+
+// std::ostream& operator<<(std::ostream& out, const Direccion &d) {
+//     out << (unsigned int) d;
+
+//     return out;
+// }
+
+// std::istream& operator>>(std::istream& in, Direccion &d) {
+//     unsigned int e;
+
+//     in >> e;
+
+//     d = static_cast<Direccion>(e);
+
+//     return in;
+// }
 
 #endif

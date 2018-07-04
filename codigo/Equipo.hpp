@@ -13,48 +13,37 @@ class Tablero;
 using namespace std;
 
 
-typedef vector<int> Genoma ;
+typedef vector<int> Genoma;
 bool enArco(int n, int m, const Posicion& pos);
 
 class Equipo {
 public:
-    Equipo(Genoma genoma, const vector<Jugador> misJugadores,
-            const vector<Jugador> otrosJugadores,
-            const unsigned int &M, const unsigned int &N,
-            const unsigned int &total, bool enDerecha);
-    // Equipo(const vector<Jugador> jugadores);
+    Equipo(Genoma genoma, bool enDerecha);
 
-    // Para el equipo
-    vector<Movimiento> turno(vector<Movimiento> movs, // actualiza tablero, prueba jugadas y devuelve la mejor
-                             function<vector<vector<Movimiento> > (void) > generarPosiblesJugadas );
-
-    bool esJugadaValida(vector<Movimiento> posiblesMovs);
-
-    int evaluarTablero(vector<Movimiento> posiblesMovs); // evalua tablero dado posible combinacion de movs
+    // Prueba jugadas y devuelve la mejor
+    vector<Movimiento> turno(Tablero &t, const vector<vector<Movimiento>> &jugadas);
 
     // Posibles jugadas para evaluar
     vector<vector<Movimiento> > genJugadas1();
 
     // Para entrenador
     const Jugador& jugador(size_t i) const;
-    bool en_derecha();
+    bool enDerecha();
     // void reiniciar();
 
     // COMUNICACION CON ARBITRO
     //-- Toma estado --
-    vector<tuple<int, int, int, string> > leerEstadoArbitro(iostream in);
+    // vector<tuple<int, int, int, string> > leerEstadoArbitro(iostream in);
 
     //-- Imprime su jugada --
-    void imprimirMovs (vector<Movimiento>& movs);
+    // void imprimirMovs (vector<Movimiento>& movs);
 
     friend std::ostream& operator<<(std::ostream& out, const Equipo &e);
     friend std::istream& operator>>(std::istream& in, const Equipo &e);
 
-
 private:
     Genoma _genoma;
-    bool _en_derecha;
-    Tablero _tablero;
+    bool _enDerecha;
 };
 
 #endif

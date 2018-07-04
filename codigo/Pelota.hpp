@@ -2,21 +2,32 @@
 #define __PELOTA__
 
 #include "Posicion.hpp"
+#include "Movimiento.hpp"
 
 
 class Pelota {
 public:
-    Pelota();
-    Posicion posicion() const;
-    void mover(const Movimiento &movimiento, const unsigned int tiempo);
-    void moverAlCentro(int x, int y, bool enDerecha);    // la pongo en el centro, quieta
-    void actualizar1();
-    void actualizar2();
-    void actualizar(Posicion pose);
+    Pelota(const unsigned int M, const unsigned int N);
+
+    Posicion actual() const;
+    Posicion siguiente() const;
+
+    void patear(const Movimiento &mov);
+    void mover();
+
+    void actualizar();
+
+    void reiniciarI();    // la pongo en el centro, para el equipo I
+    void reiniciarD();    // la pongo en el centro, para el equipo D
+
 private:
-    Posicion _posicion;
-    unsigned int _tiempo;
-    Movimiento _movimiento;
+    Movimiento _mov;
+
+    Posicion _actual;
+    Posicion _siguiente;
+
+    Posicion _inicialI;
+    Posicion _inicialD;
 };
 
 #endif

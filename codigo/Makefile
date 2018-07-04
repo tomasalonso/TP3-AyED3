@@ -4,7 +4,7 @@ OPTIMIZATIONS= -O2 -march=native
 
 all: tp3
 
-tp3: tp3.o Equipo.o Tablero.o Jugador.o Arbitro.o Pelota.o Posicion.o
+tp3: tp3.o Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o: %.cpp

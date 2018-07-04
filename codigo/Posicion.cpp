@@ -3,6 +3,8 @@
 #include <cmath>
 
 
+Posicion::Posicion() : _x(0), _y(0) {}
+
 Posicion::Posicion(const unsigned int x, const unsigned int y) : _x(x), _y(y) {}
 
 Posicion::Posicion(const Posicion& pos) :  _x(pos._x), _y(pos._y) {}
@@ -19,29 +21,28 @@ bool Posicion::operator==(const Posicion otro) const {
     return _x == otro._x && _y == otro._y;
 }
 
-void Posicion::mover(const Movimiento &movimiento) {
-    if(movimiento.moverse) {
-        switch((int)movimiento.dir) {
-        case QUIETO: break;
-        case ARRIBA:
-            _y++; break;
-        case ABAJO:
-            _y--; break;
-        case IZQUIERDA:
-            _x--; break;
-        case DERECHA:
-            _x++; break;
-        case ARRIBA_IZQUIERDA:
-            _y++; _x--; break;
-        case ARRIBA_DERECHA:
-            _y++; _x++; break;
-        case ABAJO_IZQUIERDA:
-            _y--; _x--; break;
-        case ABAJO_DERECHA:
-            _y--; _x++; break;
-        }
+void Posicion::mover(const Direccion &dir) {
+    switch(dir) {
+    case QUIETO: break;
+    case ARRIBA:
+        _y++; break;
+    case ABAJO:
+        _y--; break;
+    case IZQUIERDA:
+        _x--; break;
+    case DERECHA:
+        _x++; break;
+    case ARRIBA_IZQUIERDA:
+        _y++; _x--; break;
+    case ARRIBA_DERECHA:
+        _y++; _x++; break;
+    case ABAJO_IZQUIERDA:
+        _y--; _x--; break;
+    case ABAJO_DERECHA:
+        _y--; _x++; break;
     }
 }
+
 
 float distancia(const float x1, const float y1, const float x2, const float y2) {
     return sqrt(pow(y1 - y2, 2) + pow(x1 - x2, 2));
