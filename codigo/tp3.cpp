@@ -19,9 +19,9 @@ int main() {
                               Jugador(2, Posicion(3,3), 0.5)
         });
     const vector<Jugador> jD({
-                              Jugador(0, Posicion(1,1), 0.5),
-                              Jugador(1, Posicion(2,2), 0.5),
-                              Jugador(2, Posicion(3,3), 0.5)
+                              Jugador(0, Posicion(6,1), 0.5),
+                              Jugador(1, Posicion(7,2), 0.5),
+                              Jugador(2, Posicion(8,3), 0.5)
         });
 
     const vector<int> gI({5,5});
@@ -37,5 +37,6 @@ int main() {
                            equipoI.turno(tablero, equipoI.genJugadas1()),
                            equipoD.turno(tablero, equipoD.genJugadas1())
                            );
+        tablero.imprimirEstado(true);
     }
 }

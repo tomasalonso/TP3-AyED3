@@ -39,7 +39,7 @@ void Pelota::mover() {
     } else {
         _siguiente = aux;
     }
-    _mov.avanzar();
+    _mov.mover();
 }
 
 void Pelota::actualizar() {

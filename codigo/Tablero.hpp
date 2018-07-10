@@ -48,7 +48,7 @@ public:
 
     // int puntaje(bool enDerecha) const;
 
-    // void imprimirEstado(bool paraEquipoDer); // imprime estado
+    void imprimirEstado(bool paraEquipoDer); // imprime estado
 
     // // Metodos para evaluarTablero
     // vector<unsigned int> distJugadorAlArco(const bool enDerecha) const;

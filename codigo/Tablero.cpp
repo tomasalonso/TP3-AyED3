@@ -17,6 +17,7 @@ Tablero::Tablero(const unsigned int &M, const unsigned int &N,
 
     // arranca el izq
     _jugadoresI[0].moverAlCentro(N, M, eqIZQ);
+    _jugPelota = &_jugadoresI[0];
 }
 
 unsigned int Tablero::N() const {return _N;}
@@ -233,6 +234,29 @@ void Tablero::actualizar(const vector<Movimiento> &movsI,
     actualizar();
 }
 
+void Tablero::imprimirEstado(bool paraEquipoDer) {
+    for (Jugador& j : _jugadoresI) {
+        cout << j.id() << " " << j.siguiente().x() << " " << j.siguiente().y() << " ";
+        if (&j == _jugPelotaSig) {
+            cout << "CON_PELOTA";
+        } else {
+            cout << "SIN_PELOTA";
+        }
+        cout << endl;
+    }
+    for (Jugador& j : _jugadoresD) {
+        cout << j.id() << " " << j.siguiente().x() << " " << j.siguiente().y() << " ";
+        if (&j == _jugPelotaSig) {
+            cout << "CON_PELOTA";
+        } else {
+            cout << "SIN_PELOTA";
+        }
+        cout << endl;
+    }
+    if (_jugPelotaSig == nullptr) {
+        cout << _pelota.siguiente().x() << " " << _pelota.siguiente().y() << endl;
+    }
+}
 
 // TODO
 unsigned int Tablero::puntaje() { // evalua tablero dado posible combinacion de movs

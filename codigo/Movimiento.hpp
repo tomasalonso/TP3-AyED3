@@ -32,7 +32,7 @@ public:
         return _dir;
     }
 
-    void avanzar() {
+    void mover() {
         if (_intensidad > 0) {
             _intensidad--;
         } else {
