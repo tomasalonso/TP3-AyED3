@@ -1,15 +1,14 @@
- #ifndef __TABLERO__
+#ifndef __TABLERO__
 #define __TABLERO__
-
-
-#include "Jugador.hpp"
-#include "Pelota.hpp"
 
 #include <iostream>
 #include <cassert>
 #include <random>
 #include <vector>
 #include <tuple>
+
+#include "Jugador.hpp"
+#include "Pelota.hpp"
 
 using namespace std;
 
@@ -40,6 +39,11 @@ public:
     void actualizar();
     void actualizar(const vector<Movimiento> &movsI,
                     const vector<Movimiento> &movsD);
+    
+    void actualizar(vector<Posicion> &posA,
+            vector<Posicion> &posB, bool &enPos,
+            enum Direccion &posesor, Posicion &posPelota,
+            unsigned int &jPelota);
 
 
     bool jugadaValida();
@@ -48,8 +52,9 @@ public:
 
     // int puntaje(bool enDerecha) const;
 
-    void imprimirEstado(bool paraEquipoDer); // imprime estado
-
+    // Imprime estado, primero izquierda, despues derecha
+	friend std::ostream& operator<<(std::ostream& out, const Tablero &t);
+    
     // // Metodos para evaluarTablero
     // vector<unsigned int> distJugadorAlArco(const bool enDerecha) const;
     // unsigned int distPelotaArco(const bool enDerecha) const;

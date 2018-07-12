@@ -2,7 +2,10 @@
 #define __MOVIMIENTO__
 
 #include <cassert>
-#include <iostream>
+#include <ostream>
+#include <vector>
+
+using namespace std;
 
 enum Direccion {
     QUIETO = 0,
@@ -40,26 +43,14 @@ public:
         }
     }
 
+    friend std::ostream& operator<<(std::ostream& out, const Movimiento &m);
+
 private:
     Direccion _dir;
     unsigned int _intensidad;
 };
 
+std::ostream& operator<<(std::ostream& out, const vector<Movimiento> &ms);
 
-// std::ostream& operator<<(std::ostream& out, const Direccion &d) {
-//     out << (unsigned int) d;
-
-//     return out;
-// }
-
-// std::istream& operator>>(std::istream& in, Direccion &d) {
-//     unsigned int e;
-
-//     in >> e;
-
-//     d = static_cast<Direccion>(e);
-
-//     return in;
-// }
 
 #endif

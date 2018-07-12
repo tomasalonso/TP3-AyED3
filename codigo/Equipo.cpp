@@ -135,35 +135,3 @@ vector<vector<Movimiento>> Equipo::genJugadas1() {  // Prueba TODAS las jugadas
 //         i++;
 //     }
 // }
-
-// std::istream& operator>>(std::istream& in, const Equipo &e) {
-//     vector<Posicion> poss;
-//     unsigned int id_posesor;
-//     bool poseida = false;
-
-//     for (int i = 0; i < 6; i++) {
-//         in >> id >> fila >> col >> posesion;
-
-//         poss.push_back(Posicion(fila, col));
-//         if (poseida == false && strcmp(posesion, "CON_PELOTA")) {
-//             poseida = true;
-//             id_posesor = id;
-//         }
-//     }
-
-//     if (!poseida) {
-//         in >> fila >> col;
-//         poss.push_back(Posicion(fila, col));
-//         e._t.actualizar(poss, e,);
-//     } else {
-//         e._t.actualizar(poss, );
-//     }
-//     in >> movs;
-//     // Recibe movimientos del arbitro
-//     vector<tuple<int, int, int, string> > estados (6);
-//     bool leerPelota = true;
-//     int id, fila, col;
-//     string posesion;
-    
-// }
-

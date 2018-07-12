@@ -43,6 +43,20 @@ void Posicion::mover(const Direccion &dir) {
     }
 }
 
+std::istream& operator>>(std::istream& in, Posicion& p) {
+    in >> p._x;
+    in >> p._y;
+
+    return in;
+}
+
+
+std::ostream& operator<<(std::ostream& out, const Posicion& p) {
+    out << p._x << " " << p._y;
+
+    return out;
+}    
+
 
 float distancia(const float x1, const float y1, const float x2, const float y2) {
     return sqrt(pow(y1 - y2, 2) + pow(x1 - x2, 2));

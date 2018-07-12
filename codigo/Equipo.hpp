@@ -5,16 +5,13 @@
 #include <functional>
 #include <algorithm>
 
+#include "Movimiento.hpp"
 #include "Tablero.hpp"
-
-class Jugador;
-class Tablero;
 
 using namespace std;
 
 
 typedef vector<int> Genoma;
-bool enArco(int n, int m, const Posicion& pos);
 
 class Equipo {
 public:
@@ -37,9 +34,6 @@ public:
 
     //-- Imprime su jugada --
     // void imprimirMovs (vector<Movimiento>& movs);
-
-    friend std::ostream& operator<<(std::ostream& out, const Equipo &e);
-    friend std::istream& operator>>(std::istream& in, const Equipo &e);
 
 private:
     Genoma _genoma;

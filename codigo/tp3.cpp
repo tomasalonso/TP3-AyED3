@@ -2,10 +2,10 @@
 #include <sstream>
 #include <string>
 
+using namespace std;
+
 #include "Equipo.hpp"
 #include "Tablero.hpp"
-
-using namespace std;
 
 
 int main() {
@@ -37,6 +37,8 @@ int main() {
                            equipoI.turno(tablero, equipoI.genJugadas1()),
                            equipoD.turno(tablero, equipoD.genJugadas1())
                            );
-        tablero.imprimirEstado(true);
+        cout << tablero;
     }
+
+    return 0;
 }

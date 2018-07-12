@@ -30,6 +30,7 @@ bool Tablero::terminado() const {
 bool Tablero::pelotaEnPosesion() const {
     return _jugPelota != nullptr;
 }
+
 const Jugador& Tablero::jugadorPelota() const {
     assert(pelotaEnPosesion());
 
@@ -51,7 +52,7 @@ bool Tablero::hayGol() {
     // pre: movimiento valido (la pelota no se va afuera de la cancha)
     return (_pelota.siguiente().x() < 0 || _pelota.siguiente().x() > _N);
 }
-// TODO: moverAlCentro
+
 void Tablero::gol() {
     // pre: hayGol()
     assert(hayGol());
@@ -234,28 +235,37 @@ void Tablero::actualizar(const vector<Movimiento> &movsI,
     actualizar();
 }
 
-void Tablero::imprimirEstado(bool paraEquipoDer) {
-    for (Jugador& j : _jugadoresI) {
-        cout << j.id() << " " << j.siguiente().x() << " " << j.siguiente().y() << " ";
-        if (&j == _jugPelotaSig) {
-            cout << "CON_PELOTA";
+void Tablero::actualizar(vector<Posicion> &posA,
+        vector<Posicion> &posB, bool &enPos,
+        enum Direccion &posesor, Posicion &posPelota,
+        unsigned int &jPelota) {
+
+}
+
+std::ostream& operator<<(std::ostream& out, const Tablero &t) {
+    for (const Jugador& j : t._jugadoresI) {
+        out << j.id() << " " << j.siguiente().x() << " " << j.siguiente().y() << " ";
+        if (&j == t._jugPelotaSig) {
+            out << "CON_PELOTA";
         } else {
-            cout << "SIN_PELOTA";
+            out << "SIN_PELOTA";
         }
         cout << endl;
     }
-    for (Jugador& j : _jugadoresD) {
-        cout << j.id() << " " << j.siguiente().x() << " " << j.siguiente().y() << " ";
-        if (&j == _jugPelotaSig) {
-            cout << "CON_PELOTA";
+    for (const Jugador& j : t._jugadoresD) {
+        out << j.id() << " " << j.siguiente().x() << " " << j.siguiente().y() << " ";
+        if (&j == t._jugPelotaSig) {
+            out << "CON_PELOTA";
         } else {
-            cout << "SIN_PELOTA";
+            out << "SIN_PELOTA";
         }
-        cout << endl;
+        out << endl;
     }
-    if (_jugPelotaSig == nullptr) {
-        cout << _pelota.siguiente().x() << " " << _pelota.siguiente().y() << endl;
+    if (t._jugPelotaSig == nullptr) {
+        out << t._pelota.siguiente().x() << " " << t._pelota.siguiente().y() << endl;
     }
+
+    return out;
 }
 
 // TODO
