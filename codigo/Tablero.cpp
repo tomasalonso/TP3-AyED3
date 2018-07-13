@@ -68,12 +68,12 @@ void Tablero::gol() {
     if (_pelota.siguiente().x() < 0) {
         goles_A++;
         _jugadoresD[0].moverAlCentro(_N, _M, eqDER);
-        _pelota.reiniciarD();
+        _pelota.actualizar(_pelota.inicialI());
         _jugPelota = &_jugadoresD[0];
     } else {
         goles_B++;
         _jugadoresI[0].moverAlCentro(_N, _M, eqIZQ);
-        _pelota.reiniciarI();
+        _pelota.actualizar(_pelota.inicialD());
         _jugPelota = &_jugadoresI[0];
     }
 }
@@ -215,13 +215,13 @@ void Tablero::actualizar() {
         // actual = siguiente
         // Actualizar jugadores
         for (Jugador& j : _jugadoresI) {
-            j.actualizar();
+            j.actualizar(j.siguiente());
         }
         for (Jugador& j : _jugadoresD) {
-            j.actualizar();
+            j.actualizar(j.siguiente());
         }
 
-        _pelota.actualizar();
+        _pelota.actualizar(_pelota.siguiente());
     }
     _jugPelota = _jugPelotaSig;
 
@@ -239,8 +239,40 @@ void Tablero::actualizar(vector<Posicion> &posA,
         vector<Posicion> &posB, bool &enPos,
         enum Direccion &posesor, Posicion &posPelota,
         unsigned int &jPelota) {
+    _tiempo--;
 
+    // Equipos
+    for (unsigned int i = 0; i < _jugadoresI.size(); i++) {
+        _jugadoresI[i].actualizar(posA[i]);
+        _jugadoresD[i].actualizar(posB[i]);
+    }
+
+    if (!chequearGol(posPelota)) {
+        // si no hubo gol, actualiza la pelota
+        if (enPos) {
+            _jugPelota = (posesor == IZQUIERDA) ?
+                    &_jugadoresI[jPelota] : &_jugadoresD[jPelota];
+            _pelota.actualizar(posPelota);
+        } else {
+            _pelota.mover();
+            _pelota.mover();
+        }
+    }
 }
+
+bool Tablero::chequearGol(Posicion posPelota) {
+    if((_pelota.actual().x() > _M-2 || _pelota.actual().x() < 2) &&
+        (posPelota == _pelota.inicialI() || posPelota == _pelota.inicialD())) {
+        if(posPelota == _pelota.inicialI()) {
+            goles_B++;
+        } else {
+            goles_A++;
+        }
+        return true;
+    }
+    return false;
+}
+
 
 std::ostream& operator<<(std::ostream& out, const Tablero &t) {
     for (const Jugador& j : t._jugadoresI) {

@@ -65,6 +65,8 @@ private:
     bool hayGol();
     // Reinicia a la pos inicial
     void gol();
+    bool chequearGol();
+
 
     void moverJug(Jugador& j, Movimiento m);
 

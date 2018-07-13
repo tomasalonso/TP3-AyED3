@@ -125,6 +125,7 @@ void leerEstado(const unsigned int cantJug,
             enPos = true;
             jPelota = j;
             posesor = IZQUIERDA;
+            posPelota = posA[i];
         }
     }
     for (unsigned int i = 0; i < cantJug; i++) {
@@ -134,6 +135,7 @@ void leerEstado(const unsigned int cantJug,
             enPos = true;
             jPelota = j;
             posesor = DERECHA;
+            posPelota = posB[i];
         }
     }
 

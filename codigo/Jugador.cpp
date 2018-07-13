@@ -36,8 +36,8 @@ void Jugador::moverAlCentro(unsigned int n, unsigned int m, bool der) {
     _actual = Posicion(medio_x, medio_y);
 }
 
-void Jugador::actualizar() {
-    _actual = _siguiente;
+void Jugador::actualizar(const Posicion &p) {
+    _actual = p;
 }
 
 void Jugador::reiniciar() {

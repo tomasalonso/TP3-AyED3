@@ -12,13 +12,13 @@ public:
     Posicion actual() const;
     Posicion siguiente() const;
 
+    Posicion inicialI() const;
+    Posicion inicialD() const;
+
     void patear(const Movimiento &mov);
     void mover();
 
-    void actualizar();
-
-    void reiniciarI();    // la pongo en el centro, para el equipo I
-    void reiniciarD();    // la pongo en el centro, para el equipo D
+    void actualizar(const Posicion &p);
 
 private:
     Movimiento _mov;

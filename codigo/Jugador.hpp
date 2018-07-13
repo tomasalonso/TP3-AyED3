@@ -20,7 +20,8 @@ public:
     void moverAlCentro(unsigned int n, unsigned int m, bool der);    // mover al centro de la cancha.
     // el bool me dice de qué lado es el equipo y determina el lado del medio
 
-    void actualizar();                  // modifica "_actual" al valor de "_siguiente"
+    void actualizar(const Posicion &p); // modifica de prepo
+
     void reiniciar();                   // vuelve a _inicial
 
 private:

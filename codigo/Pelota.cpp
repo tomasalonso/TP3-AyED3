@@ -25,6 +25,14 @@ Posicion Pelota::siguiente() const {
     return _siguiente;
 }
 
+Posicion Pelota::inicialI() const {
+    return _inicialI;
+}
+
+Posicion Pelota::inicialD() const {
+    return _inicialD;
+}
+
 void Pelota::patear(const Movimiento &mov) {
     _mov = mov;
 }
@@ -42,16 +50,16 @@ void Pelota::mover() {
     _mov.mover();
 }
 
-void Pelota::actualizar() {
-    _actual = _siguiente;
-}
+void actualizar(const Posicion &p) {
+    mover();                                    //la muevo como venia
+    if (_siguiente == p) {                      //si solo se movio una vez es que la interceptaron o se movió con el jugador
+        _mov = Movimiento(QUIETO);
+    } else {
+        mover();                                //si no la interceptaron la muevo de nuevo, esta deberia ser la posicion en la que termino si no hubo gol
+        if (_siguiente != p) {                  //si no es la posicion, es que hubo gol, la dejo quieta
+            _mov = Movimiento(QUIETO);
+        }
+    }
 
-void Pelota::reiniciarI() {
-    _actual = _inicialI;
-    _mov = Movimiento(QUIETO);
-}
-
-void Pelota::reiniciarD() {
-    _actual = _inicialD;
-    _mov = Movimiento(QUIETO);
+    _actual = p;                                //le guardo la posicion en la que esta
 }
