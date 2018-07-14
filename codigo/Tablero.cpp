@@ -6,22 +6,25 @@
 using namespace std;
 
 
-Tablero::Tablero(const unsigned int &M, const unsigned int &N,
+Tablero::Tablero(const int &M, const int &N,
                  const unsigned int &total,
                  const vector<Jugador> &eqI, const vector<Jugador> &eqD)
     : _M(M), _N(N), _total(total), _tiempo(0),
       _jugadoresI(eqI), _jugadoresD(eqD), goles_A(0), goles_B(0),
       _pelota(M, N), _jugPelota(&_jugadoresI[0]) {
 
-    assert(M%2==1 && N%2==0 && M >= 3 && N >= 2*M);
+    assert(M%2==1);
+    assert(N%2==0);
+    assert(M >= 3);
+    assert(N >= 2*M);
 
     // arranca el izq
     _jugadoresI[0].moverAlCentro(N, M, eqIZQ);
     _jugPelota = &_jugadoresI[0];
 }
 
-unsigned int Tablero::N() const {return _N;}
-unsigned int Tablero::M() const {return _M;}
+int Tablero::N() const {return _N;}
+int Tablero::M() const {return _M;}
 
 bool Tablero::terminado() const {
     return (_tiempo == _total);
@@ -110,7 +113,6 @@ void Tablero::moverJug(Jugador& j, Movimiento m) {
             _pelota.patear(Movimiento(m.dir(), 1)); // Mueve la pelota con el jugador
         }
     }
-
     j.mover(m);
 }
 
@@ -260,7 +262,7 @@ void Tablero::actualizar(vector<Posicion> &posA,
     }
 }
 
-bool Tablero::chequearGol(Posicion posPelota) {
+bool Tablero::chequearGol(const Posicion posPelota) {
     if((_pelota.actual().x() > _M-2 || _pelota.actual().x() < 2) &&
         (posPelota == _pelota.inicialI() || posPelota == _pelota.inicialD())) {
         if(posPelota == _pelota.inicialI()) {
@@ -349,76 +351,86 @@ unsigned int Tablero::puntaje() { // evalua tablero dado posible combinacion de 
 //     return puntaje;
 }
 
+void Tablero::jugadasValidas(vector<vector<Movimiento>> &posiblesI, vector<vector<Movimiento>> &posiblesD) {
+    posiblesI.clear();
+    posiblesD.clear();
 
-// bool Tablero::esJugadaValida(vector<Movimiento> posiblesMovs) { // evalua tablero dado posible combinacion de movs
-//     // me hago copia del equipo para modificarlos y ver como quedan las posiciones
-//     vector<Jugador> equipo = _tablero.verJugadores(_en_derecha);
-//     vector<Posicion> nuevasPos(3, Posicion(-1,-1));
-//     int n = _tablero.N();
-//     int m = _tablero.M();
+    // por cada jugador de I
+    for (unsigned int i = 0; i < _jugadoresI.size(); i++) {
 
-//    for (int i = 0; i < 3; i++) {
-//         Movimiento& movActual = posiblesMovs[i];
-//         int pos_x;
-//         int pos_y;
+        posiblesI.push_back(vector<Movimiento>());
+        posiblesD.push_back(vector<Movimiento>());
+        
+        jugadasValidasJug(_jugadoresI[i], posiblesI[i]);
+        jugadasValidasJug(_jugadoresD[i], posiblesD[i]);
+    }
 
-//         if (movActual.moverse) {
+    for (Jugador& j : _jugadoresI) {
+        
+    }
+    //
+}
 
-//             // se mueve el jugador con o sin pelota
-//             equipo[i].mover(movActual);
-//             equipo[i].actualizar();     // les pongo la nueva dirección
+void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
+    movs.push_back(Movimiento(QUIETO)); 
 
-//             pos_x = equipo[i].pos().x();
-//             pos_y = equipo[i].pos().y();
+    const bool derecha = j.actual().x()+1 <= _M-1;
+    const bool izquierda = j.actual().x()-1 >= 0;
+    const bool arriba = j.actual().y()+1 <= _N-1;
+    const bool abajo = j.actual().y()+1 >= 0;
+    const bool alturaArco = (_m/2)-1 <= j.actual().y() <= (m/2)+1;
+    const bool arribaArco = j.actual().y() == (m/2)+2;
+    const bool abajoArco = j.actual().y() == (m/2)-2;
 
-//             if(_tablero.pelotaEnPosesion() &&   // si alguien tiene la pelota
-//                _tablero.jugadorPelota().id() != equipo[i].id() && // y no soy yo
-//                enArco(n,m,equipo[i].pos())) {               // y entré al arco como une gile
-//                 return false;
-//             }
+    if(derecha)
+        movs.push_back(Movimiento(DERECHA));
 
-//         } else {
+    if(izquierda)
+        movs.push_back(Movimiento(IZQUIERDA));
 
-//             // si tira la pelota tengo que chequear parámetros
+    if(arriba)
+        movs.push_back(Movimiento(ARRIBA));
 
-//             Posicion pelota = _tablero.posPelota();
+    if(abajo)
+        movs.push_back(Movimiento(ABAJO));
 
-//             // restricción del enunciado
-//             if(movActual.intensidad > m/2) {
-//                 return false;
-//             }
+    if(arriba && izquierda)
+        movs.push_back(Movimiento(ARRIBA_IZQUIERDA));
 
-//             // muevo la pelota (simulo movimiento)
-//             for(int j = 0; j < movActual.intensidad; j++) {
-//                 pelota.mover(movActual);
-//                 pelota.mover(movActual);  // por cada "turno" avanza dos casilleros
-//             }
-//             // coloco resultados en esas variables, voy a chequearlo mas abajo
-//             pos_x = pelota.x();
-//             pos_y = pelota.y();
-//         }
+    if(arriba && derecha)
+        movs.push_back(Movimiento(ARRIBA_DERECHA));
 
+    if(abajo && izquierda)
+        movs.push_back(Movimiento(ABAJO_IZQUIERDA));
 
-//         // chequeo que la posicion final de la pelota/jugadore sea válida
-//         // se va de cancha y no está en el arco
-//         if ( !(0 <= pos_x && pos_x < n && 0 <= pos_x && pos_y < m) &&
-//                                 !enArco(n, m, Posicion(pos_x, pos_y))) {
-//             return false;
-//         }
-//     }
+    if(abajo && derecha)
+        movs.push_back(Movimiento(ABAJO_DERECHA));
 
-//     // acá chequeo que no haya dos jugadores de un mismo equipo en la misma celda
-//     for (auto jugadorA : equipo) {
-//         for (auto jugadorB : equipo) {
-//             if (jugadorA.id() != jugadorB.id() &&
-//                             jugadorA.pos() == jugadorB.pos()) {
-//                 return false;
-//             }
-//         }
-//     }
+    // si tiene la pelota
+    if (_jugPelota == &j) {
+        if(!derecha && alturaArco) {
+            movs.push_back(Movimiento(DERECHA));
+        } else if (!derecha && arribaArco){
+            movs.push_back(Movimiento(ABAJO_DERECHA));
+        } else if (!derecha && abajoArco) {
+            movs.push_back(Movimiento(ARRIBA_DERECHA));
+        } else if (!izquierda && alturaArco) {
+            movs.push_back(Movimiento(IZQUIERDA));
+        } else if (!izquierda && arribaArco){
+            movs.push_back(Movimiento(ABAJO_IZQUIERDA));
+        } else if (!izquierda && abajoArco) {
+            movs.push_back(Movimiento(ARRIBA_IZQUIERDA));
+        }
+        for (unsigned int dir = 1; dir < 9; dir++) {
+            // Por cada posible intensidad
+            for (unsigned int inten = 0; inten < _M/2 && !intensidadTope; inten++) {
+                //HACER: agregar las intensidades hasta que se vaya arafue de la chacan
 
-//     return true;
-// }
+            }
+        }
+    }
+}
+
 
 // bool Tablero::enArco(int n, int m, const Posicion& pos) {
 //     vector<Posicion> posDeArco(6,Posicion(-1,-1));

@@ -9,8 +9,8 @@ using namespace std;
 
 
 int main() {
-    const unsigned int m = 5;
-    const unsigned int n = 10;
+    const int m = 5;
+    const int n = 10;
     const unsigned int total = 10;
 
     const vector<Jugador> jI({

@@ -16,13 +16,13 @@ using namespace std;
 class Tablero {
 public:
     // constructor para el árbitro (toma dos equipos)
-    Tablero(const unsigned int &M, const unsigned int &N,
+    Tablero(const int &M, const int &N,
             const unsigned int &total, const vector<Jugador> &eqI,
             const vector<Jugador> &eqD);
 
     // getters
-    unsigned int N() const;
-    unsigned int M() const;
+    int N() const;
+    int M() const;
 
     bool terminado() const;
 
@@ -46,7 +46,7 @@ public:
             unsigned int &jPelota);
 
 
-    bool jugadaValida();
+    bool esJugadaValida(vector<Movimiento> posiblesMovs, bool enDerecha);
 
     unsigned int puntaje();
 
@@ -65,7 +65,7 @@ private:
     bool hayGol();
     // Reinicia a la pos inicial
     void gol();
-    bool chequearGol();
+    bool chequearGol(const Posicion posPelota);
 
 
     void moverJug(Jugador& j, Movimiento m);
@@ -79,8 +79,8 @@ private:
 
 
     // Cancha
-    const unsigned int _M;
-    const unsigned int _N;
+    const int _M;
+    const int _N;
 
     // Tiempos
     const unsigned int _total;
@@ -91,8 +91,8 @@ private:
     vector<Jugador> _jugadoresD;
 
     // Goles
-    int goles_A;
-    int goles_B;
+    unsigned int goles_A;
+    unsigned int goles_B;
 
     // Pelota
     Pelota _pelota;

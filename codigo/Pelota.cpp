@@ -3,11 +3,11 @@
 #include <cassert>
 
 
-Pelota::Pelota(const unsigned int M, const unsigned int N)
+Pelota::Pelota(const int M, const int N)
     : _mov(QUIETO)
 {
-    const unsigned int medio_x = N/2; // n es par por precondición
-    const unsigned int medio_y = M/2; // m es impar, así que la celda del centro
+    const int medio_x = N/2; // n es par por precondición
+    const int medio_y = M/2; // m es impar, así que la celda del centro
                                       // es mitad redondeada para abajo
 
     _inicialI = Posicion(medio_x-1, medio_y);
@@ -50,13 +50,13 @@ void Pelota::mover() {
     _mov.mover();
 }
 
-void actualizar(const Posicion &p) {
+void Pelota::actualizar(const Posicion &p) {
     mover();                                    //la muevo como venia
     if (_siguiente == p) {                      //si solo se movio una vez es que la interceptaron o se movió con el jugador
         _mov = Movimiento(QUIETO);
     } else {
         mover();                                //si no la interceptaron la muevo de nuevo, esta deberia ser la posicion en la que termino si no hubo gol
-        if (_siguiente != p) {                  //si no es la posicion, es que hubo gol, la dejo quieta
+        if (!(_siguiente == p)) {                  //si no es la posicion, es que hubo gol, la dejo quieta
             _mov = Movimiento(QUIETO);
         }
     }

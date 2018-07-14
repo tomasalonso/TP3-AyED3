@@ -7,7 +7,7 @@
 
 class Pelota {
 public:
-    Pelota(const unsigned int M, const unsigned int N);
+    Pelota(const int M, const int N);
 
     Posicion actual() const;
     Posicion siguiente() const;

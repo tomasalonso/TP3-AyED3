@@ -9,11 +9,11 @@
 class Posicion {
 public:
     Posicion();
-    Posicion(const unsigned int x, const unsigned int y);
+    Posicion(const int x, const int y);
     Posicion(const Posicion& pos);
 
-    unsigned int x() const;
-    unsigned int y() const;
+    int x() const;
+    int y() const;
 
     void mover(const Direccion &dir);
 
@@ -23,8 +23,8 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const Posicion& p);
     
 private:
-    unsigned int _x;
-    unsigned int _y;
+    int _x;
+    int _y;
 };
 
 

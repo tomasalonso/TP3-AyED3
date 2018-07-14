@@ -27,11 +27,11 @@ void Jugador::mover(const Movimiento &m) {
     _siguiente.mover(m.dir());
 }
 
-void Jugador::moverAlCentro(unsigned int n, unsigned int m, bool der) {
+void Jugador::moverAlCentro(int n, int m, bool der) {
     // pre: n par, m impar
-    const unsigned int medio_x = (der) ? n/2 : n/2-1;
+    const int medio_x = (der) ? n/2 : n/2-1;
     // m es impar, asi que la celda del centro es mitad redondeada para abajo
-    const unsigned int medio_y = m/2;
+    const int medio_y = m/2;
 
     _actual = Posicion(medio_x, medio_y);
 }
