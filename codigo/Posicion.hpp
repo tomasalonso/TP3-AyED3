@@ -15,13 +15,14 @@ public:
     int x() const;
     int y() const;
 
-    void mover(const Direccion &dir);
+    void mover(const Movimiento &m);
+    void mover(const Movimiento &m, const unsigned int intensidad);
 
     bool operator==(const Posicion otro) const;
 
     friend std::istream& operator>>(std::istream& in, Posicion& p);
     friend std::ostream& operator<<(std::ostream& out, const Posicion& p);
-    
+
 private:
     int _x;
     int _y;

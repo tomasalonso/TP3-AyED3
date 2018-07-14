@@ -1,6 +1,23 @@
 #include "Movimiento.hpp"
 
 
+bool Movimiento::esPase() const {
+     return (_intensidad > 0);
+ }
+
+Direccion Movimiento::dir() const {
+    return _dir;
+}
+
+void Movimiento::mover() {
+    if (_intensidad > 0) {
+        _intensidad--;
+    } else {
+        _dir = QUIETO;
+    }
+}
+
+
 std::ostream& operator<<(std::ostream& out, const Movimiento &m) {
     if (m.esPase()) {
         out << "PASE " << m._dir << " " << m._intensidad;

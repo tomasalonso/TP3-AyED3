@@ -22,7 +22,7 @@ bool Equipo::enDerecha() {
 // }
 
 // actualiza tablero, prueba jugadas y devuelve la mejor
-vector<Movimiento> Equipo::turno(Tablero &t, const vector<vector<Movimiento>> &jugadas) {
+vector<Movimiento> Equipo::turno(Tablero &t) {
     vector<Movimiento> mejorJugada;
     vector<Movimiento> jugadaContrario({Movimiento(QUIETO),
                                         Movimiento(QUIETO),
@@ -33,7 +33,7 @@ vector<Movimiento> Equipo::turno(Tablero &t, const vector<vector<Movimiento>> &j
     // @TO-DO: algo que pruebe menos jugadas de manera inteligente
     int puntajeMejor = -1;
     int puntajeActual;
-    for (auto &j : jugadas) {  // Devuelve todas válidas
+    for (auto &j : genJugadas1(t)) {  // Devuelve todas válidas
         t.mover(j, jugadaContrario);
         puntajeActual = t.puntaje();
         if(puntajeActual > puntajeMejor) {
@@ -47,57 +47,59 @@ vector<Movimiento> Equipo::turno(Tablero &t, const vector<vector<Movimiento>> &j
 
 vector<vector<Movimiento>> Equipo::genJugadas1(Tablero &t) {  // Prueba TODAS las jugadas
 // HACER: actualizar al nuevo uso de sarasa, cosito piripitruli. (jugadasValidas de tablero)
-    vector<vector<Movimiento>> jugadas;
+    vector<vector<Movimiento>> jugadas({{Movimiento(QUIETO),
+                                       Movimiento(QUIETO),
+                                         Movimiento(QUIETO)}});
 
-    int filas = t.M();
-    int totalDirs = 9;
+    // int filas = t.m();
+    // int totalDirs = 9;
 
-    // Por cada jugada jugador 1
-    for (int i = 0; i < totalDirs; ++i) {
+    // // Por cada jugada jugador 1
+    // for (int i = 0; i < totalDirs; ++i) {
 
-        // Por cada jugada jugador 2
-        for (int j = 0; j < totalDirs; ++j) {
+    //     // Por cada jugada jugador 2
+    //     for (int j = 0; j < totalDirs; ++j) {
 
-            // Por cada jugada jugador 3
-            for (int k = 0; k < totalDirs; ++k) {
+    //         // Por cada jugada jugador 3
+    //         for (int k = 0; k < totalDirs; ++k) {
 
-                // Todos se mueven
-                vector<Movimiento> jugada = { Movimiento((Direccion)i),
-                                              Movimiento((Direccion)j),
-                                              Movimiento((Direccion)k)  };
+    //             // Todos se mueven
+    //             vector<Movimiento> jugada = { Movimiento((Direccion)i),
+    //                                           Movimiento((Direccion)j),
+    //                                           Movimiento((Direccion)k)  };
 
-                if(t.esJugadaValida(jugada)) {
-                    jugadas.push_back(jugada);
-                }
+    //             if(t.esJugadaValida(jugada)) {
+    //                 jugadas.push_back(jugada);
+    //             }
 
-                // Si alguno tiene la pelota, considero los posibles pases
-                if(t.pelotaEnPosesion()) {
+    //             // Si alguno tiene la pelota, considero los posibles pases
+    //             if(t.pelotaEnPosesion()) {
 
-                    int idJugadorPelota = (int)(t.jugadorPelota()).id();
-                    if (idJugadorPelota < 4) {   // es de mi equipo
+    //                 int idJugadorPelota = (int)(t.jugadorPelota()).id();
+    //                 if (idJugadorPelota < 4) {   // es de mi equipo
 
-                        // Por cada posible direccion
-                        for (int dir = 1; dir < 9; ++dir) {
+    //                     // Por cada posible direccion
+    //                     for (int dir = 1; dir < 9; ++dir) {
 
-                            // Pongo esto para no probar más intensidades de las necesarias en una misma dirección
-                            bool intensidadTope = false;
-                            // Por cada posible intensidad
-                            for (int inten = 0; inten < filas/2 && !intensidadTope ; ++inten) {
+    //                         // Pongo esto para no probar más intensidades de las necesarias en una misma dirección
+    //                         bool intensidadTope = false;
+    //                         // Por cada posible intensidad
+    //                         for (int inten = 0; inten < filas/2 && !intensidadTope ; ++inten) {
 
-                                jugada[idJugadorPelota] = Movimiento((Direccion)dir, inten);
-                                if(t.esJugadaValida(jugada)) {
-                                    jugadas.push_back(jugada);
-                                } else {
-                                    intensidadTope = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+    //                             jugada[idJugadorPelota] = Movimiento((Direccion)dir, inten);
+    //                             if(t.esJugadaValida(jugada)) {
+    //                                 jugadas.push_back(jugada);
+    //                             } else {
+    //                                 intensidadTope = true;
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
 
-        }
-    }
+    //     }
+    // }
 
     return jugadas;
 }

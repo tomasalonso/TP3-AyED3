@@ -36,12 +36,12 @@ int main() {
     do {
         cantJug++;
         probsA.push_back(probabilidad);
-    
+
         cin >> i >> probabilidad;
     } while (i != 0);
 
     probsB.push_back(probabilidad);
-    
+
     // Lee el probabilidades del equipo 2
     for (unsigned int i = 1; i < cantJug; i++) {
         cin >> i >> probabilidad;
@@ -92,7 +92,7 @@ int main() {
     cout << tablero;
 
     //while (!tablero.terminado()) {
-        cout << equipoI.turno(tablero, equipoI.genJugadas1());
+        cout << equipoI.turno(tablero);
         leerEstado(cantJug, posA, posB, enPos,
             posesor, posPelota, jPelota);
         tablero.actualizar(posA, posB, enPos,

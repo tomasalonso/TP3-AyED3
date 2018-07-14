@@ -27,21 +27,11 @@ public:
         assert(d != QUIETO);
     }
 
-    bool esPase() const {
-        return (_intensidad > 0);
-    }
+    bool esPase() const;
 
-    Direccion dir() const {
-        return _dir;
-    }
+    Direccion dir() const;
 
-    void mover() {
-        if (_intensidad > 0) {
-            _intensidad--;
-        } else {
-            _dir = QUIETO;
-        }
-    }
+    void mover();
 
     friend std::ostream& operator<<(std::ostream& out, const Movimiento &m);
 

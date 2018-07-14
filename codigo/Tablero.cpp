@@ -6,25 +6,25 @@
 using namespace std;
 
 
-Tablero::Tablero(const int &M, const int &N,
+Tablero::Tablero(const int &m, const int &n,
                  const unsigned int &total,
                  const vector<Jugador> &eqI, const vector<Jugador> &eqD)
-    : _M(M), _N(N), _total(total), _tiempo(0),
+    : _m(m), _n(n), _total(total), _tiempo(0),
       _jugadoresI(eqI), _jugadoresD(eqD), goles_A(0), goles_B(0),
-      _pelota(M, N), _jugPelota(&_jugadoresI[0]) {
+      _pelota(m, n), _jugPelota(&_jugadoresI[0]) {
 
-    assert(M%2==1);
-    assert(N%2==0);
-    assert(M >= 3);
-    assert(N >= 2*M);
+    assert(m%2==1);
+    assert(n%2==0);
+    assert(m >= 3);
+    assert(n >= 2*m);
 
     // arranca el izq
-    _jugadoresI[0].moverAlCentro(N, M, eqIZQ);
+    _jugadoresI[0].moverAlCentro(n, m, eqIZQ);
     _jugPelota = &_jugadoresI[0];
 }
 
-int Tablero::N() const {return _N;}
-int Tablero::M() const {return _M;}
+int Tablero::n() const {return _n;}
+int Tablero::m() const {return _m;}
 
 bool Tablero::terminado() const {
     return (_tiempo == _total);
@@ -53,7 +53,7 @@ Posicion Tablero::posPelota() const {
 
 bool Tablero::hayGol() {
     // pre: movimiento valido (la pelota no se va afuera de la cancha)
-    return (_pelota.siguiente().x() < 0 || _pelota.siguiente().x() > _N);
+    return (_pelota.siguiente().x() < 0 || _pelota.siguiente().x() > _n);
 }
 
 void Tablero::gol() {
@@ -70,12 +70,12 @@ void Tablero::gol() {
     // Gol equipo derecha
     if (_pelota.siguiente().x() < 0) {
         goles_A++;
-        _jugadoresD[0].moverAlCentro(_N, _M, eqDER);
+        _jugadoresD[0].moverAlCentro(_n, _m, eqDER);
         _pelota.actualizar(_pelota.inicialI());
         _jugPelota = &_jugadoresD[0];
     } else {
         goles_B++;
-        _jugadoresI[0].moverAlCentro(_N, _M, eqIZQ);
+        _jugadoresI[0].moverAlCentro(_n, _m, eqIZQ);
         _pelota.actualizar(_pelota.inicialD());
         _jugPelota = &_jugadoresI[0];
     }
@@ -241,7 +241,7 @@ void Tablero::actualizar(vector<Posicion> &posA,
         vector<Posicion> &posB, bool &enPos,
         enum Direccion &posesor, Posicion &posPelota,
         unsigned int &jPelota) {
-    _tiempo--;
+    _tiempo++;
 
     // Equipos
     for (unsigned int i = 0; i < _jugadoresI.size(); i++) {
@@ -263,7 +263,7 @@ void Tablero::actualizar(vector<Posicion> &posA,
 }
 
 bool Tablero::chequearGol(const Posicion posPelota) {
-    if((_pelota.actual().x() > _M-2 || _pelota.actual().x() < 2) &&
+    if((_pelota.actual().x() > _m-2 || _pelota.actual().x() < 2) &&
         (posPelota == _pelota.inicialI() || posPelota == _pelota.inicialD())) {
         if(posPelota == _pelota.inicialI()) {
             goles_B++;
@@ -351,7 +351,8 @@ unsigned int Tablero::puntaje() { // evalua tablero dado posible combinacion de 
 //     return puntaje;
 }
 
-void Tablero::jugadasValidas(vector<vector<Movimiento>> &posiblesI, vector<vector<Movimiento>> &posiblesD) {
+void Tablero::jugadasValidas(vector<vector<Movimiento>> &posiblesI,
+                             vector<vector<Movimiento>> &posiblesD) {
     posiblesI.clear();
     posiblesD.clear();
 
@@ -360,27 +361,22 @@ void Tablero::jugadasValidas(vector<vector<Movimiento>> &posiblesI, vector<vecto
 
         posiblesI.push_back(vector<Movimiento>());
         posiblesD.push_back(vector<Movimiento>());
-        
+
         jugadasValidasJug(_jugadoresI[i], posiblesI[i]);
         jugadasValidasJug(_jugadoresD[i], posiblesD[i]);
     }
-
-    for (Jugador& j : _jugadoresI) {
-        
-    }
-    //
 }
 
 void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
-    movs.push_back(Movimiento(QUIETO)); 
-
-    const bool derecha = j.actual().x()+1 <= _M-1;
+    const bool derecha = j.actual().x()+1 <= _m-1;
     const bool izquierda = j.actual().x()-1 >= 0;
-    const bool arriba = j.actual().y()+1 <= _N-1;
+    const bool arriba = j.actual().y()+1 <= _n-1;
     const bool abajo = j.actual().y()+1 >= 0;
-    const bool alturaArco = (_m/2)-1 <= j.actual().y() <= (m/2)+1;
-    const bool arribaArco = j.actual().y() == (m/2)+2;
-    const bool abajoArco = j.actual().y() == (m/2)-2;
+    const bool alturaArco = (_m/2)-1 <= j.actual().y() && j.actual().y() <= (_m/2)+1;
+    const bool arribaArco = j.actual().y() == (_m/2)+2;
+    const bool abajoArco = j.actual().y() == (_m/2)-2;
+
+    movs.push_back(Movimiento(QUIETO));
 
     if(derecha)
         movs.push_back(Movimiento(DERECHA));
@@ -421,11 +417,21 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
         } else if (!izquierda && abajoArco) {
             movs.push_back(Movimiento(ARRIBA_IZQUIERDA));
         }
-        for (unsigned int dir = 1; dir < 9; dir++) {
+        for (unsigned int dir = 1; dir <= 8; dir++) {
             // Por cada posible intensidad
-            for (unsigned int inten = 0; inten < _M/2 && !intensidadTope; inten++) {
-                //HACER: agregar las intensidades hasta que se vaya arafue de la chacan
+            for (int inten = 1; inten < _m/2 ; inten++) {
+                Posicion pos = _pelota.actual();
+                const Movimiento pase = Movimiento(Direccion(dir), inten*2);
 
+                pos.mover(pase);
+
+                // si se fue de la cancha, terminar
+                if ((0 > pos.x() && pos.x() > _n-1) ||
+                    (0 > pos.y() && pos.y() > _m-1)) {
+                    break;
+                }
+                // si no se va de la cancha
+                movs.push_back(pase);
             }
         }
     }
@@ -451,7 +457,7 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
 
 // vector<unsigned int> Tablero::distJugadorAlArco(const bool enDerecha) const {
 //     const vector<Jugador> &js = (enDerecha) ? _jugadoresD : _jugadoresI;
-//     const unsigned int xArco = (enDerecha) ? _N : -1;
+//     const unsigned int xArco = (enDerecha) ? _n : -1;
 
 //     vector<unsigned int> dist(_jugadoresI.size());
 
@@ -459,12 +465,12 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
 //         const float x = j.pos().x();
 //         const float y = j.pos().y();
 
-//         if (y > _M/2) {
-//             dist.push_back(distancia(x, y, xArco, _M/2+1));
-//         } else if (y == _M/2) {
+//         if (y > _m/2) {
+//             dist.push_back(distancia(x, y, xArco, _m/2+1));
+//         } else if (y == _m/2) {
 //             dist.push_back(abs(int(x - xArco)));
 //         } else {
-//             dist.push_back(distancia(x, y, xArco, _M/2-1));
+//             dist.push_back(distancia(x, y, xArco, _m/2-1));
 //         }
 //     }
 
@@ -472,17 +478,17 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
 // }
 
 // unsigned int Tablero::distPelotaArco(const bool enDerecha) const {
-//     const unsigned int xArco = (enDerecha) ? _N : -1;
+//     const unsigned int xArco = (enDerecha) ? _n : -1;
 //     const float x = _pelota.posicion().x();
 //     const float y = _pelota.posicion().y();
 
-//     if (y > (unsigned int) (_M/2)) {
-//         return distancia(x, y, xArco, _M/2+1);
-//     } else if (y == _M/2) {
+//     if (y > (unsigned int) (_m/2)) {
+//         return distancia(x, y, xArco, _m/2+1);
+//     } else if (y == _m/2) {
 //         int res = abs(int(x - xArco));
 //         return res;
 //     } else {
-//         return distancia(x, y, xArco, _M/2-1);
+//         return distancia(x, y, xArco, _m/2-1);
 //     }
 // }
 
