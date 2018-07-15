@@ -16,13 +16,13 @@ using namespace std;
 class Tablero {
 public:
     // constructor para el árbitro (toma dos equipos)
-    Tablero(const int &M, const int &N,
+    Tablero(const int &m, const int &n,
             const unsigned int &total, const vector<Jugador> &eqI,
             const vector<Jugador> &eqD);
 
     // getters
-    int N() const;
-    int M() const;
+    int n() const;
+    int m() const;
 
     bool terminado() const;
 
@@ -39,7 +39,7 @@ public:
     void actualizar();
     void actualizar(const vector<Movimiento> &movsI,
                     const vector<Movimiento> &movsD);
-    
+
     void actualizar(vector<Posicion> &posA,
             vector<Posicion> &posB, bool &enPos,
             enum Direccion &posesor, Posicion &posPelota,
@@ -48,13 +48,13 @@ public:
 
     bool esJugadaValida(vector<Movimiento> posiblesMovs, bool enDerecha);
 
+    void jugadasValidas(vector<vector<Movimiento>> &posiblesI, vector<vector<Movimiento>> &posiblesD);
+
     unsigned int puntaje();
 
-    // int puntaje(bool enDerecha) const;
-
     // Imprime estado, primero izquierda, despues derecha
-	friend std::ostream& operator<<(std::ostream& out, const Tablero &t);
-    
+    friend std::ostream& operator<<(std::ostream& out, const Tablero &t);
+
     // // Metodos para evaluarTablero
     // vector<unsigned int> distJugadorAlArco(const bool enDerecha) const;
     // unsigned int distPelotaArco(const bool enDerecha) const;
@@ -77,10 +77,12 @@ private:
     Jugador* quiteSuelta(Jugador &izq, Jugador &der);
     Jugador* quitePoseida(Jugador &sacador, Jugador &posesor);
 
+    void jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs);
+
 
     // Cancha
-    const int _M;
-    const int _N;
+    const int _m;
+    const int _n;
 
     // Tiempos
     const unsigned int _total;

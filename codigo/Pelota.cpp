@@ -40,10 +40,10 @@ void Pelota::patear(const Movimiento &mov) {
 void Pelota::mover() {
     // Avanzar UNA posición de acuerdo al pase
     Posicion aux = _actual;
-    aux.mover(_mov.dir());
+    aux.mover(_mov);
 
     if (aux == _siguiente) {
-        _siguiente.mover(_mov.dir());
+        _siguiente.mover(_mov);
     } else {
         _siguiente = aux;
     }

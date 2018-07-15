@@ -18,10 +18,11 @@ public:
     Equipo(Genoma genoma, bool enDerecha);
 
     // Prueba jugadas y devuelve la mejor
-    vector<Movimiento> turno(Tablero &t, const vector<vector<Movimiento>> &jugadas);
+    vector<Movimiento> turno(Tablero &t);
 
     // Posibles jugadas para evaluar
-    vector<vector<Movimiento> > genJugadas1(Tablero &t);
+    void genJugadas1(Tablero &t, vector<vector<Movimiento> > &jugadasPropias,
+                     vector<vector<Movimiento> > &jugadasContrario);
 
     // Para entrenador
     const Jugador& jugador(size_t i) const;

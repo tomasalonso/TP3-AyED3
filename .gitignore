@@ -48,3 +48,5 @@ elizondo/log/*
 # *.aux
 # *.out
 # *.toc
+elizondo
+*pyc

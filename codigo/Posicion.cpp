@@ -21,27 +21,32 @@ bool Posicion::operator==(const Posicion otro) const {
     return _x == otro._x && _y == otro._y;
 }
 
-void Posicion::mover(const Direccion &dir) {
-    switch(dir) {
+void Posicion::mover(const Movimiento &m) {
+    mover(m, 1);
+}
+
+void Posicion::mover(const Movimiento &m, const unsigned int i) {
+    switch(m.dir()) {
     case QUIETO: break;
     case ARRIBA:
-        _y++; break;
+        _y += i; break;
     case ABAJO:
-        _y--; break;
+        _y -= i; break;
     case IZQUIERDA:
-        _x--; break;
+        _x -= i; break;
     case DERECHA:
-        _x++; break;
+        _x += i; break;
     case ARRIBA_IZQUIERDA:
-        _y++; _x--; break;
+        _y += i; _x -= i; break;
     case ARRIBA_DERECHA:
-        _y++; _x++; break;
+        _y += i; _x += i; break;
     case ABAJO_IZQUIERDA:
-        _y--; _x--; break;
+        _y -= i; _x -= i; break;
     case ABAJO_DERECHA:
-        _y--; _x++; break;
+        _y -= i; _x += i; break;
     }
 }
+
 
 std::istream& operator>>(std::istream& in, Posicion& p) {
     in >> p._x;
@@ -50,12 +55,11 @@ std::istream& operator>>(std::istream& in, Posicion& p) {
     return in;
 }
 
-
 std::ostream& operator<<(std::ostream& out, const Posicion& p) {
     out << p._x << " " << p._y;
 
     return out;
-}    
+}
 
 
 float distancia(const float x1, const float y1, const float x2, const float y2) {

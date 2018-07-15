@@ -34,8 +34,8 @@ int main() {
 
     while (!tablero.terminado()) {
         tablero.actualizar(
-                           equipoI.turno(tablero, equipoI.genJugadas1()),
-                           equipoD.turno(tablero, equipoD.genJugadas1())
+                           equipoI.turno(tablero),
+                           equipoD.turno(tablero)
                            );
         cout << tablero;
     }
