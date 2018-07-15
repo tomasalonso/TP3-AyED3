@@ -89,7 +89,7 @@ int main() {
     vector<Jugador> jD((pos == IZQUIERDA) ? jB : jA);
 
     Tablero tablero(m, n, total, jI, jD);
-    cout << tablero;
+    // cout << tablero;
 
     //while (!tablero.terminado()) {
         cout << equipoI.turno(tablero);
@@ -97,7 +97,7 @@ int main() {
             posesor, posPelota, jPelota);
         tablero.actualizar(posA, posB, enPos,
             posesor, posPelota, jPelota);
-        cout << tablero;
+        // cout << tablero;
     //}
 
     return 0;

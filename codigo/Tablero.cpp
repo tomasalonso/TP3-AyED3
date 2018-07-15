@@ -523,5 +523,3 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
 
 //     return (b*h)/2;
 // }
-
-// int Tablero::puntaje(bool enDerecha) const {return -1;}

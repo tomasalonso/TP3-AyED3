@@ -21,7 +21,8 @@ public:
     vector<Movimiento> turno(Tablero &t);
 
     // Posibles jugadas para evaluar
-    vector<vector<Movimiento> > genJugadas1(Tablero &t);
+    void genJugadas1(Tablero &t, vector<vector<Movimiento> > &jugadasPropias,
+                     vector<vector<Movimiento> > &jugadasContrario);
 
     // Para entrenador
     const Jugador& jugador(size_t i) const;

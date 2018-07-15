@@ -24,35 +24,81 @@ bool Equipo::enDerecha() {
 // actualiza tablero, prueba jugadas y devuelve la mejor
 vector<Movimiento> Equipo::turno(Tablero &t) {
     vector<Movimiento> mejorJugada;
-    vector<Movimiento> jugadaContrario({Movimiento(QUIETO),
-                                        Movimiento(QUIETO),
-                                        Movimiento(QUIETO)});
+
+    vector<vector<Movimiento> > jugadasPropias;
+    vector<vector<Movimiento> > jugadasContrario({{Movimiento(QUIETO),
+                                                   Movimiento(QUIETO),
+                                                   Movimiento(QUIETO)}});
+
+
+    genJugadas1(t, jugadasPropias, jugadasContrario);
 
     // generamos de manera todos los movimientos
     // (asumimos que el oponente se queda quieto)
     // @TO-DO: algo que pruebe menos jugadas de manera inteligente
     int puntajeMejor = -1;
-    int puntajeActual;
-    for (auto &j : genJugadas1(t)) {  // Devuelve todas válidas
-        t.mover(j, jugadaContrario);
-        puntajeActual = t.puntaje();
-        if(puntajeActual > puntajeMejor) {
-            puntajeMejor = puntajeActual;
-            mejorJugada = j;
+    for (auto &jPropia : jugadasPropias) {  // Devuelve todas válidas
+        for (auto &jContrario : jugadasContrario) {
+            t.mover(jPropia, jContrario);
+
+            const int puntajeActual = t.puntaje();
+
+            if (puntajeActual > puntajeMejor) {
+                puntajeMejor = puntajeActual;
+                mejorJugada = jPropia;
+            }
         }
     }
 
     return mejorJugada;
 }
 
-vector<vector<Movimiento>> Equipo::genJugadas1(Tablero &t) {  // Prueba TODAS las jugadas
-// HACER: actualizar al nuevo uso de sarasa, cosito piripitruli. (jugadasValidas de tablero)
+vector<vector<Movimiento> > combinar(vector<vector<Movimiento> > ms) {
+    if (ms.empty()) {
+        return vector<vector<Movimiento> >();
+    }
+
+    vector<vector<Movimiento> > res;
+
+    vector<Movimiento> back = ms.back();
+    ms.pop_back();
+
+    for (Movimiento& m : back) {
+        res += combinar(ms);
+        for (auto mov : ) {
+            mov.push_back(m);
+        }
+    }
+
+    return 
+}
+
+// Genera TODAS las jugadas posibles
+void Equipo::genJugadas1(Tablero &t, vector<vector<Movimiento> > &jugadasPropias, vector<vector<Movimiento> > &jugadasContrario) {
+    vector<vector<Movimiento> > movValidosPropios;
+    vector<vector<Movimiento> > movValidosContrario;
+
+    jugadasPropias.clear();
+    jugadasContrario.clear();
+
+    if (_enDerecha) {
+        t.jugadasValidas(movValidosContrario, movValidosPropios);
+    } else {
+        t.jugadasValidas(movValidosPropios, movValidosContrario);
+    }
+
+
     vector<vector<Movimiento>> jugadas({{Movimiento(QUIETO),
-                                       Movimiento(QUIETO),
+                                         Movimiento(QUIETO),
                                          Movimiento(QUIETO)}});
 
-    // int filas = t.m();
-    // int totalDirs = 9;
+    for (unsigned int i = 0; i < jugadasPropias.size(); i++) {
+        vector<Movimiento> jugada;
+        for (zip(jugadasPropias)) {
+            
+        }
+    }
+
 
     // // Por cada jugada jugador 1
     // for (int i = 0; i < totalDirs; ++i) {

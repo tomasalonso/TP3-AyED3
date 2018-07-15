@@ -52,10 +52,8 @@ public:
 
     unsigned int puntaje();
 
-    // int puntaje(bool enDerecha) const;
-
     // Imprime estado, primero izquierda, despues derecha
-	friend std::ostream& operator<<(std::ostream& out, const Tablero &t);
+    friend std::ostream& operator<<(std::ostream& out, const Tablero &t);
 
     // // Metodos para evaluarTablero
     // vector<unsigned int> distJugadorAlArco(const bool enDerecha) const;
