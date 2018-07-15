@@ -30,7 +30,7 @@ vector<Movimiento> Equipo::turno(Tablero &t) {
         for (auto &jContrario : jugadasContrario) {
             t.mover(jPropia, jContrario);
 
-            const int puntajeActual = t.puntaje();
+            const int puntajeActual = t.puntaje(_genoma, _enDerecha);
 
             if (puntajeActual > puntajeMejor) {
                 puntajeMejor = puntajeActual;
@@ -64,6 +64,6 @@ void Equipo::genJugadas1(Tablero &t, vector<vector<Movimiento> > &jugadasPropias
                                                    Movimiento(QUIETO)})
                                );
 
+    // combinar([[1,2,3],[4,5,6]]) = [1,4], [1,5], [1,6], [2, 4], ...
     jugadasPropias = combinar(movValidosPropios);
-
 }

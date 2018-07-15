@@ -93,10 +93,10 @@ int main() {
 
     //while (!tablero.terminado()) {
         cout << equipoI.turno(tablero);
-        leerEstado(cantJug, posA, posB, enPos,
-            posesor, posPelota, jPelota);
-        tablero.actualizar(posA, posB, enPos,
-            posesor, posPelota, jPelota);
+        // leerEstado(cantJug, posA, posB, enPos,
+        //     posesor, posPelota, jPelota);
+        // tablero.actualizar(posA, posB, enPos,
+        //     posesor, posPelota, jPelota);
         // cout << tablero;
     //}
 

@@ -9,6 +9,7 @@
 
 #include "Jugador.hpp"
 #include "Pelota.hpp"
+#include "extras.hpp"
 
 using namespace std;
 
@@ -44,11 +45,9 @@ public:
                              const bool &enPos, const enum Direccion &posesor,
                     const Posicion &posPelota, const unsigned int &jPelota);
 
-    bool esJugadaValida(vector<Movimiento> posiblesMovs, bool enDerecha);
-
     void jugadasValidas(vector<vector<Movimiento>> &posiblesI, vector<vector<Movimiento>> &posiblesD);
 
-    unsigned int puntaje();
+    unsigned int puntaje(Genoma genoma, bool enDerecha);
 
     // Imprime estado, primero izquierda, despues derecha
     friend std::ostream& operator<<(std::ostream& out, const Tablero &t);

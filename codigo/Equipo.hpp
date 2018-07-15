@@ -7,11 +7,10 @@
 
 #include "Movimiento.hpp"
 #include "Tablero.hpp"
+#include "extras.hpp"
 
 using namespace std;
 
-
-typedef vector<int> Genoma;
 
 class Equipo {
 public:

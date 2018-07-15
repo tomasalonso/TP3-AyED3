@@ -302,52 +302,39 @@ std::ostream& operator<<(std::ostream& out, const Tablero &t) {
 }
 
 // TODO
-unsigned int Tablero::puntaje() { // evalua tablero dado posible combinacion de movs
-    return 0;
-//     vector<int> mediciones(10);     // puede variar el 10
-//     int puntaje = 0;
+// evalua tablero dado posible combinacion de movs
+unsigned int Tablero::puntaje(Genoma genoma, bool enDerecha) {
+    vector<int> mediciones(10);     // puede variar el 10
+    int puntaje = 0;
 
-//     // para cada jugador mío
-//         vector<unsigned int> dist = _tablero.distJugadorAlArco(_en_derecha);
-//         mediciones[0] = dist[0];
-//         mediciones[1] = dist[1];
-//         mediciones[2] = dist[2];
+    // para cada jugador mío
+    vector<unsigned int> dist = distJugadorAlArco(enDerecha);
+    mediciones[0] = dist[0];
+    mediciones[1] = dist[1];
+    mediciones[2] = dist[2];
 
+    mediciones[3] = distPelotaArco(enDerecha);
+    int pose = 0;
 
-//     // if(_en_derecha){
+    // // cercanía rival cambia si tengo o no la pelota
+    // // Si tengo la pelota
+    // if(pelotaEnPosesion() &&
+    //    ((!enDerecha && jugadorPelota().id() < 3) ||
+    //     (enDerecha && jugadorPelota().id() >= 3)    )) {
+    //     pose = genoma.size()/2;
+    //     mediciones[4] = cercaniaARival(Jugador&, true);
+    // } else {
+    //     pose = 0;
+    //     mediciones[4] = cercaniaARival(Jugador&, false);
+    // }
 
+    // mediciones[5] = areaCubierta(bool _en_derecha);
 
-//     //     mediciones[0] = _tablero.distJugadorAlArco(_jugadoresD[0]);
-//     //     mediciones[1] = _tablero.distJugadorAlArco(_jugadoresD[1]);
-//     //     mediciones[2] = _tablero.distJugadorAlArco(_jugadoresD[2]);
-//     // } else {
-//     //     mediciones[0] = _tablero.distJugadorAlArco(_jugadoresI[0]);
-//     //     mediciones[1] = _tablero.distJugadorAlArco(_jugadoresI[1]);
-//     //     mediciones[2] = _tablero.distJugadorAlArco(_jugadoresI[2]);
+    // for (int i = 0 ; i < (int)genoma.size()/2; i++) {      // asume misma longitud
+    //     puntaje += _genoma[i+pose] * mediciones[i];
+    // }
 
-//     // }
-//     mediciones[3] = _tablero.distPelotaArco(_en_derecha);
-//     int pose = 0;
-
-//     // cercanía rival cambia si tengo o no la pelota
-//     // Si tengo la pelota
-//     if(_tablero.pelotaEnPosesion() &&
-//                         ((!_en_derecha && _tablero.jugadorPelota().id() < 3) ||
-//                          (_en_derecha && _tablero.jugadorPelota().id() >= 3)    )) {
-//         pose = _genoma.size()/2;
-//         // mediciones[4] = cercaniaARival(Jugador&, true);
-//     } else {
-//         pose = 0;
-//         // mediciones[4] = cercaniaARival(Jugador&, false);
-//     }
-
-//     // mediciones[5] = areaCubierta(bool _en_derecha);
-
-//     for (int i = 0 ; i < (int)_genoma.size()/2; i++) {      // asume misma longitud
-//         puntaje += _genoma[i+pose] * mediciones[i];
-//     }
-
-//     return puntaje;
+    return puntaje;
 }
 
 void Tablero::jugadasValidas(vector<vector<Movimiento>> &posiblesI,
@@ -481,11 +468,13 @@ unsigned int Tablero::cercaniaARival(const Jugador &j) const {
         _jugadoresD : _jugadoresI;
 
     unsigned int min = distancia(x, y,
-                                 rivales[0].actual().x(), rivales[0].actual().y());
+                                 rivales[0].actual().x(),
+                                 rivales[0].actual().y());
     // Por cada rival contrario, ver la distancia con el rival
-    for (size_t i = 1; i < rivales.size(); i++) {
+    for (unsigned int i = 1; i < rivales.size(); i++) {
         const unsigned int dist = distancia(x, y,
-                                     rivales[i].actual().x(), rivales[i].actual().y());
+                                     rivales[i].actual().x(),
+                                     rivales[i].actual().y());
 
         if (dist < min) {
             min = dist;
