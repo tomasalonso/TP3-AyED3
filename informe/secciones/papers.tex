@@ -3,13 +3,13 @@
 Para la siguiente sección leímos tres publicaciones académicas que utilizan el esquema de algoritmos genéticos para optimizar parámetros relacionados con los modelados de los distintos problemas que presentan. Se aplican sobre, por ejemplo, planeamiento de almacenamientos logísticos\cite{warehouse}, agentes que aprenden a jugar al Mario\cite{mario} y modelos epidémicos que pretenden detener la proliferación de enfermedades\cite{epidemic}. Mientras leíamos estas publicaciones (y mientras decidíamos cuáles leer entre un mar de títulos interesantes) comprendimos que los algoritmos genéticos son aplicables a variadas ramas del conocimiento. Entendimos también que los resultados obtenidos dependen fuertemente de buenas decisiones a la hora de instanciar todas las partes de este esquema. Resulta imprescindible determinar una función de \emph{fitness} adecuada, que contemple las variables necesarias y ajustarla a medida que se conozcan los primeros resultados de la experimentación hasta obtener una que permita lograr buenos resultados.
 
 
-Playing Mario using advanced AI techniques:
+\subsubsection*{Playing Mario using advanced AI techniques:}
 
 Con un algoritmo genético buscaron optimizar los pesos de una red neuronal (es como si fuera una calibración) que decide las jugadas basándose en el estado del entorno de Mario. Las salidas de esta red representan las cinco posibles teclas que pueden usarse para la siguiente jugada.
 Este estado de entorno tiene 14 parámetros, que dan información sobre la poscición de los obstáculos/enemigos.
 En el paper se discuten distintos parámetros a tomar en cuenta para la función de \emph{fitness} y ciertos obstáculos como la generalización del entrenamiento a más niveles del juego, pues las poblaciones del algoritmo genético iban olvidando cómo evitar enemigos anteriores una vez que llegaban a niveles más avanzados.
 
-A Genetic Algorithm for Finding an Optimal Curing Strategy for Epidemic Spreading in Weighted Networks:
+\subsubsection*{A Genetic Algorithm for Finding an Optimal Curing Strategy for Epidemic Spreading in Weighted Networks:}
 
 Esta publicación presenta el problema de evitar la expansión de una epidema buscando el menor costo. Se basa en modelos epidémicos modelados sobre grafos pesados, que además del uso medicinal tienen aplicaciones en redes sociales y telecomunicaciones. Por ejemplo, una epidemia en una red social podría se la difusión de una noticia falsa.
 
