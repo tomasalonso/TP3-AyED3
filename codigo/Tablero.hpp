@@ -29,7 +29,7 @@ public:
     bool pelotaEnPosesion() const;
     const Jugador& jugadorPelota() const;
     Posicion posPelota() const;
-    // const vector<Jugador>& verJugadores(bool enDerecha) const;
+    const vector<Jugador>& verJugadores(const bool enDerecha) const;
 
 
     // Mover al estado siguiente
@@ -40,11 +40,9 @@ public:
     void actualizar(const vector<Movimiento> &movsI,
                     const vector<Movimiento> &movsD);
 
-    void actualizar(vector<Posicion> &posA,
-            vector<Posicion> &posB, bool &enPos,
-            enum Direccion &posesor, Posicion &posPelota,
-            unsigned int &jPelota);
-
+    void actualizar(const vector<Posicion> &posA, const vector<Posicion> &posB,
+                             const bool &enPos, const enum Direccion &posesor,
+                    const Posicion &posPelota, const unsigned int &jPelota);
 
     bool esJugadaValida(vector<Movimiento> posiblesMovs, bool enDerecha);
 
@@ -55,11 +53,11 @@ public:
     // Imprime estado, primero izquierda, despues derecha
     friend std::ostream& operator<<(std::ostream& out, const Tablero &t);
 
-    // // Metodos para evaluarTablero
-    // vector<unsigned int> distJugadorAlArco(const bool enDerecha) const;
-    // unsigned int distPelotaArco(const bool enDerecha) const;
-    // unsigned int cercaniaARival(const Jugador &j) const;
-    // float areaCubierta(const bool enDerecha) const;
+    // Metodos para evaluarTablero
+    vector<unsigned int> distJugadorAlArco(const bool enDerecha) const;
+    unsigned int distPelotaArco(const bool enDerecha) const;
+    unsigned int cercaniaARival(const Jugador &j) const;
+    float areaCubierta(const bool enDerecha) const;
 
 private:
     bool hayGol();
