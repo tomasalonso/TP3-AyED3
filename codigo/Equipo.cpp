@@ -1,25 +1,14 @@
 #include "Equipo.hpp"
 
 #include <cassert>
-
+#include "extras.hpp"
 
 Equipo::Equipo(Genoma genoma, bool enDerecha) : _genoma(genoma), _enDerecha(enDerecha) {}
 
-// const Jugador& Equipo::jugador(size_t i) const {
-//     assert(i < 6);
-//     if(i/3) {
-//         return _tablero.verJugadores(false)[i%3];
-//     }
-
-//     return _tablero.verJugadores(true)[i%3];
-// }
 
 bool Equipo::enDerecha() {
     return _enDerecha;
 }
-
-// void Equipo::reiniciar(bool metiGol) {
-// }
 
 // actualiza tablero, prueba jugadas y devuelve la mejor
 vector<Movimiento> Equipo::turno(Tablero &t) {
@@ -53,25 +42,6 @@ vector<Movimiento> Equipo::turno(Tablero &t) {
     return mejorJugada;
 }
 
-vector<vector<Movimiento> > combinar(vector<vector<Movimiento> > ms) {
-    if (ms.empty()) {
-        return vector<vector<Movimiento> >();
-    }
-
-    vector<vector<Movimiento> > res;
-
-    vector<Movimiento> back = ms.back();
-    ms.pop_back();
-
-    for (Movimiento& m : back) {
-        res += combinar(ms);
-        for (auto mov : ) {
-            mov.push_back(m);
-        }
-    }
-
-    return 
-}
 
 // Genera TODAS las jugadas posibles
 void Equipo::genJugadas1(Tablero &t, vector<vector<Movimiento> > &jugadasPropias, vector<vector<Movimiento> > &jugadasContrario) {
@@ -88,103 +58,12 @@ void Equipo::genJugadas1(Tablero &t, vector<vector<Movimiento> > &jugadasPropias
     }
 
 
-    vector<vector<Movimiento>> jugadas({{Movimiento(QUIETO),
-                                         Movimiento(QUIETO),
-                                         Movimiento(QUIETO)}});
+    jugadasContrario.push_back(vector<Movimiento>(
+                                                  {Movimiento(QUIETO),
+                                                   Movimiento(QUIETO),
+                                                   Movimiento(QUIETO)})
+                               );
 
-    for (unsigned int i = 0; i < jugadasPropias.size(); i++) {
-        vector<Movimiento> jugada;
-        for (zip(jugadasPropias)) {
-            
-        }
-    }
+    jugadasPropias = combinar(movValidosPropios);
 
-
-    // // Por cada jugada jugador 1
-    // for (int i = 0; i < totalDirs; ++i) {
-
-    //     // Por cada jugada jugador 2
-    //     for (int j = 0; j < totalDirs; ++j) {
-
-    //         // Por cada jugada jugador 3
-    //         for (int k = 0; k < totalDirs; ++k) {
-
-    //             // Todos se mueven
-    //             vector<Movimiento> jugada = { Movimiento((Direccion)i),
-    //                                           Movimiento((Direccion)j),
-    //                                           Movimiento((Direccion)k)  };
-
-    //             if(t.esJugadaValida(jugada)) {
-    //                 jugadas.push_back(jugada);
-    //             }
-
-    //             // Si alguno tiene la pelota, considero los posibles pases
-    //             if(t.pelotaEnPosesion()) {
-
-    //                 int idJugadorPelota = (int)(t.jugadorPelota()).id();
-    //                 if (idJugadorPelota < 4) {   // es de mi equipo
-
-    //                     // Por cada posible direccion
-    //                     for (int dir = 1; dir < 9; ++dir) {
-
-    //                         // Pongo esto para no probar más intensidades de las necesarias en una misma dirección
-    //                         bool intensidadTope = false;
-    //                         // Por cada posible intensidad
-    //                         for (int inten = 0; inten < filas/2 && !intensidadTope ; ++inten) {
-
-    //                             jugada[idJugadorPelota] = Movimiento((Direccion)dir, inten);
-    //                             if(t.esJugadaValida(jugada)) {
-    //                                 jugadas.push_back(jugada);
-    //                             } else {
-    //                                 intensidadTope = true;
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-
-    //     }
-    // }
-
-    return jugadas;
 }
-
-// void Equipo::imprimirMovs (vector<Movimiento>& movs) {
-//     for (int i = 0; i < (int)movs.size(); i++) {
-//         if (movs[i].moverse) {
-//             printf("%d %s %d\n", i, "MOVIMIENTO", (int)movs[i].dir);
-//         } else {
-//             printf("%d %s %d %d\n", i, "PASE", (int)movs[i].dir, movs[i].intensidad);
-//         }
-//     }
-// }
-
-// vector<tuple<int, int, int, string> > leerEstadoArbitro(iostream& in) {
-//     vector<tuple<int, int, int, string> > estados (6);
-//     bool leerPelota = true;
-//     int id, fila, col;
-//     string posesion;
-//     for (int i = 0; i < 6; ++i) {
-
-//         in >> id >> fila >> col >> posesion;
-//         estados[i] = make_tuple(id, fila, col, posesion);
-
-//         leerPelota = leerPelota && (posesion == "SIN_PELOTA");
-//     }
-//     if (leerPelota) {
-//         in >> fila >> col;
-//         estados[6] = make_tuple(-1, fila, col, "pelota");
-//     }
-//     return estados;
-// }
-
-// std::ostream& operator<<(std::ostream& out, const Equipo &e) {
-//     // Envía movimiento de cada jugador
-//      // actualiza tablero, prueba jugadas y devuelve la mejor
-//     unsigned int i = 0;
-//     for (Movimiento& m : turno( generarPosiblesJugadas )) {
-//         out << i << " " << m << std::endl;
-//         i++;
-//     }
-// }

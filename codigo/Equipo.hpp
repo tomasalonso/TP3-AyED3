@@ -27,14 +27,6 @@ public:
     // Para entrenador
     const Jugador& jugador(size_t i) const;
     bool enDerecha();
-    // void reiniciar();
-
-    // COMUNICACION CON ARBITRO
-    //-- Toma estado --
-    // vector<tuple<int, int, int, string> > leerEstadoArbitro(iostream in);
-
-    //-- Imprime su jugada --
-    // void imprimirMovs (vector<Movimiento>& movs);
 
 private:
     Genoma _genoma;

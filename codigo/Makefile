@@ -4,10 +4,10 @@ OPTIMIZATIONS= -O2 -march=native
 
 all: tp3 elizondo
 
-elizondo: elizondo.o Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o
+elizondo: elizondo.o Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-tp3: tp3.o Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o
+tp3: tp3.o Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o: %.cpp
