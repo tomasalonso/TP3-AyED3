@@ -1,0 +1,23 @@
+\subsection{Algortimos genéticos: breve contexto}
+
+Para la siguiente sección leímos tres publicaciones académicas que utilizan el esquema de algoritmos genéticos para optimizar parámetros relacionados con los modelados de los distintos problemas que presentan. Se aplican sobre, por ejemplo, planeamiento de almacenamientos logísticos\cite{warehouse}, agentes que aprenden a jugar al Mario\cite{mario} y modelos epidémicos que pretenden detener la proliferación de enfermedades\cite{epidemic}. Mientras leíamos estas publicaciones (y mientras decidíamos cuáles leer entre un mar de títulos interesantes) comprendimos que los algoritmos genéticos son aplicables a variadas ramas del conocimiento. Entendimos también que los resultados obtenidos dependen fuertemente de buenas decisiones a la hora de instanciar todas las partes de este esquema. Resulta imprescindible determinar una función de \emph{fitness} adecuada, que contemple las variables necesarias y ajustarla a medida que se conozcan los primeros resultados de la experimentación hasta obtener una que permita lograr buenos resultados.
+
+
+Playing Mario using advanced AI techniques:
+
+Con un algoritmo genético buscaron optimizar los pesos de una red neuronal (es como si fuera una calibración) que decide las jugadas basándose en el estado del entorno de Mario. Las salidas de esta red representan las cinco posibles teclas que pueden usarse para la siguiente jugada.
+Este estado de entorno tiene 14 parámetros, que dan información sobre la poscición de los obstáculos/enemigos.
+En el paper se discuten distintos parámetros a tomar en cuenta para la función de \emph{fitness} y ciertos obstáculos como la generalización del entrenamiento a más niveles del juego, pues las poblaciones del algoritmo genético iban olvidando cómo evitar enemigos anteriores una vez que llegaban a niveles más avanzados.
+
+A Genetic Algorithm for Finding an Optimal Curing Strategy for Epidemic Spreading in Weighted Networks:
+
+Esta publicación presenta el problema de evitar la expansión de una epidema buscando el menor costo. Se basa en modelos epidémicos modelados sobre grafos pesados, que además del uso medicinal tienen aplicaciones en redes sociales y telecomunicaciones. Por ejemplo, una epidemia en una red social podría se la difusión de una noticia falsa.
+
+El modelo asume que un nodo puede infectarse varias veces luego de recuperarse y por teoremas previos se cuenta con que existe un valor umbral tal que si se pasa, la epidemia quedará siempre en la red. Es decir, cada nodo va a infectar a otro y cuando se recuperen van a volver infectarse indefinidamente. Este umbral se traduce en una propiedad que deben cumplir los parámetros que más adelante se explican.
+
+Los nodos tienen una tasa o velocidad de recuperación luego de una infección, que puede ser modificada, por ejemplo, distribuyendo más vacunas a la ciudad representada por ese nodo. Tienen además un costo asociado, que puede ser el costo de distribución o de la cantidad de vacunas necesarias. Lo que se busca entonces es un conjunto de tasas de recuperación, una para cada nodo, tal que cumplan la propiedad relacionada al umbral epidémico y a la vez minimicen el costo.
+
+Se utiliza un algoritmo genético para encontrar un buen valor para estas tasas. Muchas de las partes, como la función de cruzamiento, fueron utilizadas desde la herramienta MATLAB.
+
+Los resultados, evaluados sobre redes reales y sintéticas, se compararon con la herramienta actual utilizada para este tipo de problemas. Se muestran en casi todos los casos costos mucho menores obtenidos con el algoritmo genético.
+
