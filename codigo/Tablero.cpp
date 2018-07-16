@@ -310,35 +310,55 @@ std::ostream& operator<<(std::ostream& out, const Tablero &t) {
 // TODO
 // evalua tablero dado posible combinacion de movs
 unsigned int Tablero::puntaje(Genoma genoma, bool enDerecha) {
-    vector<int> mediciones(10);     // puede variar el 10
-    int puntaje = 0;
-
+    vector<int> mediciones;     // puede variar el 10
+    unsigned int puntaje = 0;
+    unsigned int index = 0;
+    unsigned int cantJug = _jugadoresI.size();
+    const bool enPosesion = pelotaEnPosesion() &&
+        ((!enDerecha && jugadorPelota().id() < 3) ||
+        (enDerecha && jugadorPelota().id() >= 3));
     // para cada jugador mío
     vector<unsigned int> dist = distJugadorAlArco(enDerecha);
-    mediciones[0] = dist[0];
-    mediciones[1] = dist[1];
-    mediciones[2] = dist[2];
 
-    mediciones[3] = distPelotaArco(enDerecha);
-    int pose = 0;
-
-    // cercanía rival cambia si tengo o no la pelota
-    // Si tengo la pelota
-    if(pelotaEnPosesion() &&
-       ((!enDerecha && jugadorPelota().id() < 3) ||
-        (enDerecha && jugadorPelota().id() >= 3)    )) {
-        pose = genoma.size()/2;
-        mediciones[4] = cercaniaARival(Jugador&, true);
+    if (enPosesion) {
+        // primeros 3 distAlArco si tengo la pelota
+        for (const auto& e : dist) {
+            puntaje += e * genoma[index++];
+        }
+        index += cantJug; // salteo los siguientes 3
     } else {
-        pose = 0;
-        mediciones[4] = cercaniaARival(Jugador&, false);
+        // segundos 3 distAlArco si no tengo la pelota
+        index += cantJug; // salteo los primeros 3
+        for (const auto& e : dist) {
+            puntaje += e * genoma[index++];
+        }
     }
 
-    mediciones[5] = areaCubierta(bool _en_derecha);
-
-    for (int i = 0 ; i < (int)genoma.size()/2; i++) {      // asume misma longitud
-        puntaje += _genoma[i+pose] * mediciones[i];
+    const auto d = distPelotaArco(enDerecha);
+    if (enPosesion) {
+        puntaje += d * genoma[index++];
+        index++; // salteo el siguiente 1
+    } else {
+        index++; // salteo el primero 1
+        puntaje += d * genoma[index++];
     }
+
+    dist = cercaniaARival(enDerecha);
+    if (enPosesion) {
+        for (const auto& j : dist) {
+            puntaje += e * genoma[index++];
+        }
+        index += cantJug;
+    } else {
+        for (const auto& e : dist) {
+            puntaje += e * genoma[index++];
+        }
+        index += cantJug;
+    }
+
+    puntaje += areaCubierta(enDerecha) * genoma[index++];
+
+
 
     return puntaje;
 }
@@ -414,13 +434,14 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
             for (int inten = 1; inten <= _m/2 ; inten++) {
                 Posicion pos = _pelota.actual();
                 const Movimiento pase_impar = Movimiento(Direccion(dir), inten*2-1);
-                const Movimiento pase_par = Movimiento(Direccion(dir), 1);
+                const Movimiento pase_par = Movimiento(Direccion(dir), inten*2);
 
                 pos.mover(pase_impar);
                 const bool enArcoImpar =
                     ((_m/2)-1 <= pos.y() && pos.y() <= (_m/2)+1) &&
                     (pos.x() == -1 || pos.x() == _n-1);
 
+                pos = _pelota.actual();
                 pos.mover(pase_par);
                 const bool enArcoPar =
                     ((_m/2)-1 <= pos.y() && pos.y() <= (_m/2)+1) &&
@@ -433,8 +454,8 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
                 if (afuera && (!enArcoImpar || !enArcoPar)) {
                     break;
                 }
-                // si no se va de la cancha
-                movs.push_back(pase);
+                // sis no se va de la cancha
+                movs.push_back(pase_par);
             }
         }
     }
