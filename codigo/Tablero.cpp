@@ -51,6 +51,10 @@ const vector<Jugador>& Tablero::verJugadores(const bool enDerecha) const {
     return _jugadoresI;
 }
 
+pair<unsigned int, unsigned int> Tablero::goles() {
+    return make_pair(goles_A, goles_B);
+}
+
 bool Tablero::hayGol() {
     // pre: movimiento valido (la pelota no se va afuera de la cancha)
     return (_pelota.siguiente().x() < 0 || _pelota.siguiente().x() > _n);

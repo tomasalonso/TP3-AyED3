@@ -32,6 +32,8 @@ public:
     Posicion posPelota() const;
     const vector<Jugador>& verJugadores(const bool enDerecha) const;
 
+    pair<unsigned int, unsigned int> goles();
+
 
     // Mover al estado siguiente
     void mover(const vector<Movimiento> &movsI,
