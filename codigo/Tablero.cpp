@@ -322,23 +322,23 @@ unsigned int Tablero::puntaje(Genoma genoma, bool enDerecha) {
     mediciones[3] = distPelotaArco(enDerecha);
     int pose = 0;
 
-    // // cercanía rival cambia si tengo o no la pelota
-    // // Si tengo la pelota
-    // if(pelotaEnPosesion() &&
-    //    ((!enDerecha && jugadorPelota().id() < 3) ||
-    //     (enDerecha && jugadorPelota().id() >= 3)    )) {
-    //     pose = genoma.size()/2;
-    //     mediciones[4] = cercaniaARival(Jugador&, true);
-    // } else {
-    //     pose = 0;
-    //     mediciones[4] = cercaniaARival(Jugador&, false);
-    // }
+    // cercanía rival cambia si tengo o no la pelota
+    // Si tengo la pelota
+    if(pelotaEnPosesion() &&
+       ((!enDerecha && jugadorPelota().id() < 3) ||
+        (enDerecha && jugadorPelota().id() >= 3)    )) {
+        pose = genoma.size()/2;
+        mediciones[4] = cercaniaARival(Jugador&, true);
+    } else {
+        pose = 0;
+        mediciones[4] = cercaniaARival(Jugador&, false);
+    }
 
-    // mediciones[5] = areaCubierta(bool _en_derecha);
+    mediciones[5] = areaCubierta(bool _en_derecha);
 
-    // for (int i = 0 ; i < (int)genoma.size()/2; i++) {      // asume misma longitud
-    //     puntaje += _genoma[i+pose] * mediciones[i];
-    // }
+    for (int i = 0 ; i < (int)genoma.size()/2; i++) {      // asume misma longitud
+        puntaje += _genoma[i+pose] * mediciones[i];
+    }
 
     return puntaje;
 }
@@ -413,18 +413,24 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
             // Por cada posible intensidad
             for (int inten = 1; inten <= _m/2 ; inten++) {
                 Posicion pos = _pelota.actual();
-                const Movimiento pase = Movimiento(Direccion(dir), inten*2);
+                const Movimiento pase_impar = Movimiento(Direccion(dir), inten*2-1);
+                const Movimiento pase_par = Movimiento(Direccion(dir), 1);
 
-                pos.mover(pase);
-
-                const bool enArco =
+                pos.mover(pase_impar);
+                const bool enArcoImpar =
                     ((_m/2)-1 <= pos.y() && pos.y() <= (_m/2)+1) &&
                     (pos.x() == -1 || pos.x() == _n-1);
+
+                pos.mover(pase_par);
+                const bool enArcoPar =
+                    ((_m/2)-1 <= pos.y() && pos.y() <= (_m/2)+1) &&
+                    (pos.x() == -1 || pos.x() == _n-1);
+
                 const bool afuera =
                     0 > pos.x() || pos.x() > _n-1 ||
                     0 > pos.y() || pos.y() > _m-1;
 
-                if (afuera && !enArco) {
+                if (afuera && (!enArcoImpar || !enArcoPar)) {
                     break;
                 }
                 // si no se va de la cancha

@@ -59,9 +59,6 @@ void Equipo::genJugadas1(Tablero &t,
     } else {
         t.jugadasValidas(movValidosPropios, movValidosContrario);
     }
-    // for (auto& e: movValidosPropios) {
-    //     cout << e << endl;
-    // }
 
     jugadasContrario.push_back(vector<Movimiento>(
                                                   {Movimiento(QUIETO),
