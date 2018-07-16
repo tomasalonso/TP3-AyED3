@@ -6,13 +6,17 @@
 
 int main()
 {
-    // poblacion_inicial(1);
+    // auto poblacion = poblacion_inicial(2);
+    // fitness_puntos(poblacion,10,5, 5);
     return 0;
 }
 Genoma hacer_genetico(  unsigned int generaciones,
                         unsigned int tamanio_poblacion,
-                        function<vector<double>(vector<Genoma> &poblacion)> fitness,
-                        function<pair<vector<Genoma>,vector<Genoma> >(vector<Genoma> &poblacion, vector<double> &puntajes)> seleccion,
+                        unsigned int n,
+                        unsigned int m,
+                        unsigned int total,
+                        function<vector<int>(vector<Genoma> &poblacion)> fitness,
+                        function<pair<vector<Genoma>,vector<Genoma> >(vector<Genoma> &poblacion, vector<int> &puntajes)> seleccion,
                         function<Genoma(Genoma &individuo)> mutacion,
                         function<Genoma(Genoma &a, Genoma &b)> crossover ) {
 
@@ -22,7 +26,7 @@ Genoma hacer_genetico(  unsigned int generaciones,
     for (auto i = 1; i < generaciones; ++i) {
         generacion = generacion_siguiente;
 
-        vector<double> puntajes = fitness(generacion); // me ordena ambas puntajes y generación de mayor a menor puntaje
+        vector<int> puntajes = fitness(generacion); // me ordena ambas puntajes y generación de mayor a menor puntaje
 
         pair<vector<Genoma>,vector<Genoma> > divididos = seleccion(generacion, puntajes);
 
@@ -51,36 +55,68 @@ vector<Genoma> poblacion_inicial(unsigned int tamanio_poblacion) {
         for (int j = 0; j < genoma_size; ++j) {
             double rand_num = _distribucion(_generador);
             actual.push_back(rand_num);
-            // cout<<rand_num<<endl;
+            cout<<rand_num<<endl;
         }
         poblacion.push_back(actual);
     }
     return poblacion;
 }
 
-vector<double> fitness_goles(vector<Genoma> &poblacion){
-    vector<double> jugados(poblacion.size());
-    vector<double> goles(poblacion.size());
-    vector<double> ganados(poblacion.size());
+vector<int> fitness_puntos(vector<Genoma> &poblacion, unsigned int n,
+                                unsigned int m, unsigned int total){
+// CONTEMPLA EMPATES
+    vector<int> puntos(poblacion.size(), 0);
 
-    for (auto i = 0; i < poblacion.size(); i++) {
-        for (int j = i; j < count; ++j) {
-            jugar(poblacion[i],poblacion[j]);
+    for (unsigned int i = 0; i < poblacion.size(); i++) {
+        for (unsigned int j = i + 1; j < poblacion.size(); j++) {
+
+            pair<unsigned int, unsigned int> goles = jugar(poblacion[i],poblacion[j],n, m, total);
+
+            // PUNTUAR
+            if (goles.first > goles.second ) {
+                puntos[i]+= 3;
+            } else if (goles.first < goles.second) {
+                puntos[j]+= 3;
+            } else {
+                puntos[i]+= 1;
+                puntos[j]+= 1;
+            }
+            cout<< puntos[i]<<" , "<<puntos[j]<<endl;
         }
     }
 
-    return v;
+    return puntos;
 }
-vector<double> fitness_dif_goles(vector<Genoma> &poblacion){
-        vector<double> v;
-    return v;
+vector<int> fitness_dif_goles(vector<Genoma> &poblacion, unsigned int n,
+                                unsigned int m, unsigned int total){
+
+// NO CONTEMPLA EMPATES. Si gana le doy un punto más.
+    vector<int> dif_goles(poblacion.size(), 0);
+
+    for (unsigned int i = 0; i < poblacion.size(); i++) {
+        for (unsigned int j = i; j < poblacion.size(); ++j) {
+            pair<unsigned int, unsigned int> goles = jugar(poblacion[i],poblacion[j],n, m, total);
+
+            // PUNTUAR
+            if (goles.first > goles.second ) {
+                dif_goles[i]++;
+            } else if (goles.first < goles.second) {
+                dif_goles[j]++;
+            }
+
+            dif_goles[i] += (goles.first-goles.second); // mis goles menos los del oponente
+            dif_goles[j] += (goles.second-goles.first);
+        }
+    }
+
+    return dif_goles;
 }
 
-pair<vector<Genoma>,vector<Genoma> > seleccion_A(vector<Genoma> &poblacion, vector<double> &puntajes){
+pair<vector<Genoma>,vector<Genoma> > seleccion_A(vector<Genoma> &poblacion, vector<int> &puntajes){
     std::vector<Genoma> v;
     return make_pair(v,v);
 }
-pair<vector<Genoma>,vector<Genoma> > seleccion_B(vector<Genoma> &poblacion, vector<double> &puntajes){
+pair<vector<Genoma>,vector<Genoma> > seleccion_B(vector<Genoma> &poblacion, vector<int> &puntajes){
     std::vector<Genoma> v;
     return make_pair(v,v);
 }
@@ -90,7 +126,7 @@ Genoma mutacion_A(Genoma &individuo){
     return v;
 }
 Genoma mutacion_B(Genoma &individuo){
-        vector<double> v;
+    vector<double> v;
     return v;
 }
 
@@ -100,29 +136,29 @@ vector<Genoma> hacer_crossover(vector<Genoma> &poblacion, function<Genoma(Genoma
 }
 
 Genoma crossover_A(Genoma &a,Genoma &b){
-        vector<double> v;
+    vector<double> v;
     return v;
 }
-Genoma crossover_B(Genoma &a,Genoma &b){    vector<double> v;
+Genoma crossover_B(Genoma &a,Genoma &b){
+    vector<double> v;
     return v;}
 
-void jugar(Genoma gI, Genoma gD, int n, int m, int total) {
-
+pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m, int total) {
 
     const vector<Jugador> jI({
-                          Jugador(0, Posicion(1,1), gI[prob0]),
-                          Jugador(1, Posicion(2,2), gI[prob1]),
-                          Jugador(2, Posicion(3,3), gI[prob2])
+                          Jugador(0, Posicion(1,1), jugA[prob0]),
+                          Jugador(1, Posicion(2,2), jugA[prob1]),
+                          Jugador(2, Posicion(3,3), jugA[prob2])
     });
     const vector<Jugador> jD({
-                          Jugador(0, Posicion(6,1), gD[prob0]),
-                          Jugador(1, Posicion(7,2), gD[prob1]),
-                          Jugador(2, Posicion(8,3), gD[prob2])
+                          Jugador(0, Posicion(6,1), jugB[prob0]),
+                          Jugador(1, Posicion(7,2), jugB[prob1]),
+                          Jugador(2, Posicion(8,3), jugB[prob2])
     });
 
 
-    Equipo equipoI(gI, false);
-    Equipo equipoD(gD, true);
+    Equipo equipoI(jugA, false);
+    Equipo equipoD(jugB, true);
 
     Tablero tablero(m, n, total, jI, jD);
 
@@ -133,4 +169,6 @@ void jugar(Genoma gI, Genoma gD, int n, int m, int total) {
                            );
         cout << tablero;
     }
+
+    return tablero.goles();
 }
