@@ -105,14 +105,17 @@ void Tablero::mover(const vector<Movimiento> &movsI, const vector<Movimiento> &m
 
 void Tablero::moverJug(Jugador& j, Movimiento m) {
     // si tiene la pelota
-    if (&j == _jugPelota) {
-        if (m.esPase()) {
-            _pelota.patear(m);
-            m = Movimiento(QUIETO);
-        } else {
-            _pelota.patear(Movimiento(m.dir(), 1)); // Mueve la pelota con el jugador
+    if (m.dir() != QUIETO) {
+        if (&j == _jugPelota) {
+            if (m.esPase()) {
+                _pelota.patear(m);
+                m = Movimiento(QUIETO);
+            } else {
+                _pelota.patear(Movimiento(m.dir(), 1)); // Mueve la pelota con el jugador
+            }
         }
     }
+
     j.mover(m);
 }
 
@@ -276,9 +279,12 @@ bool Tablero::chequearGol(const Posicion posPelota) {
 
 
 std::ostream& operator<<(std::ostream& out, const Tablero &t) {
+    cout << "m: " << t._m << endl;
+    cout << "n: " << t._n << endl;
+
     for (const Jugador& j : t._jugadoresI) {
-        out << j.id() << " " << j.siguiente().x() << " " << j.siguiente().y() << " ";
-        if (&j == t._jugPelotaSig) {
+        out << j.id() << " " << j.actual().x() << " " << j.actual().y() << " ";
+        if (&j == t._jugPelota) {
             out << "CON_PELOTA";
         } else {
             out << "SIN_PELOTA";
@@ -286,16 +292,16 @@ std::ostream& operator<<(std::ostream& out, const Tablero &t) {
         cout << endl;
     }
     for (const Jugador& j : t._jugadoresD) {
-        out << j.id() << " " << j.siguiente().x() << " " << j.siguiente().y() << " ";
-        if (&j == t._jugPelotaSig) {
+        out << j.id() << " " << j.actual().x() << " " << j.actual().y() << " ";
+        if (&j == t._jugPelota) {
             out << "CON_PELOTA";
         } else {
             out << "SIN_PELOTA";
         }
         out << endl;
     }
-    if (t._jugPelotaSig == nullptr) {
-        out << t._pelota.siguiente().x() << " " << t._pelota.siguiente().y() << endl;
+    if (t._jugPelota == nullptr) {
+        out << t._pelota.actual().x() << " " << t._pelota.actual().y() << endl;
     }
 
     return out;
@@ -342,11 +348,11 @@ void Tablero::jugadasValidas(vector<vector<Movimiento>> &posiblesI,
     posiblesI.clear();
     posiblesD.clear();
 
+    posiblesI.resize(_jugadoresI.size());
+    posiblesD.resize(_jugadoresD.size());
+
     // por cada jugador de I
     for (unsigned int i = 0; i < _jugadoresI.size(); i++) {
-
-        posiblesI.push_back(vector<Movimiento>());
-        posiblesD.push_back(vector<Movimiento>());
 
         jugadasValidasJug(_jugadoresI[i], posiblesI[i]);
         jugadasValidasJug(_jugadoresD[i], posiblesD[i]);
@@ -354,9 +360,9 @@ void Tablero::jugadasValidas(vector<vector<Movimiento>> &posiblesI,
 }
 
 void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
-    const bool derecha = j.actual().x()+1 <= _m-1;
+    const bool derecha = j.actual().x()+1 <= _n-1;
     const bool izquierda = j.actual().x()-1 >= 0;
-    const bool arriba = j.actual().y()+1 <= _n-1;
+    const bool arriba = j.actual().y()+1 <= _m-1;
     const bool abajo = j.actual().y()+1 >= 0;
     const bool alturaArco = (_m/2)-1 <= j.actual().y() && j.actual().y() <= (_m/2)+1;
     const bool arribaArco = j.actual().y() == (_m/2)+2;
@@ -405,15 +411,20 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
         }
         for (unsigned int dir = 1; dir <= 8; dir++) {
             // Por cada posible intensidad
-            for (int inten = 1; inten < _m/2 ; inten++) {
+            for (int inten = 1; inten <= _m/2 ; inten++) {
                 Posicion pos = _pelota.actual();
                 const Movimiento pase = Movimiento(Direccion(dir), inten*2);
 
                 pos.mover(pase);
 
-                // si se fue de la cancha, terminar
-                if ((0 > pos.x() && pos.x() > _n-1) ||
-                    (0 > pos.y() && pos.y() > _m-1)) {
+                const bool enArco =
+                    ((_m/2)-1 <= pos.y() && pos.y() <= (_m/2)+1) &&
+                    (pos.x() == -1 || pos.x() == _n-1);
+                const bool afuera =
+                    0 > pos.x() || pos.x() > _n-1 ||
+                    0 > pos.y() || pos.y() > _m-1;
+
+                if (afuera && !enArco) {
                     break;
                 }
                 // si no se va de la cancha

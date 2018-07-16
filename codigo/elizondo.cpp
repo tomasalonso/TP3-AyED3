@@ -1,3 +1,5 @@
+#include <fstream>
+
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -21,6 +23,8 @@ int main() {
     int n;
     unsigned int total;
     enum Direccion pos;
+    ofstream f;
+    f.open ("example.txt");
 
     cin >> n >> m >> total >> pos;
 
@@ -49,9 +53,9 @@ int main() {
     }
 
     // HACER: leer de parámetros
-    const vector<Posicion> inicialA({Posicion(1,1),
-                                     Posicion(2,2),
-                                     Posicion(3,3)
+    const vector<Posicion> inicialA({Posicion(6,6),
+                                     Posicion(8,3),
+                                     Posicion(9,3)
                                     });
 
     // Arma jugadores primer equipo
@@ -89,16 +93,24 @@ int main() {
     vector<Jugador> jD((pos == IZQUIERDA) ? jB : jA);
 
     Tablero tablero(m, n, total, jI, jD);
-    // cout << tablero;
+    f << tablero << endl;
 
-    //while (!tablero.terminado()) {
+    while (!tablero.terminado()) {
         cout << equipoI.turno(tablero);
-        // leerEstado(cantJug, posA, posB, enPos,
-        //     posesor, posPelota, jPelota);
-        // tablero.actualizar(posA, posB, enPos,
-        //     posesor, posPelota, jPelota);
-        // cout << tablero;
-    //}
+        f << equipoI.turno(tablero) << endl;
+        f << "Hasta aca llego" << endl;
+
+        leerEstado(cantJug, posA, posB, enPos,
+            posesor, posPelota, jPelota);
+        for (auto a : posA)
+        f << a << endl;
+        for (auto a : posB)
+            f << a << endl;
+        f << enPos << endl;
+        tablero.actualizar(posA, posB, enPos,
+            posesor, posPelota, jPelota);
+    }
+    f.close();
 
     return 0;
 }
@@ -122,11 +134,9 @@ void leerEstado(const unsigned int cantJug,
     string s;
 
     enPos = false;
-    cout << cantJug << endl;
     for (unsigned int i = 0; i < cantJug; i++) {
         unsigned int j;
         cin >> j >> posA[i] >> s;
-        cout << i << endl;
         if (s == "CON_PELOTA") {
             enPos = true;
             jPelota = j;
@@ -137,7 +147,6 @@ void leerEstado(const unsigned int cantJug,
     for (unsigned int i = 0; i < cantJug; i++) {
         unsigned int j;
         cin >> j >> posB[i] >> s;
-        cout << i << endl;
         if (s == "CON_PELOTA") {
             enPos = true;
             jPelota = j;
@@ -146,9 +155,7 @@ void leerEstado(const unsigned int cantJug,
         }
     }
 
-    cout << "termine de leer, falta la pelota" << endl;
     if (!enPos) {
-        cout << "hasta los huevos" << endl;
         cin >> posPelota;
     }
 }

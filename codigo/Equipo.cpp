@@ -15,19 +15,20 @@ vector<Movimiento> Equipo::turno(Tablero &t) {
     vector<Movimiento> mejorJugada;
 
     vector<vector<Movimiento> > jugadasPropias;
-    vector<vector<Movimiento> > jugadasContrario({{Movimiento(QUIETO),
-                                                   Movimiento(QUIETO),
-                                                   Movimiento(QUIETO)}});
-
+    vector<vector<Movimiento> > jugadasContrario;
 
     genJugadas1(t, jugadasPropias, jugadasContrario);
 
-    // generamos de manera todos los movimientos
+    // for (auto j : jugadasPropias) {
+    //     cout << j << endl;
+    // }
+
+    // generamos todos los movimientos
     // (asumimos que el oponente se queda quieto)
     // @TO-DO: algo que pruebe menos jugadas de manera inteligente
     int puntajeMejor = -1;
-    for (auto &jPropia : jugadasPropias) {  // Devuelve todas válidas
-        for (auto &jContrario : jugadasContrario) {
+    for (const auto &jPropia : jugadasPropias) {  // Devuelve todas válidas
+        for (const auto &jContrario : jugadasContrario) {
             t.mover(jPropia, jContrario);
 
             const int puntajeActual = t.puntaje(_genoma, _enDerecha);
@@ -44,7 +45,9 @@ vector<Movimiento> Equipo::turno(Tablero &t) {
 
 
 // Genera TODAS las jugadas posibles
-void Equipo::genJugadas1(Tablero &t, vector<vector<Movimiento> > &jugadasPropias, vector<vector<Movimiento> > &jugadasContrario) {
+void Equipo::genJugadas1(Tablero &t,
+                         vector<vector<Movimiento> > &jugadasPropias,
+                         vector<vector<Movimiento> > &jugadasContrario) {
     vector<vector<Movimiento> > movValidosPropios;
     vector<vector<Movimiento> > movValidosContrario;
 
@@ -56,13 +59,15 @@ void Equipo::genJugadas1(Tablero &t, vector<vector<Movimiento> > &jugadasPropias
     } else {
         t.jugadasValidas(movValidosPropios, movValidosContrario);
     }
-
+    // for (auto& e: movValidosPropios) {
+    //     cout << e << endl;
+    // }
 
     jugadasContrario.push_back(vector<Movimiento>(
                                                   {Movimiento(QUIETO),
                                                    Movimiento(QUIETO),
-                                                   Movimiento(QUIETO)})
-                               );
+                                                   Movimiento(QUIETO)}
+                                                  ));
 
     // combinar([[1,2,3],[4,5,6]]) = [1,4], [1,5], [1,6], [2, 4], ...
     jugadasPropias = combinar(movValidosPropios);

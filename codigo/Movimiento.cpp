@@ -20,9 +20,9 @@ void Movimiento::mover() {
 
 std::ostream& operator<<(std::ostream& out, const Movimiento &m) {
     if (m.esPase()) {
-        out << "PASE " << m._dir << " " << m._intensidad;
+        out << "PASE " << m._dir << " " << (m._intensidad/2);
     } else {
-        out << "MOVIMIENTO" << m._dir;
+        out << "MOVIMIENTO " << m._dir;
     }
 
      return out;
