@@ -45,8 +45,10 @@ public:
                              const bool &enPos, const enum Direccion &posesor,
                     const Posicion &posPelota, const unsigned int &jPelota);
 
-    void jugadasValidas(vector<vector<Movimiento>> &posiblesI, vector<vector<Movimiento>> &posiblesD);
 
+    void jugadasValidas(vector<vector<Movimiento>> &posibles,
+                        bool enDerecha);
+    
     unsigned int puntaje(Genoma genoma, bool enDerecha);
 
     // Imprime estado, primero izquierda, despues derecha

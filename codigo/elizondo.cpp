@@ -97,8 +97,8 @@ int main() {
     f << tablero << endl;
 
     while (!tablero.terminado()) {
-        cout << equipoI.turno(tablero, BRUTUS);
-        f << equipoI.turno(tablero, BRUTUS) << endl;
+        cout << equipoI.turno(tablero);
+        f << equipoI.turno(tablero) << endl;
         f << "Hasta aca llego" << endl;
 
         leerEstado(cantJug, posA, posB, enPos,

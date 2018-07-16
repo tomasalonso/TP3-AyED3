@@ -360,24 +360,18 @@ unsigned int Tablero::puntaje(Genoma genoma, bool enDerecha) {
 
     puntaje += areaCubierta(enDerecha) * genoma[index++];
 
-
-
     return puntaje;
 }
 
-void Tablero::jugadasValidas(vector<vector<Movimiento>> &posiblesI,
-                             vector<vector<Movimiento>> &posiblesD) {
-    posiblesI.clear();
-    posiblesD.clear();
+void Tablero::jugadasValidas(vector<vector<Movimiento>> &posibles,
+                            bool enDerecha) {
+    vector<Jugador> &js = (enDerecha) ? _jugadoresI : _jugadoresD;
 
-    posiblesI.resize(_jugadoresI.size());
-    posiblesD.resize(_jugadoresD.size());
+    posibles.clear();
+    posibles.resize(js.size());
 
-    // por cada jugador de I
-    for (unsigned int i = 0; i < _jugadoresI.size(); i++) {
-
-        jugadasValidasJug(_jugadoresI[i], posiblesI[i]);
-        jugadasValidasJug(_jugadoresD[i], posiblesD[i]);
+    for (unsigned int i = 0; i < js.size(); i++) {
+        jugadasValidasJug(js[i], posibles[i]);
     }
 }
 

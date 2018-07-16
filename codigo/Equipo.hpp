@@ -17,18 +17,17 @@ public:
     Equipo(Genoma genoma, bool enDerecha);
 
     // Prueba jugadas y devuelve la mejor
-    vector<Movimiento> turno(Tablero &t, const enum Busqueda opc);
+    vector<Movimiento> turno(Tablero &t);
 
     // Posibles jugadas para evaluar
-    void genJugadas1(Tablero &t, vector<vector<Movimiento> > &jugadasPropias,
-                     vector<vector<Movimiento> > &jugadasContrario);
+    void genTodas(Tablero &t,
+                    vector<vector<Movimiento> > &jugadas,
+                    bool enDerecha);
 
-    vector<vector<Movimiento> > vecinos(vector<Movimiento> actual, vector<vector<Movimiento> > jugadasValidas);
-
-    vector<Movimiento> fuerzaBruta(Tablero &t);
-    vector<Movimiento> busquedaLocal(Tablero &t);
-    vector<Movimiento> grasp(Tablero &t);
-
+    vector<Movimiento> fuerzaBruta(Tablero &t,
+                                    const vector<vector<Movimiento> > &jugadasPropias,
+                                    const vector<Movimiento> &jugadaContrario,
+                                    bool enDerecha);
 
     // Para entrenador
     const Jugador& jugador(size_t i) const;
