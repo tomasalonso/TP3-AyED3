@@ -11,6 +11,4 @@ vector<vector<T> > combinar(vector<vector<T> > &vs);
 
 typedef vector<double> Genoma;
 
-enum Busqueda { LOCAL, BRUTUS, GRASP };
-
 #endif

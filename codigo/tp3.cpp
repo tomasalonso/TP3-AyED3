@@ -35,12 +35,12 @@ int main() {
 
     cout << tablero << endl;
     while (!tablero.terminado()) { 
-        cout << equipoI.turno(tablero, BRUTUS) << endl;
-        cout << equipoD.turno(tablero, BRUTUS) << endl;
+        cout << equipoI.turno(tablero) << endl;
+        cout << equipoD.turno(tablero) << endl;
       
         tablero.actualizar(
-                           equipoI.turno(tablero, BRUTUS),
-                           equipoD.turno(tablero, BRUTUS)
+                           equipoI.turno(tablero),
+                           equipoD.turno(tablero)
                            );
         cout << tablero;
 

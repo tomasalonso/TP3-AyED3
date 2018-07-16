@@ -2,12 +2,12 @@ CXX=g++
 CXXFLAGS= -std=c++11 -g -Wall $(OPTIMIZATIONS)
 OPTIMIZATIONS= -O2 -march=native
 
-all: tp3 elizondo
+all: tp3 elizondo genetico
 
 elizondo: elizondo.o Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-tp3: tp3.o Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o  funGenetico.o
+tp3: tp3.o Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o 
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 genetico:  Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o  funGenetico.o
