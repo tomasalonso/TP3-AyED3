@@ -55,7 +55,7 @@ public:
     // Metodos para evaluarTablero
     vector<unsigned int> distJugadorAlArco(const bool enDerecha) const;
     unsigned int distPelotaArco(const bool enDerecha) const;
-    unsigned int cercaniaARival(const Jugador &j) const;
+    vector<unsigned int> cercaniaARival(const bool enDerecha) const;
     float areaCubierta(const bool enDerecha) const;
 
 private:

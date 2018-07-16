@@ -6,12 +6,13 @@ using namespace std;
 
 #include "Equipo.hpp"
 #include "Tablero.hpp"
+#include "extras.hpp"
 
 
 int main() {
     const int m = 5;
     const int n = 10;
-    const unsigned int total = 10;
+    const unsigned int total = 20;
 
     const vector<Jugador> jI({
                               Jugador(0, Posicion(1,1), 0.5),
@@ -24,20 +25,27 @@ int main() {
                               Jugador(2, Posicion(8,3), 0.5)
         });
 
-    const vector<int> gI({5,5});
-    const vector<int> gD({5,5});
+    const vector<double> gI(15, 0.7);
+    const vector<double> gD(15, 0.7);
 
     Equipo equipoI(gI, false);
     Equipo equipoD(gD, true);
 
     Tablero tablero(m, n, total, jI, jD);
 
-    while (!tablero.terminado()) {
+    cout << tablero << endl;
+    while (!tablero.terminado()) { 
+        cout << equipoI.turno(tablero, BRUTUS) << endl;
+        cout << equipoD.turno(tablero, BRUTUS) << endl;
+      
         tablero.actualizar(
-                           equipoI.turno(tablero),
-                           equipoD.turno(tablero)
+                           equipoI.turno(tablero, BRUTUS),
+                           equipoD.turno(tablero, BRUTUS)
                            );
         cout << tablero;
+
+        std::string line;
+        std::getline(std::cin, line);
     }
 
     return 0;

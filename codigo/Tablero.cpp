@@ -281,6 +281,8 @@ bool Tablero::chequearGol(const Posicion posPelota) {
 std::ostream& operator<<(std::ostream& out, const Tablero &t) {
     cout << "m: " << t._m << endl;
     cout << "n: " << t._n << endl;
+    cout << "goles I: " << t.goles_A << endl;
+    cout << "goles D: " << t.goles_B << endl;
 
     for (const Jugador& j : t._jugadoresI) {
         out << j.id() << " " << j.actual().x() << " " << j.actual().y() << " ";
@@ -343,14 +345,14 @@ unsigned int Tablero::puntaje(Genoma genoma, bool enDerecha) {
         puntaje += d * genoma[index++];
     }
 
-    dist = cercaniaARival(enDerecha);
+    vector<unsigned int> cercania = cercaniaARival(enDerecha);
     if (enPosesion) {
-        for (const auto& j : dist) {
+        for (const auto& e : cercania) {
             puntaje += e * genoma[index++];
         }
         index += cantJug;
     } else {
-        for (const auto& e : dist) {
+        for (const auto& e : cercania) {
             puntaje += e * genoma[index++];
         }
         index += cantJug;
@@ -499,27 +501,33 @@ unsigned int Tablero::distPelotaArco(const bool enDerecha) const {
     }
 }
 
-unsigned int Tablero::cercaniaARival(const Jugador &j) const {
-    const float x = j.actual().x();
-    const float y = j.actual().y();
-    const vector<Jugador> &rivales = (j.id() < _jugadoresI.size()) ?
-        _jugadoresD : _jugadoresI;
+vector<unsigned int> Tablero::cercaniaARival(const bool enDerecha) const {
+    const vector<Jugador> &js = (enDerecha) ? _jugadoresD : _jugadoresI;
+    
+    vector<unsigned int> cercania; 
+    for (const Jugador& j : js) {
+        const float x = j.actual().x();
+        const float y = j.actual().y();
+        const vector<Jugador> &rivales = (j.id() < _jugadoresI.size()) ?
+            _jugadoresD : _jugadoresI;
 
-    unsigned int min = distancia(x, y,
-                                 rivales[0].actual().x(),
-                                 rivales[0].actual().y());
-    // Por cada rival contrario, ver la distancia con el rival
-    for (unsigned int i = 1; i < rivales.size(); i++) {
-        const unsigned int dist = distancia(x, y,
-                                     rivales[i].actual().x(),
-                                     rivales[i].actual().y());
+        unsigned int min = distancia(x, y,
+                                     rivales[0].actual().x(),
+                                     rivales[0].actual().y());
+        // Por cada rival contrario, ver la distancia con el rival
+        for (unsigned int i = 1; i < rivales.size(); i++) {
+            const unsigned int dist = distancia(x, y,
+                                         rivales[i].actual().x(),
+                                         rivales[i].actual().y());
 
-        if (dist < min) {
-            min = dist;
+            if (dist < min) {
+                min = dist;
+            }
         }
+        cercania.push_back(min);
     }
 
-    return min;
+    return cercania;
 }
 
 float Tablero::areaCubierta(const bool enDerecha) const {

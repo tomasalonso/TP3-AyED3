@@ -6,6 +6,7 @@
 
 #include "Equipo.hpp"
 #include "Tablero.hpp"
+#include "extras.hpp"
 
 using namespace std;
 
@@ -85,7 +86,7 @@ int main() {
         jB.push_back(Jugador(i, posB[i], probsB[i]));
     }
 
-    vector<int> gA({5,5});
+    vector<double> gA({5,5});
 
     Equipo equipoI(gA, false);
 
@@ -96,8 +97,8 @@ int main() {
     f << tablero << endl;
 
     while (!tablero.terminado()) {
-        cout << equipoI.turno(tablero);
-        f << equipoI.turno(tablero) << endl;
+        cout << equipoI.turno(tablero, BRUTUS);
+        f << equipoI.turno(tablero, BRUTUS) << endl;
         f << "Hasta aca llego" << endl;
 
         leerEstado(cantJug, posA, posB, enPos,
