@@ -13,4 +13,9 @@ typedef vector<double> Genoma;
 
 enum Busqueda { LOCAL, BRUTUS, GRASP };
 
+#define genoma_size 13
+#define prob0 10
+#define prob1 11
+#define prob2 12
+
 #endif
