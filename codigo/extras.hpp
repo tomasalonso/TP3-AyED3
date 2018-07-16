@@ -6,4 +6,4 @@ using namespace std;
 template<typename T>
 vector<vector<T> > combinar(vector<vector<T> > &vs);
 
-typedef vector<int> Genoma;
+typedef vector<double> Genoma;
