@@ -7,7 +7,7 @@ all: tp3 elizondo genetico
 elizondo: elizondo.o Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-tp3: tp3.o Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o 
+tp3: tp3.o Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 genetico:  Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o  funGenetico.o
@@ -18,3 +18,4 @@ genetico:  Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.
 
 clean:
 	rm -f tp3 *.o
+	rm -f genetico *.o
