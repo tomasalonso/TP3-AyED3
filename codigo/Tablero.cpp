@@ -11,7 +11,7 @@ Tablero::Tablero(const int &m, const int &n,
                  const vector<Jugador> &eqI, const vector<Jugador> &eqD)
     : _m(m), _n(n), _total(total), _tiempo(0),
       _jugadoresI(eqI), _jugadoresD(eqD), goles_A(0), goles_B(0),
-      _pelota(m, n), _jugPelota(&_jugadoresI[0]) {
+      _pelota(m, n), _jugPelota(&_jugadoresI[0]), _jugPelotaSig(&_jugadoresI[0]) {
 
     assert(m%2==1);
     assert(n%2==0);
@@ -20,7 +20,6 @@ Tablero::Tablero(const int &m, const int &n,
 
     // arranca el izq
     _jugadoresI[0].moverAlCentro(n, m, eqIZQ);
-    _jugPelota = &_jugadoresI[0];
 }
 
 int Tablero::n() const {return _n;}
@@ -57,7 +56,7 @@ pair<unsigned int, unsigned int> Tablero::goles() {
 
 bool Tablero::hayGol() {
     // pre: movimiento valido (la pelota no se va afuera de la cancha)
-    return (_pelota.siguiente().x() < 0 || _pelota.siguiente().x() > _n);
+    return (_pelota.siguiente().x() < 0 || _pelota.siguiente().x() > _n-1);
 }
 
 void Tablero::gol() {
@@ -73,15 +72,15 @@ void Tablero::gol() {
 
     // Gol equipo derecha
     if (_pelota.siguiente().x() < 0) {
-        goles_A++;
-        _jugadoresD[0].moverAlCentro(_n, _m, eqDER);
-        _pelota.actualizar(_pelota.inicialD());
-        _jugPelota = &_jugadoresD[0];
-    } else {
         goles_B++;
         _jugadoresI[0].moverAlCentro(_n, _m, eqIZQ);
         _pelota.actualizar(_pelota.inicialI());
-        _jugPelota = &_jugadoresI[0];
+        _jugPelotaSig = &_jugadoresI[0];
+    } else {
+        goles_A++;
+        _jugadoresD[0].moverAlCentro(_n, _m, eqDER);
+        _pelota.actualizar(_pelota.inicialD());
+        _jugPelotaSig = &_jugadoresD[0];
     }
 }
 
@@ -94,32 +93,31 @@ void Tablero::mover(const vector<Movimiento> &movsI, const vector<Movimiento> &m
         moverJug(_jugadoresI[i], movsI[i]);
         moverJug(_jugadoresD[i], movsD[i]);
     }
-
     // MoverPelota
     // En moverJugadores un jugador puede patear o mover la pelota
+
     _pelota.mover();
+
     // Si la tiene un jugador se queda quieta, si la patearon se mueve UNA pos
     if (!disputaIntermedia()) {
         // Si no hubo intersección
         // Mueve la segunda pos del turno
         _pelota.mover();
-        disputaFinal();
     }
+    disputaFinal();
 }
 
 void Tablero::moverJug(Jugador& j, Movimiento m) {
     // si tiene la pelota
-    if (m.dir() != QUIETO) {
-        if (&j == _jugPelota) {
-            if (m.esPase()) {
-                _pelota.patear(m);
-                m = Movimiento(QUIETO);
-            } else {
-    cout << "holla " << m.dir() << endl;
-                _pelota.patear(Movimiento(m.dir())); // Mueve la pelota con el jugador
-            }
+    if (&j == _jugPelota) {
+        if (m.esPase()) {
+            _pelota.patear(m);
+            m = Movimiento(QUIETO);
+            _jugPelotaSig = nullptr;
+        } else {
+            _pelota.patear(Movimiento(m.dir())); // Mueve la pelota con el jugador
         }
-    }
+    } 
 
     j.mover(m);
 }
@@ -178,9 +176,9 @@ void Tablero::desempatar(const vector<Jugador*>& js) {
     } else { // if (js.size() == 2)
         // desempatar
         if (_jugPelota == nullptr) { // si nadie tiene la pelota
-            _jugPelota = quiteSuelta(*js[0], *js[1]);
+            _jugPelotaSig = quiteSuelta(*js[0], *js[1]);
         } else {
-            _jugPelota = quitePoseida(
+            _jugPelotaSig = quitePoseida(
                          (js[0] != _jugPelota) ? *js[0] : *js[1],
                          (js[0] == _jugPelota) ? *js[0] : *js[1]
                                       );
@@ -242,6 +240,8 @@ void Tablero::actualizar(const vector<Movimiento> &movsI,
                          const vector<Movimiento> &movsD) {
     // Pre: movimiento válido
     mover(movsI, movsD);
+    cout << _jugadoresI[0].siguiente() << endl;
+    cout << _pelota.siguiente() << endl;
     actualizar();
 }
 
@@ -421,13 +421,6 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
     const bool arribaArco = j.actual().y() == ((_m/2)+2);
     const bool abajoArco = j.actual().y() == ((_m/2)-2);
 
-    /*
-    cout << "derecha: " << derecha << endl;
-    cout << "izquierda: " << izquierda << endl;
-    cout << "arriba: " << arriba << endl;
-    cout << "abajo: " << abajo << endl;
-    */
-
     movs.clear();
     movs.push_back(Movimiento(QUIETO));
 
@@ -454,7 +447,7 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
 
     if(abajo && derecha)
         movs.push_back(Movimiento(ABAJO_DERECHA));
-/*
+
     // si tiene la pelota
     if (_jugPelota == &j) {
         if(!derecha && alturaArco) {
@@ -474,33 +467,33 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
             // Por cada posible intensidad
             for (int inten = 1; inten <= _m/2 ; inten++) {
                 Posicion pos = _pelota.actual();
-                const Movimiento pase_impar = Movimiento(Direccion(dir), inten*2-1);
-                const Movimiento pase_par = Movimiento(Direccion(dir), inten*2);
+                Movimiento pase_impar = Movimiento(Direccion(dir), inten*2-1);
+                Movimiento pase_par = Movimiento(Direccion(dir), inten*2);
 
-                pos.mover(pase_impar);
+                pos.mover(pase_impar, inten*2-1);
                 const bool enArcoImpar =
                     ((_m/2)-1 <= pos.y() && pos.y() <= (_m/2)+1) &&
-                    (pos.x() == -1 || pos.x() == _n-1);
+                    (pos.x() == -1 || pos.x() == _n);
 
                 pos = _pelota.actual();
-                pos.mover(pase_par);
+                pos.mover(pase_par, inten*2);
                 const bool enArcoPar =
                     ((_m/2)-1 <= pos.y() && pos.y() <= (_m/2)+1) &&
-                    (pos.x() == -1 || pos.x() == _n-1);
+                    (pos.x() == -1 || pos.x() == _n);
 
                 const bool afuera =
                     0 > pos.x() || pos.x() > _n-1 ||
                     0 > pos.y() || pos.y() > _m-1;
 
-                if (afuera && (!enArcoImpar || !enArcoPar)) {
+                if (afuera && !enArcoImpar && !enArcoPar) {
                     break;
                 }
-                // sis no se va de la cancha
+                // si no se va de la cancha
                 movs.push_back(pase_par);
             }
         }
     }
-    */
+    
 }
 
 
