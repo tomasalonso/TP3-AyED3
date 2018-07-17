@@ -240,8 +240,6 @@ void Tablero::actualizar(const vector<Movimiento> &movsI,
                          const vector<Movimiento> &movsD) {
     // Pre: movimiento válido
     mover(movsI, movsD);
-    cout << _jugadoresI[0].siguiente() << endl;
-    cout << _pelota.siguiente() << endl;
     actualizar();
 }
 
