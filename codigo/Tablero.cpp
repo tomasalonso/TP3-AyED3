@@ -115,7 +115,8 @@ void Tablero::moverJug(Jugador& j, Movimiento m) {
                 _pelota.patear(m);
                 m = Movimiento(QUIETO);
             } else {
-                _pelota.patear(Movimiento(m.dir(), 1)); // Mueve la pelota con el jugador
+    cout << "holla " << m.dir() << endl;
+                _pelota.patear(Movimiento(m.dir())); // Mueve la pelota con el jugador
             }
         }
     }

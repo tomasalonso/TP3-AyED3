@@ -21,8 +21,8 @@ enum Direccion {
 
 class Movimiento {
 public:
-    Movimiento() : _dir(QUIETO) {};
-    Movimiento(Direccion d) : _dir(d), _intensidad(0) {};
+    Movimiento() : _dir(QUIETO), _intensidad(0) {};
+    Movimiento(Direccion d) : _dir(d), _intensidad(1) {};
     Movimiento(Direccion d, unsigned int i) : _dir(d), _intensidad(i) {
         assert(d != QUIETO);
     }
@@ -31,7 +31,9 @@ public:
 
     Direccion dir() const;
 
-    void mover();
+    unsigned int intensidad() const;
+
+    void bajarIntensidad(unsigned int i);
 
     friend std::ostream& operator<<(std::ostream& out, const Movimiento &m);
 

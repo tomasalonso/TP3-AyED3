@@ -21,11 +21,13 @@ bool Posicion::operator==(const Posicion otro) const {
     return _x == otro._x && _y == otro._y;
 }
 
-void Posicion::mover(const Movimiento &m) {
+void Posicion::mover(Movimiento &m) {
     mover(m, 1);
 }
 
-void Posicion::mover(const Movimiento &m, const int i) {
+void Posicion::mover(Movimiento &m, const int i) {
+    if (m.intensidad() > 0) {
+        m.bajarIntensidad(i);
     switch(m.dir()) {
     case QUIETO: break;
     case ARRIBA:
@@ -44,6 +46,7 @@ void Posicion::mover(const Movimiento &m, const int i) {
         _y -= i; _x -= i; break;
     case ABAJO_DERECHA:
         _y -= i; _x += i; break;
+    }
     }
 }
 
