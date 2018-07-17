@@ -18,4 +18,13 @@ enum Busqueda { LOCAL, BRUTUS, GRASP };
 #define prob1 11
 #define prob2 12
 
+//  @TODO: arreglar los indices con el esquema difinitivo de los genomas
+
+#define inicio_ataque   0
+#define fin_ataque      5
+#define inicio_defensa  6
+#define fin_defensa     9
+#define inicio_proba    10
+#define fin_proba       12
+
 #endif
