@@ -22,7 +22,7 @@ Posicion Jugador::siguiente() const {
     return _siguiente;
 }
 
-void Jugador::mover(const Movimiento &m) {
+void Jugador::mover(Movimiento &m) {
     _siguiente = _actual;
     _siguiente.mover(m);
 }

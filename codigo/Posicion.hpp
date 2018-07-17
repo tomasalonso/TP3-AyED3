@@ -15,8 +15,8 @@ public:
     int x() const;
     int y() const;
 
-    void mover(const Movimiento &m);
-    void mover(const Movimiento &m, const int intensidad);
+    void mover(Movimiento &m);
+    void mover(Movimiento &m, const int intensidad);
 
     bool operator==(const Posicion otro) const;
 

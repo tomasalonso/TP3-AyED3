@@ -2,19 +2,19 @@
 
 
 bool Movimiento::esPase() const {
-     return (_intensidad > 0);
+     return (_intensidad > 1);
  }
 
 Direccion Movimiento::dir() const {
     return _dir;
 }
 
-void Movimiento::mover() {
-    if (_intensidad > 0) {
-        _intensidad--;
-    } else {
-        _dir = QUIETO;
-    }
+unsigned int Movimiento::intensidad() const {
+    return _intensidad;
+}
+
+void Movimiento::bajarIntensidad(unsigned int i) {
+    _intensidad -= i;
 }
 
 

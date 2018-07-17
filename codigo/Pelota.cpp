@@ -35,31 +35,13 @@ Posicion Pelota::inicialD() const {
 
 void Pelota::patear(const Movimiento &mov) {
     _mov = mov;
+    _siguiente = _actual;
 }
 
 void Pelota::mover() {
-    // Avanzar UNA posición de acuerdo al pase
-    Posicion aux = _actual;
-    aux.mover(_mov);
-
-    if (aux == _siguiente) {
-        _siguiente.mover(_mov);
-    } else {
-        _siguiente = aux;
-    }
-    _mov.mover();
+    _siguiente.mover(_mov);
 }
 
 void Pelota::actualizar(const Posicion &p) {
-    mover();                                    //la muevo como venia
-    if (_siguiente == p) {                      //si solo se movio una vez es que la interceptaron o se movió con el jugador
-        _mov = Movimiento(QUIETO);
-    } else {
-        mover();                                //si no la interceptaron la muevo de nuevo, esta deberia ser la posicion en la que termino si no hubo gol
-        if (!(_siguiente == p)) {                  //si no es la posicion, es que hubo gol, la dejo quieta
-            _mov = Movimiento(QUIETO);
-        }
-    }
-
     _actual = p;                                //le guardo la posicion en la que esta
 }
