@@ -12,12 +12,13 @@ int main()
 }
 Genoma hacer_genetico(  unsigned int generaciones,
                         unsigned int tamanio_poblacion,
+                        unsigned int proba_mutacion,
                         unsigned int n,
                         unsigned int m,
                         unsigned int total,
                         function<vector<int>(vector<Genoma> &poblacion)> fitness,
                         function<pair<vector<Genoma>,vector<Genoma> >(vector<Genoma> &poblacion, vector<int> &puntajes)> seleccion,
-                        function<Genoma(Genoma &individuo)> mutacion,
+                        function<Genoma(Genoma &individuo, unsigned int proba_mutacion)> mutacion,
                         function<Genoma(Genoma &a, Genoma &b)> crossover ) {
 
     vector<Genoma> generacion = poblacion_inicial(tamanio_poblacion);
@@ -30,7 +31,7 @@ Genoma hacer_genetico(  unsigned int generaciones,
 
         pair<vector<Genoma>,vector<Genoma> > divididos = seleccion(generacion, puntajes);
 
-        vector<Genoma> cruzados = hacer_crossover(divididos.second, mutacion);
+        vector<Genoma> cruzados = hacer_crossover(divididos.second, mutacion, proba_mutacion);
 
         generacion_siguiente = divididos.first;
 
@@ -42,7 +43,7 @@ Genoma hacer_genetico(  unsigned int generaciones,
 
 vector<Genoma> poblacion_inicial(unsigned int tamanio_poblacion) {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-  std::default_random_engine _generador (seed);
+    std::default_random_engine _generador (seed);
 
 
     // std::default_random_engine _generador;
@@ -121,16 +122,39 @@ pair<vector<Genoma>,vector<Genoma> > seleccion_B(vector<Genoma> &poblacion, vect
     return make_pair(v,v);
 }
 
-Genoma mutacion_A(Genoma &individuo){
-    vector<double> v;
-    return v;
-}
-Genoma mutacion_B(Genoma &individuo){
-    vector<double> v;
-    return v;
+void mutacion_A(Genoma &individuo, unsigned int proba_mutacion){
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine _generador (seed);
+    std::uniform_real_distribution<double> _dist_continua{0.0,1.0};
+    std::uniform_int_distribution<int> _dist_discreta{0,genoma_size-1};
+
+    double muto = _dist_continua(_generador);
+
+    if (muto <= proba_mutacion) {
+        int indice_random = _dist_discreta(_generador);
+        individuo[indice_random] = _dist_continua(_generador);
+    }
 }
 
-vector<Genoma> hacer_crossover(vector<Genoma> &poblacion, function<Genoma(Genoma &individuo)> mutacion){
+void mutacion_B(Genoma &individuo, unsigned int proba_mutacion){
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine _generador (seed);
+    std::uniform_real_distribution<double> _dist_continua{0.0,1.0};
+    std::uniform_int_distribution<int> _dist_discreta{0,genoma_size-1};
+
+    double muto = _dist_continua(_generador);
+
+    if (muto <= proba_mutacion) {
+        int indice_random = _dist_discreta(_generador);
+        individuo[indice_random] = 1-individuo[indice_random];
+    }
+
+}
+
+vector<Genoma> hacer_crossover( vector<Genoma> &poblacion,
+                                function<Genoma(Genoma &individuo,
+                                                unsigned int proba_mutacion)> mutacion,
+                                unsigned int proba_mutacion){
     vector<Genoma> v;
     return v;
 }
