@@ -16,10 +16,10 @@ vector<Movimiento> Equipo::turno(Tablero &t) {
     vector<vector<Movimiento> > jugadasPropias;
     vector<vector<Movimiento> > jugadasContrario;
 
-    genTodas(t, jugadasContrario, !_enDerecha);
     genTodas(t, jugadasPropias, _enDerecha);
+    genTodas(t, jugadasContrario, !_enDerecha);
 
-    vector<Movimiento> mejorJugadaContrario = fuerzaBruta(t,
+    vector<Movimiento> mejorContrario = fuerzaBruta(t,
                                 jugadasContrario,
                                 vector<Movimiento>({
                                                 Movimiento(QUIETO),
@@ -28,7 +28,7 @@ vector<Movimiento> Equipo::turno(Tablero &t) {
                                             }),
                                 !_enDerecha);
 
-    return ( fuerzaBruta(t, jugadasPropias, mejorJugadaContrario, _enDerecha) );
+    return ( fuerzaBruta(t, jugadasPropias, mejorContrario, _enDerecha) );
 }
 
 // Genera TODAS las jugadas posibles
@@ -52,11 +52,15 @@ vector<Movimiento> Equipo::fuerzaBruta(Tablero &t,
     vector<Movimiento> mejorJugada;
 
     // comparamos todos los movimientos
-    int puntajeMejor = -1;
+    double puntajeMejor = -1;
     for (const auto &jPropia : jugadasPropias) {  // Devuelve todas válidas
-        t.mover(jPropia, jugadaContrario);
+        if (enDerecha) {
+            t.mover(jugadaContrario, jPropia);
+        } else {
+            t.mover(jPropia, jugadaContrario); 
+        }
 
-        const int puntajeActual = t.puntaje(_genoma, enDerecha);
+        const double puntajeActual = t.puntaje(_genoma, enDerecha);
 
         if (puntajeActual > puntajeMejor) {
             puntajeMejor = puntajeActual;

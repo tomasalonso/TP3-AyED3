@@ -16,7 +16,7 @@ public:
     int y() const;
 
     void mover(const Movimiento &m);
-    void mover(const Movimiento &m, const unsigned int intensidad);
+    void mover(const Movimiento &m, const int intensidad);
 
     bool operator==(const Posicion otro) const;
 
@@ -29,7 +29,7 @@ private:
 };
 
 
-float distancia(const float x1, const float y1, const float x2, const float y2);
-float altura(const Posicion &a, const Posicion &b, const Posicion &c);
+double distancia(const double x1, const double y1, const double x2, const double y2);
+double altura(const Posicion &a, const Posicion &b, const Posicion &c);
 
 #endif

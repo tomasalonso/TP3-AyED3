@@ -25,7 +25,7 @@ void Posicion::mover(const Movimiento &m) {
     mover(m, 1);
 }
 
-void Posicion::mover(const Movimiento &m, const unsigned int i) {
+void Posicion::mover(const Movimiento &m, const int i) {
     switch(m.dir()) {
     case QUIETO: break;
     case ARRIBA:
@@ -62,14 +62,14 @@ std::ostream& operator<<(std::ostream& out, const Posicion& p) {
 }
 
 
-float distancia(const float x1, const float y1, const float x2, const float y2) {
+double distancia(const double x1, const double y1, const double x2, const double y2) {
     return sqrt(pow(y1 - y2, 2) + pow(x1 - x2, 2));
 }
 
-float altura(const Posicion &a, const Posicion &b, const Posicion &c) {
+double altura(const Posicion &a, const Posicion &b, const Posicion &c) {
     const Posicion b_a = Posicion(b.x() - a.x(), b.y() - a.y());
-    int d_x = a.x() + b_a.x()/2;
-    int d_y = a.y() + b_a.y()/2;
+    double d_x = a.x() + b_a.x()/2;
+    double d_y = a.y() + b_a.y()/2;
 
     return distancia(c.x(), c.y(), d_x, d_y);
 }

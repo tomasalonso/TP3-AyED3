@@ -24,7 +24,7 @@ Posicion Jugador::siguiente() const {
 
 void Jugador::mover(const Movimiento &m) {
     _siguiente = _actual;
-    _siguiente.mover(m.dir());
+    _siguiente.mover(m);
 }
 
 void Jugador::moverAlCentro(int n, int m, bool der) {

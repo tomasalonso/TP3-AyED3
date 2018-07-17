@@ -33,15 +33,23 @@ int main() {
 
     Tablero tablero(m, n, total, jI, jD);
 
+    /*
+    Jugador elJugador(0, Posicion(5,0), 0.5);
+    vector<Movimiento> movs;
+    tablero.jugadasValidasJug(elJugador, movs);
+
+    cout << movs << endl;
+    */
     cout << tablero << endl;
     while (!tablero.terminado()) { 
-        cout << equipoI.turno(tablero) << endl;
-        cout << equipoD.turno(tablero) << endl;
+        //cout << equipoI.turno(tablero) << endl;
+        //cout << equipoD.turno(tablero) << endl;
       
         tablero.actualizar(
                            equipoI.turno(tablero),
                            equipoD.turno(tablero)
                            );
+
         cout << tablero;
 
         std::string line;

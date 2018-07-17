@@ -51,16 +51,19 @@ public:
     void jugadasValidas(vector<vector<Movimiento>> &posibles,
                         bool enDerecha);
     
-    unsigned int puntaje(Genoma genoma, bool enDerecha);
+    double puntaje(Genoma genoma, bool enDerecha);
 
     // Imprime estado, primero izquierda, despues derecha
     friend std::ostream& operator<<(std::ostream& out, const Tablero &t);
+    friend std::ostream& imprimirSiguiente(std::ostream& out, const Tablero &t);
+
 
     // Metodos para evaluarTablero
-    vector<unsigned int> distJugadorAlArco(const bool enDerecha) const;
-    unsigned int distPelotaArco(const bool enDerecha) const;
-    vector<unsigned int> cercaniaARival(const bool enDerecha) const;
-    float areaCubierta(const bool enDerecha) const;
+    vector<double> distJugadorAlArco(const bool enDerecha) const;
+    double distPelotaArco(const bool enDerecha) const;
+    vector<double> cercaniaARival(const bool enDerecha) const;
+    double areaCubierta(const bool enDerecha) const;
+    void jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs);
 
 private:
     bool hayGol();
@@ -78,7 +81,7 @@ private:
     Jugador* quiteSuelta(Jugador &izq, Jugador &der);
     Jugador* quitePoseida(Jugador &sacador, Jugador &posesor);
 
-    void jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs);
+//    void jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs);
 
 
     // Cancha
