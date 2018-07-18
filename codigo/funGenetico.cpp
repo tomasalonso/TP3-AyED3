@@ -167,7 +167,7 @@ vector<int> fitness_dif_goles(vector<Genoma> &poblacion, unsigned int n,
     }
 
     // ADEMÁS TENGO QUE ORDENAR LOS PUNTAJES Y GENOMAS PARA QUE ESTÉN DE MAYOR A MENOR FITNESS
-    vector<tuple<int, Genoma> > todos_juntos (poblacion.size());
+    vector<tuple<int, Genoma> > todos_juntos;
     for (unsigned int i = 0; i < poblacion.size(); i++) {
         todos_juntos.push_back(make_tuple(dif_goles[i],poblacion[i]));
     }
