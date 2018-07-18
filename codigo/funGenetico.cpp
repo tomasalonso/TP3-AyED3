@@ -289,20 +289,29 @@ Genoma crossover_BLOQUES(Genoma &a,Genoma &b){ // por bloques semánticos
     std::uniform_int_distribution<int> _dist_discreta{0,1};
 
     Genoma cruza(genoma_size);
-    auto &primero = (_dist_discreta(_generador))? a : b; // ATAQUE
-    auto &segundo = (_dist_discreta(_generador))? a : b; // DEFENSA
-    auto &tercero = (_dist_discreta(_generador))? a : b; // PROBABILIDADES DE QUITE
+    auto &d_j_a = (_dist_discreta(_generador))? a : b; // DISTANCIA JUGADOR ARCO
+    auto &d_p_a = (_dist_discreta(_generador))? a : b; // DISTANCIA PELOTA ARCO
+    auto &d_r = (_dist_discreta(_generador))? a : b; // DISTANCIA RIVAL
+    auto &area_ocupada = (_dist_discreta(_generador))? a : b; // AREA
+    auto &quite = (_dist_discreta(_generador))? a : b; // PROBABILIDADES DE QUITE
 
-    for (int i = inicio_ataque; i <= fin_ataque; i++) {
-        cruza[i] = primero[i];
+    for (int i = inicio_dist_j_a; i <= fin_dist_j_a; i++) {
+        cruza[i] = d_j_a[i];
     }
 
-    for (int i = inicio_defensa; i <= fin_defensa; i++) {
-        cruza[i] = segundo[i];
+    for (int i = inicio_dist_p_a; i <= fin_dist_p_a; i++) {
+        cruza[i] = d_p_a[i];
     }
-    for (int i = inicio_proba; i <= fin_proba; i++) {
-        cruza[i] = tercero[i];
+    for (int i = inicio_dist_rival; i <= fin_dist_rival; i++) {
+        cruza[i] = d_r[i];
     }
+
+    cruza[area] = area_ocupada[area];
+
+    for (int i = inicio_probas; i <= fin_probas; i++) {
+        cruza[i] = quite[i];
+    }
+
     return cruza;
 }
 Genoma crossover_RANDOM(Genoma &a,Genoma &b){ // mezcla random
