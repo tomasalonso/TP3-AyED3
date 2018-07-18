@@ -10,9 +10,10 @@
 
 int main()
 {
-    for (const double g : grasp(1, 10, 5, 100)) {
-      cout << g << endl;
+    for (const double g : grasp(50, 10, 5, 50)) {
+      cout << g << " ";
     }
+    cout << endl;
 
     return 0;
 }
@@ -90,6 +91,47 @@ vector<Genoma> generar_vecinos(Genoma actual) {
       vecinos.push_back(nuevo);
   }
   return vecinos;
+}
+
+vector<int> fitness_puntos(vector<Genoma> &poblacion, unsigned int n,
+                                unsigned int m, unsigned int total){
+// CONTEMPLA EMPATES
+    vector<int> puntos(poblacion.size(), 0);
+
+    for (unsigned int i = 0; i < poblacion.size(); i++) {
+        for (unsigned int j = i + 1; j < poblacion.size(); j++) {
+            // cerr<<"Juegan i: "<<i<<" vs. j: "<<j<<endl;
+            pair<unsigned int, unsigned int> goles = jugar(poblacion[i],poblacion[j],n, m, total);
+
+            // PUNTUAR
+            if (goles.first > goles.second ) {
+                puntos[i]+= 3;
+            } else if (goles.first < goles.second) {
+                puntos[j]+= 3;
+            } else {
+                puntos[i]+= 1;
+                puntos[j]+= 1;
+            }
+        }
+    }
+
+    // ADEMÁS TENGO QUE ORDENAR LOS PUNTAJES Y GENOMAS PARA QUE ESTÉN DE MAYOR A MENOR FITNESS
+    vector<tuple<int, Genoma> > todos_juntos;
+    for (unsigned int i = 0; i < poblacion.size(); i++) {
+        todos_juntos.push_back(make_tuple(puntos[i],poblacion[i]));
+    }
+
+    stable_sort (todos_juntos.rbegin(), todos_juntos.rend());
+
+    int k = 0;
+
+    for (auto e : todos_juntos) {
+        puntos[k] = get<0>(e);
+        poblacion[k] = get<1>(e);
+        k++;
+    }
+
+    return puntos;
 }
 
 pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m, int total) {
