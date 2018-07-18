@@ -224,12 +224,11 @@ void mutacion_A(Genoma &individuo, double proba_mutacion){
     std::uniform_real_distribution<double> _dist_continua{0.0,1.0};
     std::uniform_int_distribution<int> _dist_discreta{0,genoma_size-1};
 
-    double muto = _dist_continua(_generador);
+    for (int i = 0; i < genoma_size; i++) {
 
-    if (muto <= proba_mutacion) {
-        cerr<<"MUTO!!!"<<endl;
-        int indice_random = _dist_discreta(_generador);
-        individuo[indice_random] = _dist_continua(_generador);
+        double muto = _dist_continua(_generador);
+        if (muto <= proba_mutacion) {
+            individuo[i] = _dist_continua(_generador);
     }
 }
 
