@@ -1,3 +1,6 @@
+#ifndef _GRID_
+#define _GRID_
+
 #include <functional>
 #include <iostream>
 #include <sstream>
@@ -17,13 +20,18 @@
         reemplazar s∗ por s
         hasta que f (s) > f (s∗) para todos los s ∈ N(s∗)
 */
-#ifndef GRID
-#define GRID
 
-Genoma hacer_grid(unsigned int n, unsigned int m, unsigned int total);
+Genoma busquedaLocal(const Genoma &g, const unsigned int n,
+                     const unsigned int m, const unsigned int total);
+
+Genoma grasp(const unsigned int cantIteraciones,
+             const unsigned int n, const unsigned int m,
+             const unsigned int total);
+
+Genoma generar();
 
 vector<Genoma> generar_vecinos(Genoma actual);
 
 pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m, int total);
 
-#endif 
+#endif
