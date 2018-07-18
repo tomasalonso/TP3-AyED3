@@ -487,7 +487,7 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
                     break;
                 }
                 // si no se va de la cancha
-                movs.push_back(pase_par);
+                movs.push_back(Movimiento(Direccion(dir), inten*2));
             }
         }
     }
