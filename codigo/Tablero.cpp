@@ -387,10 +387,34 @@ double Tablero::puntaje(Genoma genoma, bool enDerecha) {
         }
         index += cantJug;
     } else {
+        index += cantJug;
         for (const double& e : cercania) {
             puntaje += e * genoma.at(index++);
         }
+    }
+    const vector<double> aPelota = distJugadorAPelota(enDerecha);
+    if (enPosesion) {
+        for (const double& e : aPelota) {
+            puntaje += e * genoma.at(index++);
+        }
         index += cantJug;
+    } else {
+        index += cantJug;
+        for (const double& e : cercania) {
+            puntaje += e * genoma.at(index++);
+        }
+    }
+    const vector<double> aLateral = distJugadorAlLateral(enDerecha);
+    if (enPosesion) {
+        for (const double& e : aLateral) {
+            puntaje += e * genoma.at(index++);
+        }
+        index += cantJug;
+    } else {
+        index += cantJug;
+        for (const double& e : cercania) {
+            puntaje += e * genoma.at(index++);
+        }
     }
 
     puntaje += areaCubierta(enDerecha) * genoma[index++];
@@ -491,7 +515,7 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
             }
         }
     }
-    
+
 }
 
 
@@ -534,8 +558,8 @@ double Tablero::distPelotaArco(const bool enDerecha) const {
 
 vector<double> Tablero::cercaniaARival(const bool enDerecha) const {
     const vector<Jugador> &js = (enDerecha) ? _jugadoresD : _jugadoresI;
-    
-    vector<double> cercania; 
+
+    vector<double> cercania;
     for (const Jugador& j : js) {
         const double x = j.siguiente().x();
         const double y = j.siguiente().y();
@@ -570,4 +594,32 @@ double Tablero::areaCubierta(const bool enDerecha) const {
     const double h = altura(js[0].siguiente(), js[1].siguiente(), js[2].siguiente());
 
     return (b*h)/2;
+}
+
+vector<double> Tablero::distJugadorAPelota(const bool enDerecha) const {
+    const vector<Jugador> &js = (enDerecha) ? _jugadoresD : _jugadoresI;
+    const double xPelota = _pelota.siguiente().x();
+    const double yPelota = _pelota.siguiente().y();
+
+    vector<double> dist;
+
+    for (const Jugador &j : js) {
+        const double xJug = j.siguiente().x();
+        const double yJug = j.siguiente().y();
+
+        dist.push_back(distancia(xPelota, yPelota, xJug, yJug));
+    }
+    return dist;
+}
+vector<double> Tablero::distJugadorAlLateral(const bool enDerecha) const {
+    const vector<Jugador> &js = (enDerecha) ? _jugadoresD : _jugadoresI;
+
+    vector<double> dist;
+
+    for (const Jugador &j : js) {
+        const double y = j.siguiente().y();
+
+        dist.push_back(min(double(y), double(_m - 1 - y)));
+    }
+    return dist;
 }

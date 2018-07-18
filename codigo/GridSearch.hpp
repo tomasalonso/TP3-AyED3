@@ -34,4 +34,7 @@ vector<Genoma> generar_vecinos(Genoma actual);
 
 pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m, int total);
 
+vector<int> fitness_puntos(vector<Genoma> &poblacion, unsigned int n,
+                                unsigned int m, unsigned int total);
+
 #endif

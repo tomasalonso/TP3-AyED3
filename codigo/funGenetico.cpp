@@ -167,7 +167,7 @@ vector<int> fitness_dif_goles(vector<Genoma> &poblacion, unsigned int n,
     }
 
     // ADEMÁS TENGO QUE ORDENAR LOS PUNTAJES Y GENOMAS PARA QUE ESTÉN DE MAYOR A MENOR FITNESS
-    vector<tuple<int, Genoma> > todos_juntos (poblacion.size());
+    vector<tuple<int, Genoma> > todos_juntos;
     for (unsigned int i = 0; i < poblacion.size(); i++) {
         todos_juntos.push_back(make_tuple(dif_goles[i],poblacion[i]));
     }
@@ -289,20 +289,29 @@ Genoma crossover_BLOQUES(Genoma &a,Genoma &b){ // por bloques semánticos
     std::uniform_int_distribution<int> _dist_discreta{0,1};
 
     Genoma cruza(genoma_size);
-    auto &primero = (_dist_discreta(_generador))? a : b; // ATAQUE
-    auto &segundo = (_dist_discreta(_generador))? a : b; // DEFENSA
-    auto &tercero = (_dist_discreta(_generador))? a : b; // PROBABILIDADES DE QUITE
+    auto &d_j_a = (_dist_discreta(_generador))? a : b; // DISTANCIA JUGADOR ARCO
+    auto &d_p_a = (_dist_discreta(_generador))? a : b; // DISTANCIA PELOTA ARCO
+    auto &d_r = (_dist_discreta(_generador))? a : b; // DISTANCIA RIVAL
+    auto &area_ocupada = (_dist_discreta(_generador))? a : b; // AREA
+    auto &quite = (_dist_discreta(_generador))? a : b; // PROBABILIDADES DE QUITE
 
-    for (int i = inicio_ataque; i <= fin_ataque; i++) {
-        cruza[i] = primero[i];
+    for (int i = inicio_dist_j_a; i <= fin_dist_j_a; i++) {
+        cruza[i] = d_j_a[i];
     }
 
-    for (int i = inicio_defensa; i <= fin_defensa; i++) {
-        cruza[i] = segundo[i];
+    for (int i = inicio_dist_p_a; i <= fin_dist_p_a; i++) {
+        cruza[i] = d_p_a[i];
     }
-    for (int i = inicio_proba; i <= fin_proba; i++) {
-        cruza[i] = tercero[i];
+    for (int i = inicio_dist_rival; i <= fin_dist_rival; i++) {
+        cruza[i] = d_r[i];
     }
+
+    cruza[area] = area_ocupada[area];
+
+    for (int i = inicio_probas; i <= fin_probas; i++) {
+        cruza[i] = quite[i];
+    }
+
     return cruza;
 }
 Genoma crossover_RANDOM(Genoma &a,Genoma &b){ // mezcla random
@@ -324,13 +333,13 @@ pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m,
 
     const vector<Jugador> jI({
                           Jugador(0, Posicion(1,1), jugA[prob0]),
-                          Jugador(1, Posicion(2,2), jugA[prob1]),
-                          Jugador(2, Posicion(3,3), jugA[prob2])
+                          Jugador(1, Posicion(1,4), jugA[prob1]),
+                          Jugador(2, Posicion(4,3), jugA[prob2])
     });
     const vector<Jugador> jD({
-                          Jugador(0, Posicion(6,1), jugB[prob0]),
-                          Jugador(1, Posicion(7,2), jugB[prob1]),
-                          Jugador(2, Posicion(8,3), jugB[prob2])
+                          Jugador(0, Posicion(6,3), jugB[prob0]),
+                          Jugador(1, Posicion(9,1), jugB[prob1]),
+                          Jugador(2, Posicion(9,4), jugB[prob2])
     });
 
 
@@ -344,7 +353,6 @@ pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m,
                            equipoI.turno(tablero),
                            equipoD.turno(tablero)
                            );
-        cout << tablero;
     }
 
     return tablero.goles();
