@@ -289,11 +289,21 @@ Genoma crossover_BLOQUES(Genoma &a,Genoma &b){ // por bloques semánticos
     std::uniform_int_distribution<int> _dist_discreta{0,1};
 
     Genoma cruza(genoma_size);
-    auto &d_j_a = (_dist_discreta(_generador))? a : b; // DISTANCIA JUGADOR ARCO
-    auto &d_p_a = (_dist_discreta(_generador))? a : b; // DISTANCIA PELOTA ARCO
-    auto &d_r = (_dist_discreta(_generador))? a : b; // DISTANCIA RIVAL
-    auto &area_ocupada = (_dist_discreta(_generador))? a : b; // AREA
-    auto &quite = (_dist_discreta(_generador))? a : b; // PROBABILIDADES DE QUITE
+
+    // DISTANCIA JUGADOR ARCO
+    auto &d_j_a = (_dist_discreta(_generador))? a : b;
+    // DISTANCIA PELOTA ARCO
+    auto &d_p_a = (_dist_discreta(_generador))? a : b;
+    // DISTANCIA RIVAL
+    auto &d_r = (_dist_discreta(_generador))? a : b;
+    // DISTANCIA JUGADOR PELOTA
+    auto &d_j_p = (_dist_discreta(_generador))? a : b;
+    // DISTANCIA JUGADOR LATERAL
+    auto &d_j_lat = (_dist_discreta(_generador))? a : b;
+    // AREA
+    auto &area_ocupada = (_dist_discreta(_generador))? a : b;
+    // PROBABILIDADES DE QUITE
+    auto &quite = (_dist_discreta(_generador))? a : b;
 
     for (int i = inicio_dist_j_a; i <= fin_dist_j_a; i++) {
         cruza[i] = d_j_a[i];
@@ -302,8 +312,17 @@ Genoma crossover_BLOQUES(Genoma &a,Genoma &b){ // por bloques semánticos
     for (int i = inicio_dist_p_a; i <= fin_dist_p_a; i++) {
         cruza[i] = d_p_a[i];
     }
+
     for (int i = inicio_dist_rival; i <= fin_dist_rival; i++) {
         cruza[i] = d_r[i];
+    }
+
+    for (int i = inicio_dist_j_p; i <= fin_dist_j_p; i++) {
+        cruza[i] = d_j_p[i];
+    }
+
+    for (int i = inicio_dist_j_lateral; i <= fin_dist_j_lateral; i++) {
+        cruza[i] = d_j_lat[i];
     }
 
     cruza[area] = area_ocupada[area];
