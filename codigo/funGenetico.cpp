@@ -333,13 +333,13 @@ pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m,
 
     const vector<Jugador> jI({
                           Jugador(0, Posicion(1,1), jugA[prob0]),
-                          Jugador(1, Posicion(2,2), jugA[prob1]),
-                          Jugador(2, Posicion(3,3), jugA[prob2])
+                          Jugador(1, Posicion(1,4), jugA[prob1]),
+                          Jugador(2, Posicion(4,3), jugA[prob2])
     });
     const vector<Jugador> jD({
-                          Jugador(0, Posicion(6,1), jugB[prob0]),
-                          Jugador(1, Posicion(7,2), jugB[prob1]),
-                          Jugador(2, Posicion(8,3), jugB[prob2])
+                          Jugador(0, Posicion(6,3), jugB[prob0]),
+                          Jugador(1, Posicion(9,1), jugB[prob1]),
+                          Jugador(2, Posicion(9,4), jugB[prob2])
     });
 
 
