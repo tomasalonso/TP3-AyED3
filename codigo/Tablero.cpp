@@ -360,35 +360,35 @@ double Tablero::puntaje(Genoma genoma, bool enDerecha) {
     if (enPosesion) {
         // primeros 3 distAlArco si tengo la pelota
         for (const double& e : dist) {
-            puntaje += e * genoma[index++];
+            puntaje += e * genoma.at(index++);
         }
         index += cantJug; // salteo los siguientes 3
     } else {
         // segundos 3 distAlArco si no tengo la pelota
         index += cantJug; // salteo los primeros 3
         for (const double& e : dist) {
-            puntaje += e * genoma[index++];
+            puntaje += e * genoma.at(index++);
         }
     }
 
     const double d = distPelotaArco(enDerecha);
     if (enPosesion) {
-        puntaje += d * genoma[index++];
+        puntaje += d * genoma.at(index++);
         index++; // salteo el siguiente 1
     } else {
         index++; // salteo el primero 1
-        puntaje += d * genoma[index++];
+        puntaje += d * genoma.at(index++);
     }
 
     const vector<double> cercania = cercaniaARival(enDerecha);
     if (enPosesion) {
         for (const double& e : cercania) {
-            puntaje += e * genoma[index++];
+            puntaje += e * genoma.at(index++);
         }
         index += cantJug;
     } else {
         for (const double& e : cercania) {
-            puntaje += e * genoma[index++];
+            puntaje += e * genoma.at(index++);
         }
         index += cantJug;
     }
