@@ -24,7 +24,7 @@ int main()
 }
 Genoma hacer_genetico(  unsigned int generaciones,
                         unsigned int tamanio_poblacion,
-                        unsigned int proba_mutacion,
+                        double proba_mutacion,
                         unsigned int n,
                         unsigned int m,
                         unsigned int total,
@@ -34,7 +34,7 @@ Genoma hacer_genetico(  unsigned int generaciones,
                         function<pair<vector<Genoma>,vector<Genoma> > (vector<Genoma> &poblacion,
                                                 vector<int> &puntajes,
                                                 double fracc_poblacion)> seleccion,
-                        function<void(Genoma &individuo, unsigned int proba_mutacion)> mutacion,
+                        function<void(Genoma &individuo, double proba_mutacion)> mutacion,
                         function<Genoma(Genoma &a, Genoma &b)> crossover ){
 
     auto inicio = high_resolution_clock::now();
@@ -211,7 +211,7 @@ pair<vector<Genoma>,vector<Genoma> > seleccion_por_cantidad(vector<Genoma> &pobl
     return make_pair(intactos,modificar);
 }
 
-void mutacion_A(Genoma &individuo, unsigned int proba_mutacion){
+void mutacion_A(Genoma &individuo, double proba_mutacion){
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine _generador (seed);
     std::uniform_real_distribution<double> _dist_continua{0.0,1.0};
@@ -226,7 +226,7 @@ void mutacion_A(Genoma &individuo, unsigned int proba_mutacion){
     }
 }
 
-void mutacion_B(Genoma &individuo, unsigned int proba_mutacion){
+void mutacion_B(Genoma &individuo, double proba_mutacion){
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine _generador (seed);
     std::uniform_real_distribution<double> _dist_continua{0.0,1.0};
@@ -243,8 +243,8 @@ void mutacion_B(Genoma &individuo, unsigned int proba_mutacion){
 
 vector<Genoma> hacer_crossover( vector<Genoma> &poblacion,
                                 function<void(Genoma &individuo,
-                                                unsigned int proba_mutacion)> mutacion,
-                                unsigned int proba_mutacion,
+                                                double proba_mutacion)> mutacion,
+                                double proba_mutacion,
                                 function<Genoma (Genoma &a,Genoma &b)> crossover,
                                 unsigned int best){
 
