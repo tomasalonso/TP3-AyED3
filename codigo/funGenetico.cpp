@@ -115,17 +115,21 @@ vector<int> fitness_puntos(vector<Genoma> &poblacion, unsigned int n,
     }
 
     // ADEMÁS TENGO QUE ORDENAR LOS PUNTAJES Y GENOMAS PARA QUE ESTÉN DE MAYOR A MENOR FITNESS
-    vector<tuple<int, int, Genoma> > todos_juntos (poblacion.size());
+    vector<tuple<int, int, Genoma> > todos_juntos;
     for (unsigned int i = 0; i < poblacion.size(); i++) {
         todos_juntos.push_back(make_tuple(puntos[i],i,poblacion[i]));
     }
 
-    stable_sort (todos_juntos.begin(), todos_juntos.end());
+    stable_sort (todos_juntos.rbegin(), todos_juntos.rend());
+
+    int k = 0;
 
     for (auto e : todos_juntos) {
         int indice = get<1>(e);
-        puntos[indice] = get<0>(e);
-        poblacion[indice] = get<2>(e);
+        puntos[k] = get<0>(e);
+        poblacion[k] = get<2>(e);
+
+        k++;
     }
 
     return puntos;
