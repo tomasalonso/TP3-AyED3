@@ -353,7 +353,6 @@ pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m,
                            equipoI.turno(tablero),
                            equipoD.turno(tablero)
                            );
-        cout << tablero;
     }
 
     return tablero.goles();
