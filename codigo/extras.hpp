@@ -28,3 +28,7 @@ enum Busqueda { LOCAL, BRUTUS, GRASP };
 #define fin_proba       12
 
 #endif
+//    0   1   2   3   4   5       6           7       8   9  10  11   12  13  14  15  16
+// [    |   |   |   |   |   |           |           |   |   |   |   |   |   |   |   |   ]
+// |-con pelota-|-sin pelota|-con pelota|-sin pelota|-con pelota|-sin pelota|
+// |----dist jug al arco----|---dist pelota arco----|-----cercania rival----|---probas--|
