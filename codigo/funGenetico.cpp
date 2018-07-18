@@ -4,7 +4,7 @@
 
 int main()
 {
-    Genoma la_posta = hacer_genetico(15, 10, 1,10, 5, 20, 0.1,
+    Genoma la_posta = hacer_genetico(20, 5, 0.7, 10, 5, 20, 0.2,
                                      fitness_puntos, seleccion_por_cantidad,
                                      mutacion_A, crossover_BLOQUES);
     // auto poblacion = poblacion_inicial(5);
@@ -44,12 +44,22 @@ Genoma hacer_genetico(  unsigned int generaciones,
     vector<Genoma> generacion_siguiente = generacion;
 
     for (unsigned int i = 0; i < generaciones; ++i) {
-        cerr<<"Generación: "<<i<<" tamaño: "<<generacion.size()<<endl;
         // for (unsigned int i=0;i<generacion.size();i++) {for(auto e : (generacion)[i] ){cerr<<e<<"  ";} cerr<<endl;}
-
         generacion = generacion_siguiente;
 
         puntajes = fitness(generacion, n, m, total); // me ordena ambas puntajes y generación de mayor a menor puntaje
+
+        int puntaje_max = 0;
+        int puntaje_max_ind = 0;
+
+        for (unsigned int k = 0; k < puntajes.size(); k++) {
+            if (puntajes[k] > puntaje_max) {
+                puntaje_max = puntajes[k];
+                puntaje_max_ind = k;
+            }
+        }
+        cerr<<"Generación: "<<i<<"\tTamaño: "<<generacion.size()<<"\tPuntaje máximo: "<<puntaje_max<<endl;
+        for(auto e : generacion[puntaje_max_ind] ){cerr<<e<<"  ";} cerr<<endl<<endl;
 
 
         pair<vector<Genoma>,vector<Genoma> > divididos = seleccion(generacion, puntajes, fracc_conservar);
@@ -265,10 +275,10 @@ vector<Genoma> hacer_crossover( vector<Genoma> &poblacion,
 
     for (auto e: nueva_gen) {
 
-        for (auto j: e) {cerr<<j<<"  ";} cerr<<endl;
+        // for (auto j: e) {cerr<<j<<"  ";} cerr<<endl;
         mutacion(e, proba_mutacion);
-    cerr<<"----MUTADO----";cerr<<endl;
-        for (auto j: e) {cerr<<j<<"  ";} cerr<<endl;
+    // cerr<<"----MUTADO----";cerr<<endl;
+        // for (auto j: e) {cerr<<j<<"  ";} cerr<<endl;
     }
     return nueva_gen;   // podríamos estar cruzando a los mismos dos veces.
 }
