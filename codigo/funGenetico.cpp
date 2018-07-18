@@ -115,9 +115,9 @@ vector<int> fitness_puntos(vector<Genoma> &poblacion, unsigned int n,
     }
 
     // ADEMÁS TENGO QUE ORDENAR LOS PUNTAJES Y GENOMAS PARA QUE ESTÉN DE MAYOR A MENOR FITNESS
-    vector<tuple<int, int, Genoma> > todos_juntos;
+    vector<tuple<int, Genoma> > todos_juntos;
     for (unsigned int i = 0; i < poblacion.size(); i++) {
-        todos_juntos.push_back(make_tuple(puntos[i],i,poblacion[i]));
+        todos_juntos.push_back(make_tuple(puntos[i],poblacion[i]));
     }
 
     stable_sort (todos_juntos.rbegin(), todos_juntos.rend());
@@ -125,9 +125,8 @@ vector<int> fitness_puntos(vector<Genoma> &poblacion, unsigned int n,
     int k = 0;
 
     for (auto e : todos_juntos) {
-        int indice = get<1>(e);
         puntos[k] = get<0>(e);
-        poblacion[k] = get<2>(e);
+        poblacion[k] = get<1>(e);
 
         k++;
     }
@@ -158,25 +157,21 @@ vector<int> fitness_dif_goles(vector<Genoma> &poblacion, unsigned int n,
     }
 
     // ADEMÁS TENGO QUE ORDENAR LOS PUNTAJES Y GENOMAS PARA QUE ESTÉN DE MAYOR A MENOR FITNESS
-    vector<tuple<int, int, Genoma> > todos_juntos (poblacion.size());
+    vector<tuple<int, Genoma> > todos_juntos (poblacion.size());
     for (unsigned int i = 0; i < poblacion.size(); i++) {
-        todos_juntos.push_back(make_tuple(dif_goles[i],i,poblacion[i]));
+        todos_juntos.push_back(make_tuple(dif_goles[i],poblacion[i]));
     }
 
-    stable_sort (todos_juntos.begin(), todos_juntos.end());
+    stable_sort (todos_juntos.rbegin(), todos_juntos.rend());
+
+    int k = 0;
 
     for (auto e : todos_juntos) {
-        int indice = get<1>(e);
-        dif_goles[indice] = get<0>(e);
-        poblacion[indice] = get<2>(e);
+        dif_goles[k] = get<0>(e);
+        poblacion[k] = get<1>(e);
+
+        k++;
     }
-    // for (auto e: dif_goles)
-    // {
-    // cerr<<e<<"\t";
-    // }
-    // cerr<<endl;
-
-
     return dif_goles;
 }
 
@@ -229,6 +224,7 @@ void mutacion_A(Genoma &individuo, double proba_mutacion){
         double muto = _dist_continua(_generador);
         if (muto <= proba_mutacion) {
             individuo[i] = _dist_continua(_generador);
+        }
     }
 }
 
