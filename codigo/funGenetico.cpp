@@ -72,8 +72,8 @@ Genoma hacer_genetico(  unsigned int generaciones,
     }
 
     auto fin = high_resolution_clock::now();
-    double runtime = duration<double, std::milli>(fin - inicio).count();
-    cerr<<"Tiempo: "<<(runtime)<<" milisegundos"<<endl;
+    auto runtime = duration_cast<minutes>(fin - inicio).count();
+    cerr<<"Tiempo: "<<runtime<<" min"<<endl;
     cerr<<"Mejor puntaje: "<<puntajes[0]<<endl;
     return generacion[0];
 }
