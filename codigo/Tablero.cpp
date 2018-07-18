@@ -117,7 +117,7 @@ void Tablero::moverJug(Jugador& j, Movimiento m) {
         } else {
             _pelota.patear(Movimiento(m.dir())); // Mueve la pelota con el jugador
         }
-    } 
+    }
 
     j.mover(m);
 }
