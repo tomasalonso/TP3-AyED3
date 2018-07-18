@@ -40,6 +40,7 @@ Genoma hacer_genetico(  unsigned int generaciones,
     auto inicio = high_resolution_clock::now();
 
     vector<Genoma> generacion = poblacion_inicial(tamanio_poblacion);
+    vector<int> puntajes;
     vector<Genoma> generacion_siguiente = generacion;
 
     for (unsigned int i = 0; i < generaciones; ++i) {
@@ -48,7 +49,8 @@ Genoma hacer_genetico(  unsigned int generaciones,
 
         generacion = generacion_siguiente;
 
-        vector<int> puntajes = fitness(generacion, n, m, total); // me ordena ambas puntajes y generación de mayor a menor puntaje
+        puntajes = fitness(generacion, n, m, total); // me ordena ambas puntajes y generación de mayor a menor puntaje
+
 
         pair<vector<Genoma>,vector<Genoma> > divididos = seleccion(generacion, puntajes, fracc_conservar);
 
@@ -61,7 +63,8 @@ Genoma hacer_genetico(  unsigned int generaciones,
 
     auto fin = high_resolution_clock::now();
     double runtime = duration<double, std::milli>(fin - inicio).count();
-    cerr<<"Tiempo: "<<runtime<<"ms"<<endl;
+    cerr<<"Tiempo: "<<(runtime)<<" milisegundos"<<endl;
+    cerr<<"Mejor puntaje: "<<puntajes[0]<<endl;
     return generacion[0];
 }
 
