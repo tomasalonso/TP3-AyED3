@@ -12,21 +12,22 @@ using namespace std;
 int main() {
     const int m = 5;
     const int n = 10;
-    const unsigned int total = 20;
+    const unsigned int total = 100;
 
     const vector<Jugador> jI({
-                              Jugador(0, Posicion(1,1), 1),
-                              Jugador(1, Posicion(2,2), 0.5),
-                              Jugador(2, Posicion(3,3), 0.5)
+                              Jugador(0, Posicion(1,1), 0.152869),
+                              Jugador(1, Posicion(2,2), 0.67807),
+                              Jugador(2, Posicion(3,3), 0.137978)
         });
     const vector<Jugador> jD({
-                              Jugador(0, Posicion(6,4), 0.5),
-                              Jugador(1, Posicion(7,2), 1),
-                              Jugador(2, Posicion(8,3), 0.5)
+                              Jugador(0, Posicion(6,4), 0.288556),
+                              Jugador(1, Posicion(7,2), 0.429239),
+                              Jugador(2, Posicion(8,3), 0.595944)
         });
 
-    const vector<double> gI(15, 0.99999);
-    const vector<double> gD(15, 0.1343);
+    const vector<double> gD(
+                      {0.902997, 0.567549, 0.919372, 0.647458, 0.11399, 0.000219284, 0.459814, 0.933624, 0.0704338, 0.18382, 0.231627, 0.363771, 0.352568, 0.118043, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.152869, 0.67807, 0.137978, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 });
+    const vector<double> gI({0.355141, 0.626732, 0.827152, 0.860142, 0.69954, 0.48047, 0.764234, 0.101884, 0.268695, 0.743567, 0.817875, 0.372644, 0.928222, 0.196441, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.288556, 0.429239, 0.595944, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 });
 
     Equipo equipoI(gI, false);
     Equipo equipoD(gD, true);
