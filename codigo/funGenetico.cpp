@@ -1,100 +1,129 @@
 #include "funGenetico.hpp"
 
+#define min_gen -1.0
+#define max_gen 1.0
 
+vector<string> f_names = {"fitness_puntos", "fitness_dif_goles"};
+vector<string> s_names = {"seleccion_por_puntaje", "seleccion_por_cantidad"};
+vector<string> m_names = {"mutacion_A", "mutacion_B"};
+vector<string> c_names = {"crossover_BLOQUES", "crossover_RANDOM"};
+
+#define enes            10
+#define emes            5
+#define tiempos         70
+
+#define fracciones      0.3
+#define probas          0.4
+
+#define gen     20
+#define pob      20
 
 int main()
 {
 
-    // string fit,sel,mut,cross;
+    // vector< fun_fitness_type > fitness = {fitness_puntos, fitness_dif_goles};
 
-    // cin>>fit>>sel>>mut>>cross;
+    // vector< fun_seleccion_type > seleccion = {seleccion_por_puntaje, seleccion_por_cantidad};
 
-    vector<
-        function<vector<int>(vector<Genoma> &poblacion, unsigned int n, unsigned int m, unsigned int total)>
-                > fitness = {fitness_puntos, fitness_dif_goles};
+    // vector< fun_mutacion_type > mutacion = {mutacion_A, mutacion_B};
 
-    vector<
-        function<pair<vector<Genoma>,vector<Genoma> > (vector<Genoma> &poblacion, vector<int> &puntajes, double fracc_poblacion)>
-                > seleccion = {seleccion_por_puntaje, seleccion_por_cantidad};
+    // vector< fun_crossover_type > crossover = {crossover_BLOQUES, crossover_RANDOM};
 
-    vector<
-        function<void(Genoma &individuo, double proba_mutacion)>
-                > mutacion = {mutacion_A, mutacion_B};
+    vector< casos_type > casos = {
 
-    vector<
-        function<Genoma(Genoma &a, Genoma &b)>
-                > crossover = {crossover_BLOQUES, crossover_RANDOM};
+        make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones, fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_BLOQUES, 0),
 
-    vector<string> f_names = {"fitness_puntos", "fitness_dif_goles"};
-    vector<string> s_names = {"seleccion_por_puntaje", "seleccion_por_cantidad"};
-    vector<string> m_names = {"mutacion_A", "mutacion_B"};
-    vector<string> c_names = {"crossover_BLOQUES", "crossover_RANDOM"};
+        make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones, fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_RANDOM, 1)
 
-    vector<int> enes = { 10 };
-    vector<int> emes = { 5 };
-    vector<int> tiempos = { 70 };
-    vector<int> generaciones = { 30 };
-    vector<int> poblaciones = { 20 , 30 };
+                                    };
 
-    vector<double> fracciones = { 0.2 , 0.4 };
-    vector<double> probas = { 0.3 , 0.6 , 0.9 };
+    // vector< casos_type > casos = {
+
+    //     make_tuple(generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
+    //      fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_, )
+
+    //     make_tuple(generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
+    //      fitness_puntos, 0, seleccion_por_puntaje, 0, mutacion_A, 0, crossover_ )
+    //                                 };
+
+    // vector< casos_type > casos = {
+
+    //     make_tuple(generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
+    //      fitness_puntos, 0, seleccion_por_, , mutacion_A, 0, crossover_, ),
+
+    //     make_tuple(generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
+    //      fitness_dif_goles, 1, seleccion_por_, , mutacion_A, 0, crossover_, )
+    //                                 };
+
+    for (auto e : casos) {
+
+        auto &generacion = get<0>(e);
+        auto &poblacion = get<1>(e);
+        auto &proba = get<2>(e);
+        auto &n = get<3>(e);
+        auto &m = get<4>(e);
+        auto &tiempo = get<5>(e);
+        auto &fraccion = get<6>(e);
+        auto &fit = get<7>(e);
+        auto &i = get<8>(e);
+        auto &sel = get<9>(e);
+        auto &j = get<10>(e);
+        auto &mut = get<11>(e);
+        auto &k = get<12>(e);
+        auto &cross = get<13>(e);
+        auto &l = get<14>(e);
 
 
-    for (unsigned int i = 0; i < fitness.size(); i++) {
-        for (unsigned int j = 0; j < seleccion.size(); j++) {
-            for (unsigned int k = 0; k < mutacion.size(); k++) {
-                for (unsigned int l = 0; l < crossover.size(); l++) {
-                    for (int N : enes) {
-                    for (int M : emes) {
-                    for (int Tiempo : tiempos) {
-                    for (double Fraccion : fracciones) {
-                    for (double Proba : probas) {
-                    for (double pob : poblaciones) {
-
-                        cerr<<"Parametros:\n "<<"N\tM\tTiempo\tFitness\t\tSeleccion\t\tMutacion\tCrossover\t\tFraccion\tProba mutacion\n";
-                        cerr<<N<<"\t"<<M<<"\t"<<Tiempo<<"\t"<<f_names[i]<<"\t"<<s_names[j]<<"\t"<<m_names[k]<<"\t"<<c_names[l]<<"\t"<<Fraccion<<"\t\t"<<Proba<<"\n\n\n";
-
-                        Genoma la_posta = hacer_genetico(generaciones[0],
-                                                         pob,
-                                                         Proba,
-                                                         N,
-                                                         M,
-                                                         Tiempo,
-                                                         Fraccion,
-                                                         fitness[i],
-                                                         seleccion[j],
-                                                         mutacion[k],
-                                                         crossover[l]               );
-
-                        cerr<<"---------------------------------------------  "<<endl<<endl;
-                        cerr<<"{ ";
-                        for (auto e: la_posta) {cerr<<e<<"  ";}
-                        cerr<<" }\n ------------- FIN EJECUCIÓN -------------  "<<endl<<endl<<endl;
-
-                    }}}}}}
-                }
-            }
-        }
+        Genoma la_posta = hacer_genetico(generacion, poblacion,
+                                         proba, n, m, tiempo,
+                                         fraccion,
+                                         fit, i,
+                                         sel, j,
+                                         mut, k,
+                                         cross, l    );
     }
+    // for (unsigned int i = 0; i < fitness.size(); i++) {
+    //     for (unsigned int j = 0; j < seleccion.size(); j++) {
+    //         for (unsigned int k = 0; k < mutacion.size(); k++) {
+    //             for (unsigned int l = 0; l < crossover.size(); l++) {
+    //                 for (int N : enes) {
+    //                 for (int M : emes) {
+    //                 for (int Tiempo : tiempos) {
+    //                 for (double Fraccion : fracciones) {
+    //                 for (double Proba : probas) {
+    //                 for (double pob : poblaciones) {
 
-    // Genoma la_posta = hacer_genetico(5, 40, 0.7, 10, 5, 30, 0.3,
-    //                                  fitness_dif_goles, seleccion_por_puntaje,
-    //                                  mutacion_A, crossover_BLOQUES);
+    //                     // cerr<<"Parametros:\n "<<"N\tM\tTiempo\tFitness\t\tSeleccion\t\tMutacion\tCrossover\t\tFraccion\tProba mutacion\n";
+    //                     // cerr<<N<<", "<<M<<", "<<Tiempo<<", "<<pob<<", "<<f_names[i]<<", "<<s_names[j]<<", "<<m_names[k]<<", "<<c_names[l]<<", "<<Fraccion<<", "<<Proba<<"\n\n\n";
 
-    // auto poblacion = poblacion_inicial(5);
-        // for (unsigned int i=0;i<poblacion.size();i++) {for(auto e : (poblacion)[i] ){cerr<<e<<"  ";} cerr<<endl;}
-    // Genoma copia = poblacion[0];
-    // for (auto e: poblacion[1]) {cerr<<e<<"  ";} cerr<<endl;
-    // Genoma cruza = crossover_BLOQUES(poblacion[0],poblacion[1], 1);
-    // vector<int> puntos={202,200,198,140,120};
-    // auto seleccion = seleccion_por_puntaje(poblacion,puntos,0.4);
-    // cerr<<"----MUTADO----";cerr<<endl;
-    // cerr<<"----CROSSOVER----";cerr<<endl;
-    // cerr<<"----DIFF----";cerr<<endl;
-    // for (unsigned int i=0;i<seleccion.first.size();i++) {for(auto e : (seleccion.first)[i] ){cerr<<e<<"  ";} cerr<<endl;}
-    // auto puntos=fitness_dif_goles(poblacion,10,5, 5);
+    //                 }}}}}}
+    //             }
+    //         }
+    //     }
+    // }
+                        // for (auto e: la_posta) {cerr<<", "<<e;}
+
+    //                     cerr<<N<<", "<<M<<"\t"<<Tiempo<<"\t"<<f_names[i]<<"\t"<<s_names[j]<<"\t"<<m_names[k]<<"\t"<<c_names[l]<<"\t"<<Fraccion<<"\t\t"<<Proba<<"\n\n\n";
+    // Genoma la_posta = hacer_genetico(                    generaciones[0],
+    //                                                      3,
+    //                                                      probas[0],
+    //                                                      enes[0],
+    //                                                      emes[0],
+    //                                                      tiempos[0],
+    //                                                      0.8,
+    //                                                      fitness[0],
+    //                                                      0,
+    //                                                      seleccion[0],
+    //                                                      0,
+    //                                                      mutacion[0],
+    //                                                      0,
+    //                                                      crossover[0],
+    //                                                      0     );
+
     return 0;
 }
+
+
 Genoma hacer_genetico(  unsigned int generaciones,
                         unsigned int tamanio_poblacion,
                         double proba_mutacion,
@@ -102,13 +131,14 @@ Genoma hacer_genetico(  unsigned int generaciones,
                         unsigned int m,
                         unsigned int total,
                         double fracc_conservar,
-                        function<vector<int>(vector<Genoma> &poblacion, unsigned int n,
-                                unsigned int m, unsigned int total)> fitness,
-                        function<pair<vector<Genoma>,vector<Genoma> > (vector<Genoma> &poblacion,
-                                                vector<int> &puntajes,
-                                                double fracc_poblacion)> seleccion,
-                        function<void(Genoma &individuo, double proba_mutacion)> mutacion,
-                        function<Genoma(Genoma &a, Genoma &b)> crossover ){
+                        fun_fitness_type fitness,
+                        unsigned int f_ind,
+                        fun_seleccion_type seleccion,
+                        unsigned int s_ind,
+                        fun_mutacion_type mutacion,
+                        unsigned int m_ind,
+                        fun_crossover_type crossover,
+                        unsigned int c_ind                   ){
 
     auto inicio = high_resolution_clock::now();
 
@@ -116,35 +146,33 @@ Genoma hacer_genetico(  unsigned int generaciones,
     vector<int> puntajes;
     vector<Genoma> generacion_siguiente = generacion;
 
+
     for (unsigned int i = 0; i < generaciones; ++i) {
-        // for (unsigned int i=0;i<generacion.size();i++) {for(auto e : (generacion)[i] ){cerr<<e<<"  ";} cerr<<endl;}
+
         generacion = generacion_siguiente;
 
         puntajes = fitness(generacion, n, m, total); // me ordena ambas puntajes y generación de mayor a menor puntaje
 
-        int puntaje_max = 0;
-        int puntaje_max_ind = 0;
-        int puntaje_min = 99999999;
-        // int puntaje_min_ind = 0;
+        // PUNTAJES Y GENERACION SE ORDENAN DE MAYOR A MENOR PUNTAJE EN FITNESS
 
-        cerr<<"Puntajes:\n";
-        for (unsigned int k = 0; k < puntajes.size(); k++) {
-            cerr<<puntajes[k]<<" ";
-            if (puntajes[k] > puntaje_max) {
-                puntaje_max = puntajes[k];
-                // puntaje_max_ind = k;
-            }
-            if (puntajes[k] < puntaje_min) {
-                puntaje_min = puntajes[k];
-                // puntaje_min_ind = k;
-            }
-        }
-        cerr<<endl<<endl;
+        auto estimadores = calcular_estimadores(puntajes);
 
-        cerr<<"Generación: "<<i<<"\tTamaño: "<<generacion.size()<<"\tPuntaje máximo: "<<puntaje_max<<"\tPuntaje mínimo: "<<puntaje_min<<endl;
+        // IMPRESIÓN DE PARAMETROS
+
+        cerr << n << ", " << m << ", " << total << ", " << tamanio_poblacion << ", " << i << ", ";
+
+        cerr << f_names[f_ind] << ", " << s_names[s_ind] << ", " << fracc_conservar << ", ";
+
+        cerr << c_names[c_ind] << ", " << m_names[m_ind] << ", " << proba_mutacion << ", ";
+
+//                                         PROMEDIO                     VARIANZA
+        cerr << puntajes[0] << ", " << estimadores.first << ", " << estimadores.second;
+
+        for(auto e : generacion[0] ){cerr<<", "<<e;} cerr<<endl;
+
+        // cerr<<"Generación: "<<i<<"\tTamaño: "<<generacion.size()<<"\tPuntaje máximo: "<<puntaje_max<<"\tPuntaje mínimo: "<<puntaje_min<<endl;
         // for (unsigned int i=0;i<generacion.size();i++) {cerr<<"P: "<<puntajes[i]<<" ";for(unsigned int j=0;j<(generacion)[i].size();j++ ){
             // if(j == 13){cerr<<endl<<"      ";}cerr<<generacion[i][j]<<"  ";} cerr<<endl;}
-        for(auto e : generacion[puntaje_max_ind] ){cerr<<e<<"  ";} cerr<<endl<<endl;
 
 
         pair<vector<Genoma>,vector<Genoma> > divididos = seleccion(generacion, puntajes, fracc_conservar);
@@ -158,8 +186,8 @@ Genoma hacer_genetico(  unsigned int generaciones,
 
     auto fin = high_resolution_clock::now();
     auto runtime = duration_cast<minutes>(fin - inicio).count();
-    cerr<<"Tiempo: "<<runtime<<" min"<<endl;
-    cerr<<"Mejor puntaje: "<<puntajes[0]<<endl;
+    cout<<"Tiempo: "<<runtime<<" min"<<endl;
+    // cerr<<"Mejor puntaje: "<<puntajes[0]<<endl;
     return generacion[0];
 }
 
@@ -169,7 +197,7 @@ vector<Genoma> poblacion_inicial(unsigned int tamanio_poblacion) {
 
 
     // std::default_random_engine _generador;
-    std::uniform_real_distribution<double> _distribucion{0.0,1.0};
+    std::uniform_real_distribution<double> _distribucion{ min_gen, max_gen };
 
     vector<Genoma> poblacion;
 
@@ -193,6 +221,7 @@ vector<int> fitness_puntos(vector<Genoma> &poblacion, unsigned int n,
 
     for (unsigned int i = 0; i < poblacion.size(); i++) {
         for (unsigned int j = i + 1; j < poblacion.size(); j++) {
+
             // cerr<<"Juegan i: "<<i<<" vs. j: "<<j<<endl;
             pair<unsigned int, unsigned int> goles = jugar(poblacion[i],poblacion[j],n, m, total);
 
@@ -205,7 +234,6 @@ vector<int> fitness_puntos(vector<Genoma> &poblacion, unsigned int n,
                 puntos[i]+= 1;
                 puntos[j]+= 1;
             }
-
         }
     }
 
@@ -235,6 +263,7 @@ vector<int> fitness_dif_goles(vector<Genoma> &poblacion, unsigned int n,
     vector<int> dif_goles(poblacion.size(), 0);
 
     for (unsigned int i = 0; i < poblacion.size(); i++) {
+        // auto inicio = high_resolution_clock::now();
         for (unsigned int j = i + 1 ; j < poblacion.size(); ++j) {
             pair<unsigned int, unsigned int> goles = jugar(poblacion[i],poblacion[j],n, m, total);
 
@@ -249,6 +278,10 @@ vector<int> fitness_dif_goles(vector<Genoma> &poblacion, unsigned int n,
             dif_goles[j] += (goles.second-goles.first);
 
         }
+
+        // auto fin = high_resolution_clock::now();
+        // auto runtime = duration_cast<milliseconds>(fin - inicio).count();
+        // cerr<<"Tiempo jugadas "<<i<<": "<<runtime<<" milisegundos"<<endl;
     }
 
     // ADEMÁS TENGO QUE ORDENAR LOS PUNTAJES Y GENOMAS PARA QUE ESTÉN DE MAYOR A MENOR FITNESS
@@ -267,6 +300,7 @@ vector<int> fitness_dif_goles(vector<Genoma> &poblacion, unsigned int n,
 
         k++;
     }
+
     return dif_goles;
 }
 
@@ -311,14 +345,16 @@ pair<vector<Genoma>,vector<Genoma> > seleccion_por_cantidad(vector<Genoma> &pobl
 void mutacion_A(Genoma &individuo, double proba_mutacion){
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine _generador (seed);
-    std::uniform_real_distribution<double> _dist_continua{0.0,1.0};
-    std::uniform_int_distribution<int> _dist_discreta{0,genoma_size-1};
+    std::uniform_real_distribution<double> _dist_continua_PROBA{0.0,1.0};
+    std::uniform_real_distribution<double> _dist_continua_GEN{ min_gen, max_gen };
+
 
     for (int i = 0; i < genoma_size; i++) {
 
-        double muto = _dist_continua(_generador);
+        double muto = _dist_continua_PROBA(_generador);
+        // cerr<<"muto: "<<muto<<endl;
         if (muto <= proba_mutacion) {
-            individuo[i] = _dist_continua(_generador);
+            individuo[i] = _dist_continua_GEN(_generador);
         }
     }
 }
@@ -326,14 +362,14 @@ void mutacion_A(Genoma &individuo, double proba_mutacion){
 void mutacion_B(Genoma &individuo, double proba_mutacion){
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine _generador (seed);
-    std::uniform_real_distribution<double> _dist_continua{0.0,1.0};
+    std::uniform_real_distribution<double> _dist_continua_PROBA{0.0,1.0};
     std::uniform_int_distribution<int> _dist_discreta{0,genoma_size-1};
 
-    double muto = _dist_continua(_generador);
+    double muto = _dist_continua_PROBA(_generador);
 
     if (muto <= proba_mutacion) {
         int indice_random = _dist_discreta(_generador);
-        individuo[indice_random] = 1-individuo[indice_random];
+        individuo[indice_random] = -individuo[indice_random];
     }
 
 }
@@ -359,11 +395,15 @@ vector<Genoma> hacer_crossover( vector<Genoma> &poblacion,
     }
 
     for (auto e: nueva_gen) {
+    // cerr<<"------BEFORE------";cerr<<endl;
+    // for (auto j: e) {cerr<<j<<"  ";} cerr<<endl;
 
         // for (auto j: e) {cerr<<j<<"  ";} cerr<<endl;
         mutacion(e, proba_mutacion);
+
+    // cerr<<"----MUTACI----";cerr<<endl;
+    // for (auto j: e) {cerr<<j<<"  ";} cerr<<endl<<endl<<endl;
     // cerr<<"----MUTADO----";cerr<<endl;
-        // for (auto j: e) {cerr<<j<<"  ";} cerr<<endl;
     }
     return nueva_gen;   // podríamos estar cruzando a los mismos dos veces.
 }
@@ -416,6 +456,7 @@ Genoma crossover_BLOQUES(Genoma &a,Genoma &b){ // por bloques semánticos
         cruza[i] = quite[i];
     }
 
+
     return cruza;
 }
 Genoma crossover_RANDOM(Genoma &a,Genoma &b){ // mezcla random
@@ -434,6 +475,8 @@ Genoma crossover_RANDOM(Genoma &a,Genoma &b){ // mezcla random
 }
 
 pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m, int total) {
+
+    // auto inicio = high_resolution_clock::now();
 
     const vector<Jugador> jI({
                           Jugador(0, Posicion(1,1), jugA[prob0]),
@@ -459,5 +502,23 @@ pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m,
                            );
     }
 
+    // auto fin = high_resolution_clock::now();
+    // auto runtime = duration_cast<milliseconds>(fin - inicio).count();
+    // cerr<<"Tiempo partido: "<<runtime<<" milisegundos"<<endl;
+
     return tablero.goles();
+}
+
+pair<double,double> calcular_estimadores(vector<int> muestra) {
+
+        double suma = accumulate( muestra.begin(),  muestra.end(), 0.0);
+        double media =  suma / muestra.size();
+
+        double accum = 0.0;
+        for_each (muestra.begin(), muestra.end(),
+                     [&](const double d) { accum += (d - media) * (d - media); } );
+
+        double stdev = sqrt(accum / (muestra.size()-1));
+
+        return make_pair(media, stdev);
 }
