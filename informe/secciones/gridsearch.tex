@@ -1,0 +1,30 @@
+\subsection{Grid-Search:}
+
+La lógica de grid-search es plantear todo el espacio de soluciones posibles, como este espacio
+es muy masivo, no es computacionalmente posible recorrer todo, por eso se decide empezar
+en algún punto aleatorio y, con un criterio, recorrer todas las soluciones vecinas a esta
+para tomar la mejor y repetir el proceso hasta llegar a alguna que sea mejor que todos sus vecinos
+, a este procedimiento se lo llama búsqueda local.
+
+
+\subsubsection{Búsqueda Local:}
+
+
+Nuestro espacio de soluciones es todas las combinaciones posibles de genes distintos en un genoma,
+son 30 genes que van en los reales entre $-1$ y $1$, entonces se comienza con un equipo aleatorio,
+es decir, con un genoma aleatorio, luego se define la vecindad como todos los genomas que tiene
+un solo gen cambiado en $\pm 0.05$ y saturando si llega a $-1$ o $1$. con estos genomas se lo hace
+jugar secuencialmente quedándose con el ganador siempre y, finalmente, con el ultimo ganador.
+Luego con el nuevo genoma mejor de todos los vecinos, se repite el proceso hasta que el ganador
+sea el mismo con el que se comenzó la iteración.
+
+
+\subsubsection{GRASP:}
+
+
+La lógica de GRASP es simplemente tener muchas soluciones randomizadas con búsqueda local y luego, con todos
+estos mejores de sus vecinos, se realiza un torneo para obtener el mejor de todos esos.
+El concepto se basa en que con la búsqueda local lo mas probable es solo obtener un máximo local y no
+el mejor de todos, entonces con GRASP la idea es aumentar la probabilidad de obtener el mejor real o
+al menos obtener un buen máximo local.
+Este esta implementado simplemente como un ciclo de búsquedas locales.
