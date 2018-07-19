@@ -89,14 +89,24 @@ Genoma hacer_genetico(  unsigned int generaciones,
 
         int puntaje_max = 0;
         int puntaje_max_ind = 0;
+        int puntaje_min = 99999999;
+        // int puntaje_min_ind = 0;
 
+        cerr<<"Puntajes:\n";
         for (unsigned int k = 0; k < puntajes.size(); k++) {
+            cerr<<puntajes[k]<<" ";
             if (puntajes[k] > puntaje_max) {
                 puntaje_max = puntajes[k];
-                puntaje_max_ind = k;
+                // puntaje_max_ind = k;
+            }
+            if (puntajes[k] < puntaje_min) {
+                puntaje_min = puntajes[k];
+                // puntaje_min_ind = k;
             }
         }
-        cerr<<"Generación: "<<i<<"\tTamaño: "<<generacion.size()<<"\tPuntaje máximo: "<<puntaje_max<<endl;
+        cerr<<endl;
+
+        cerr<<"Generación: "<<i<<"\tTamaño: "<<generacion.size()<<"\tPuntaje máximo: "<<puntaje_max<<"\tPuntaje mínimo: "<<puntaje_min<<endl;
         for(auto e : generacion[puntaje_max_ind] ){cerr<<e<<"  ";} cerr<<endl<<endl;
 
 
