@@ -520,7 +520,7 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
 
 vector<double> Tablero::distJugadorAlArco(const bool enDerecha) const {
     const vector<Jugador> &js = (enDerecha) ? _jugadoresD : _jugadoresI;
-    const double xArco = (enDerecha) ? _n : -1;
+    const double xArco = (enDerecha) ? -1 : _n;
 
     vector<double> dist;
 
@@ -541,7 +541,7 @@ vector<double> Tablero::distJugadorAlArco(const bool enDerecha) const {
 }
 
 double Tablero::distPelotaArco(const bool enDerecha) const {
-    const double xArco = (enDerecha) ? _n : -1;
+    const double xArco = (enDerecha) ? -1 : _n;
     const double x = _pelota.siguiente().x();
     const double y = _pelota.siguiente().y();
 
