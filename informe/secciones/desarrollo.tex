@@ -7,9 +7,7 @@ de tres jugadores un partido de fútbol con un numero de jugadas determinado.
 El objetivo principal es desarrollar un equipo que con una función parametrizable
 que evalúa posibles jugadas siguientes y con eso decida cual es la mejor a tomar
 la idea es, con las distintas heurísticas, decidir que parámetros son buenos para esa
-función evaluadora y así diagramar una buena estrategia de juego general.
-
-
+función evaluadora y así diagramar una buena estrategia de juego general.\\
 
 \subsection{Implementación}
 
@@ -22,7 +20,7 @@ conoce todas las reglas del juego a ser respetadas por los equipos, también tie
 6 jugadores, el es el encargado de llevar la partida y el resultado así como también es el que tiene la
 función evaluadora de jugadas que toma los genomas (los parámetros de la función dependientes de cada equipo)
 y evalúa la jugada a realizar.
-Luego esta el equipo, que solo tiene identificadores para sus jugadores y el dicho genoma propio de cada equipo.
+Luego esta el equipo, que solo tiene identificadores para sus jugadores y el dicho genoma propio de cada equipo.\\
 
 
 Todas las estructuras que manejan una posición (jugadores y pelota) tienen en realidad, dos posiciones, actual, la que
@@ -32,6 +30,23 @@ saber como quedaría configurado el terreno para evaluarlo
 El tablero usa esta variable siguiente para evaluar el puntaje de la jugada a tomar.
 luego el tablero le dice los puntajes de las jugadas propuestas al equipo y este decide cual realizar, confirmandole
 al tablero cual es, y este efectivamente realizando la jugada, que es básicamente actualizar la posición actual
-con la siguiente.
+con la siguiente.\\
 
-\subsection{Algo mas?}
+\subsection{Parametrizacion}
+
+Se decidió utilizar un genoma de 30 parámetros los cuales varían entre $-1$ y $1$ simbolizando la importancia total
+que se le da a un dato del tablero ($-1$ si es muy malo que eso crezca $0$ si es irrelevante $1$ si es muy bueno que crezca)
+y también se utilizan algunos para cuando se tiene la pelota y otros distintos para los mismos datos
+cuando no se posee la pelota. El motivo de esto es poder permitirle a los equipos tomar estrategias distintas cuando están
+atacando o defendiendieno, se presento la idea de también permitir actuar distinto cuando se va perdiendo o ganando pero
+el tiempo no permitió implementar esto y ademas creemos que ya vamos a poder ver un buen comportamiento con solo esta
+diferenciacion.\\
+
+Los últimos 3 genes del genoma no varían entre $-1$ y $1$, solo van de $0$ a $1$ y representan las probabilidades de quite
+de los 3 jugadores del equipo, supusimos que esto es importante para el juego y decidimos darle el poder de esto
+a los algoritmos de optimizacion.\\
+
+
+El tablero simplemente toma este genoma y dependiendo si el equipo esta en poseción o no, multiplica el valor del gen por
+el dato siendo considerado, como por ejemplo puede ser la distancia de un jugador al arco, al rival, la distancia de la pelota
+al arco contrario, la distancia a los borde, el área cubierta y si el siguiente paso es gol o no.
