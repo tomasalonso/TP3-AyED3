@@ -23,14 +23,14 @@ int main() {
     const unsigned int total = 100;
 
     const vector<Jugador> jI({
-                              Jugador(0, Posicion(1,1), 0.152869),
-                              Jugador(1, Posicion(2,2), 0.67807),
-                              Jugador(2, Posicion(3,3), 0.137978)
+                              Jugador(0, Posicion(1,1), 0.339975),
+                              Jugador(1, Posicion(2,2), 0.0291968),
+                              Jugador(2, Posicion(3,3), 0.568359)
         });
     const vector<Jugador> jD({
-                              Jugador(0, Posicion(6,4), 0.288556),
-                              Jugador(1, Posicion(7,2), 0.429239),
-                              Jugador(2, Posicion(8,3), 0.595944)
+                              Jugador(0, Posicion(6,4), 0.563661),
+                              Jugador(1, Posicion(7,2), 0.219302),
+                              Jugador(2, Posicion(8,3), 0.876167)
         });
 
     Equipo equipoI(gI, false);
