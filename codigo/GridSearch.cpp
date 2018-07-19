@@ -108,7 +108,7 @@ vector<Genoma> generar_vecinos(Genoma actual) {
       nuevo = actual;
       nuevo[i] -= 0.1;
       if(nuevo[i] < 0) {
-          nuevo[i] = -1;
+          nuevo[i] = 0;
       }
       vecinos.push_back(nuevo);
   }
