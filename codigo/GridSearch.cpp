@@ -10,8 +10,8 @@
 
 int main()
 {
-    for (const double g : grasp(50, 10, 5, 50)) {
-      cout << g << " ";
+    for (const double g : grasp(15, 10, 5, 50)) {
+      cout << g << ", ";
     }
     cout << endl;
 
@@ -40,12 +40,19 @@ Genoma generar() {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
     std::default_random_engine generador (seed);
-    std::uniform_real_distribution<double> distribucion{0.0,1.0};
+    std::uniform_real_distribution<double> distribucion1{-1.0, 1.0};
+    std::uniform_real_distribution<double> distribucion2{0, 1.0};
 
     Genoma random;
 
-    for (unsigned int j = 0; j < genoma_size; ++j) {
-        const double rand_num = distribucion(generador);
+    for (unsigned int j = 0; j < inicio_probas; ++j) {
+        const double rand_num = distribucion1(generador);
+
+        random.push_back(rand_num);
+        cerr << rand_num << endl;
+    }
+    for (unsigned int j = inicio_probas; j < genoma_size; ++j) {
+        const double rand_num = distribucion1(generador);
 
         random.push_back(rand_num);
         cerr << rand_num << endl;
@@ -75,21 +82,37 @@ Genoma busquedaLocal(const Genoma &g, const unsigned int n,
 
 vector<Genoma> generar_vecinos(Genoma actual) {
   vector<Genoma> vecinos;
-  for(unsigned int i = 0; i < genoma_size; i++) {
+  for(unsigned int i = 0; i < inicio_probas; i++) {
       Genoma nuevo = actual;
-      nuevo[i] += 0.05;
+      nuevo[i] += 0.1;
       if(nuevo[i] > 1) {
           nuevo[i] = 1;
       }
       vecinos.push_back(nuevo);
 
       nuevo = actual;
-      nuevo[i] -= 0.05;
-      if(nuevo[i] < 0) {
-          nuevo[i] = 0;
+      nuevo[i] -= 0.1;
+      if(nuevo[i] < -1) {
+          nuevo[i] = -1;
       }
       vecinos.push_back(nuevo);
   }
+  for(unsigned int i = inicio_probas; i < genoma_size; i++) {
+      Genoma nuevo = actual;
+      nuevo[i] += 0.1;
+      if(nuevo[i] > 1) {
+          nuevo[i] = 1;
+      }
+      vecinos.push_back(nuevo);
+
+      nuevo = actual;
+      nuevo[i] -= 0.1;
+      if(nuevo[i] < 0) {
+          nuevo[i] = -1;
+      }
+      vecinos.push_back(nuevo);
+  }
+
   return vecinos;
 }
 
