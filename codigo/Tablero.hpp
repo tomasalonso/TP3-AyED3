@@ -50,7 +50,7 @@ public:
 
     void jugadasValidas(vector<vector<Movimiento>> &posibles,
                         bool enDerecha);
-    
+
     double puntaje(Genoma genoma, bool enDerecha);
 
     // Imprime estado, primero izquierda, despues derecha
@@ -63,6 +63,8 @@ public:
     double distPelotaArco(const bool enDerecha) const;
     vector<double> cercaniaARival(const bool enDerecha) const;
     double areaCubierta(const bool enDerecha) const;
+    vector<double> distJugadorAPelota(const bool enDerecha) const;
+    vector<double> distJugadorAlLateral(const bool enDerecha) const;
     void jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs);
 
 private:
