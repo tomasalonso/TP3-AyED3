@@ -52,7 +52,7 @@ Genoma generar() {
         cerr << rand_num << endl;
     }
     for (unsigned int j = inicio_probas; j < genoma_size; ++j) {
-        const double rand_num = distribucion1(generador);
+        const double rand_num = distribucion2(generador);
 
         random.push_back(rand_num);
         cerr << rand_num << endl;
