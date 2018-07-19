@@ -49,22 +49,28 @@ vector<Movimiento> Equipo::fuerzaBruta(Tablero &t,
                                         const vector<vector<Movimiento> > &jugadasPropias,
                                         const vector<Movimiento> &jugadaContrario,
                                         bool enDerecha) {
-    vector<Movimiento> mejorJugada;
 
+    vector<Movimiento> mejorJugada = jugadasPropias[0];
     // comparamos todos los movimientos
-    double puntajeMejor = -1;
-    for (const auto &jPropia : jugadasPropias) {  // Devuelve todas válidas
+    if (enDerecha) {
+        t.mover(jugadaContrario, jugadasPropias[0]);
+    } else {
+        t.mover(jugadasPropias[0], jugadaContrario);
+    }
+
+    double puntajeMejor = t.puntaje(_genoma, enDerecha);
+    for (unsigned int i = 1; i < jugadasPropias.size(); i++) {  // Devuelve todas válidas
         if (enDerecha) {
-            t.mover(jugadaContrario, jPropia);
+            t.mover(jugadaContrario, jugadasPropias[i]);
         } else {
-            t.mover(jPropia, jugadaContrario); 
+            t.mover(jugadasPropias[i], jugadaContrario);
         }
 
         const double puntajeActual = t.puntaje(_genoma, enDerecha);
 
         if (puntajeActual > puntajeMejor) {
             puntajeMejor = puntajeActual;
-            mejorJugada = jPropia;
+            mejorJugada = jugadasPropias[i];
         }
     }
 
