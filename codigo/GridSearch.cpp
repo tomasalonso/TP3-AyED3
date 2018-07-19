@@ -10,8 +10,8 @@
 
 int main()
 {
-    for (const double g : grasp(50, 10, 5, 50)) {
-      cout << g << " ";
+    for (const double g : grasp(15, 10, 5, 50)) {
+      cout << g << ", ";
     }
     cout << endl;
 
@@ -40,12 +40,19 @@ Genoma generar() {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
     std::default_random_engine generador (seed);
-    std::uniform_real_distribution<double> distribucion{0.0,1.0};
+    std::uniform_real_distribution<double> distribucion1{-1.0, 1.0};
+    std::uniform_real_distribution<double> distribucion2{0, 1.0};
 
     Genoma random;
 
-    for (unsigned int j = 0; j < genoma_size; ++j) {
-        const double rand_num = distribucion(generador);
+    for (unsigned int j = 0; j < inicio_probas; ++j) {
+        const double rand_num = distribucion1(generador);
+
+        random.push_back(rand_num);
+        cerr << rand_num << endl;
+    }
+    for (unsigned int j = inicio_probas; j < genoma_size; ++j) {
+        const double rand_num = distribucion2(generador);
 
         random.push_back(rand_num);
         cerr << rand_num << endl;
@@ -75,21 +82,37 @@ Genoma busquedaLocal(const Genoma &g, const unsigned int n,
 
 vector<Genoma> generar_vecinos(Genoma actual) {
   vector<Genoma> vecinos;
-  for(unsigned int i = 0; i < genoma_size; i++) {
+  for(unsigned int i = 0; i < inicio_probas; i++) {
       Genoma nuevo = actual;
-      nuevo[i] += 0.05;
+      nuevo[i] += 0.1;
       if(nuevo[i] > 1) {
           nuevo[i] = 1;
       }
       vecinos.push_back(nuevo);
 
       nuevo = actual;
-      nuevo[i] -= 0.05;
+      nuevo[i] -= 0.1;
+      if(nuevo[i] < -1) {
+          nuevo[i] = -1;
+      }
+      vecinos.push_back(nuevo);
+  }
+  for(unsigned int i = inicio_probas; i < genoma_size; i++) {
+      Genoma nuevo = actual;
+      nuevo[i] += 0.1;
+      if(nuevo[i] > 1) {
+          nuevo[i] = 1;
+      }
+      vecinos.push_back(nuevo);
+
+      nuevo = actual;
+      nuevo[i] -= 0.1;
       if(nuevo[i] < 0) {
           nuevo[i] = 0;
       }
       vecinos.push_back(nuevo);
   }
+
   return vecinos;
 }
 
@@ -138,13 +161,13 @@ pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m,
 
     const vector<Jugador> jI({
                           Jugador(0, Posicion(1,1), jugA[prob0]),
-                          Jugador(1, Posicion(2,2), jugA[prob1]),
-                          Jugador(2, Posicion(3,3), jugA[prob2])
+                          Jugador(1, Posicion(1,4), jugA[prob1]),
+                          Jugador(2, Posicion(4,3), jugA[prob2])
     });
     const vector<Jugador> jD({
-                          Jugador(0, Posicion(6,1), jugB[prob0]),
-                          Jugador(1, Posicion(7,2), jugB[prob1]),
-                          Jugador(2, Posicion(8,3), jugB[prob2])
+                          Jugador(0, Posicion(6,3), jugB[prob0]),
+                          Jugador(1, Posicion(9,1), jugB[prob1]),
+                          Jugador(2, Posicion(9,4), jugB[prob2])
     });
 
 

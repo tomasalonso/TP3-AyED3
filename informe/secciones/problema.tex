@@ -1,1 +1,43 @@
-No se pueden hacer pases a bordes de la cancha de posiciones impares
+
+En este trabajo práctico se va a investigar y explorar la resolución de problemas con
+diversas heurísticas de exploración de soluciones, en principal se va a trabajar
+con búsqueda local, GRASP y algoritmos genéticos. particularmente se va a intentar trabajar
+con la toma de decisiones estratégicas en un juego de tipo adversarial.\\
+
+
+En principio se pretende modelar un partido de fútbol donde dos equipos de 3
+jugadores compiten para ver cual de los dos obtiene más goles en un período de tiempo. El
+equipo con mayor cantidad de goles será el ganador. En caso de que ambos equipos tengan
+la misma cantidad de goles realizados, el resultado será un empate. Nuestro objetivo es lograr
+conseguir un equipo que tenga una buena estrategia de juego con las mencionadas técnicas
+algorítmicas. El objetivo es, en primer lugar, modelar computacionalmente el fenómeno descrito, luego
+parametrizar propiedades de dicho modelo que sean controlables e implementar, con distintas técnicas
+algorítmicas, algoritmos que permitan conseguir buenos valores para dichos parámetros. Estos parámetros
+serán los generadores de distintas soluciones al problema modelado.
+\\
+
+
+Se procederá así:
+En la próxima sección se describirá el modelo logico y luego, con más detalle, como fue implementado
+computacionalmente el mismo,
+así como también una explicación de cada decisión tomada ya sea por necesidad o facilidad para
+la aplicación de las heurísticas sobre esta implementación. el objetivo es que una solución
+para el modelo sea también una solución para el problema real.
+\\
+
+
+Luego se explicará el razonamiento y las decisiones tomadas en cuanto a las ideas desarrolladas para
+la resolución del problema. Se mostrara como funciona la heurística tratada en particular,
+daremos también ejemplos del funcionamiento y se explicará en detalle por qué es
+efectivamente una implementación de la técnica elegida, hablaremos también de que esperamos notar
+en los resultados.
+Hablaremos también de las complejidades temporales y espaciales de cada algoritmo.
+\\
+
+
+Por último vamos a realizar una experimentación computacional para medir la performance de
+los algoritmos implementados así como sus distintas propiedades. Para ello vamos a trabajar con
+todas las heurísticas al mismo tiempo, comparando sus resultados para corridas del aproximadamente
+el mismo costo temporal. luego se van a desarrollar experimentos que permiten medir los aspectos
+evolutivos de las soluciones obtenidas mediante las distintas técnicas utilizadas en
+el trabajo para poder compararlas entre si en base a estos aspectos.\\
