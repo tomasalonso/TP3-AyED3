@@ -39,20 +39,20 @@ int main()
 
     // vector< casos_type > casos = {
 
-    //     {generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
-    //      fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_, }
+    //     make_tuple(generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
+    //      fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_, )
 
-    //     {generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
-    //      fitness_puntos, 0, seleccion_por_puntaje, 0, mutacion_A, 0, crossover_ }
+    //     make_tuple(generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
+    //      fitness_puntos, 0, seleccion_por_puntaje, 0, mutacion_A, 0, crossover_ )
     //                                 };
 
     // vector< casos_type > casos = {
 
-    //     {generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
-    //      fitness_puntos, 0, seleccion_por_, , mutacion_A, 0, crossover_, },
+    //     make_tuple(generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
+    //      fitness_puntos, 0, seleccion_por_, , mutacion_A, 0, crossover_, ),
 
-    //     {generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
-    //      fitness_dif_goles, 1, seleccion_por_, , mutacion_A, 0, crossover_, }
+    //     make_tuple(generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
+    //      fitness_dif_goles, 1, seleccion_por_, , mutacion_A, 0, crossover_, )
     //                                 };
 
     for (auto e : casos) {
