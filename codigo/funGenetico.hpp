@@ -60,4 +60,6 @@ Genoma crossover_RANDOM(Genoma &a,Genoma &b);
 
 pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m, int total);
 
+pair<double, double> calcular_estimadores(vector<int> muestra);
+
 #endif

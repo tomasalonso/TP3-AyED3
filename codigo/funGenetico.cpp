@@ -460,4 +460,17 @@ pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m,
     }
 
     return tablero.goles();
+
+pair<double,double> calcular_estimadores(vector<int> muestra) {
+
+        double suma = accumulate( muestra.begin(),  muestra.end(), 0.0);
+        double media =  suma / muestra.size();
+
+        double accum = 0.0;
+        for_each (muestra.begin(), muestra.end(),
+                     [&](const double d) { accum += (d - media) * (d - media); } );
+
+        double stdev = sqrt(accum / (muestra.size()-1));
+
+        return make_pair(media, stdev);
 }
