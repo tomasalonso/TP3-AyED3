@@ -25,18 +25,53 @@ int main()
         function<Genoma(Genoma &a, Genoma &b)>
                 > crossover = {crossover_BLOQUES, crossover_RANDOM};
 
+    vector<string> f_names = {"fitness_puntos", "fitness_dif_goles"};
+    vector<string> s_names = {"seleccion_por_puntaje", "seleccion_por_cantidad"};
+    vector<string> m_names = {"mutacion_A", "mutacion_B"};
+    vector<string> c_names = {"crossover_BLOQUES", "crossover_RANDOM"};
 
-    for (auto f : fitness){
-        for (auto s : seleccion){
-            for (auto m : mutacion){
-                for (auto c : crossover){
+    vector<int> enes = { 10 };
+    vector<int> emes = { 5 };
+    vector<int> tiempos = { 70 };
+    vector<int> generaciones = { 30 };
+    vector<int> poblaciones = { 20 , 30 };
 
-                    Genoma la_posta = hacer_genetico(4, 5, 0.7, 10, 5, 30, 0.4, f, s, m, c);
+    vector<double> fracciones = { 0.2 , 0.4 };
+    vector<double> probas = { 0.3 , 0.6 , 0.9 };
 
-                    cerr<<"------------- ----------------- -------------  "<<endl<<endl;
-                    cerr<<"{ ";
-                    for (auto e: la_posta) {cerr<<e<<"  ";}
-                    cerr<<" }\n ------------- FIN EJECUCIÓN -------------  "<<endl<<endl<<endl;
+
+    for (unsigned int i = 0; i < fitness.size(); i++) {
+        for (unsigned int j = 0; j < seleccion.size(); j++) {
+            for (unsigned int k = 0; k < mutacion.size(); k++) {
+                for (unsigned int l = 0; l < crossover.size(); l++) {
+                    for (int N : enes) {
+                    for (int M : emes) {
+                    for (int Tiempo : tiempos) {
+                    for (double Fraccion : fracciones) {
+                    for (double Proba : probas) {
+                    for (double pob : poblaciones) {
+
+                        cerr<<"Parametros:\n "<<"N\tM\tTiempo\tFitness\t\tSeleccion\t\tMutacion\tCrossover\t\tFraccion\tProba mutacion\n";
+                        cerr<<N<<"\t"<<M<<"\t"<<Tiempo<<"\t"<<f_names[i]<<"\t"<<s_names[j]<<"\t"<<m_names[k]<<"\t"<<c_names[l]<<"\t"<<Fraccion<<"\t\t"<<Proba<<"\n\n\n";
+
+                        Genoma la_posta = hacer_genetico(generaciones[0],
+                                                         pob,
+                                                         Proba,
+                                                         N,
+                                                         M,
+                                                         Tiempo,
+                                                         Fraccion,
+                                                         fitness[i],
+                                                         seleccion[j],
+                                                         mutacion[k],
+                                                         crossover[l]               );
+
+                        cerr<<"---------------------------------------------  "<<endl<<endl;
+                        cerr<<"{ ";
+                        for (auto e: la_posta) {cerr<<e<<"  ";}
+                        cerr<<" }\n ------------- FIN EJECUCIÓN -------------  "<<endl<<endl<<endl;
+
+                    }}}}}}
                 }
             }
         }
@@ -104,9 +139,11 @@ Genoma hacer_genetico(  unsigned int generaciones,
                 // puntaje_min_ind = k;
             }
         }
-        cerr<<endl;
+        cerr<<endl<<endl;
 
         cerr<<"Generación: "<<i<<"\tTamaño: "<<generacion.size()<<"\tPuntaje máximo: "<<puntaje_max<<"\tPuntaje mínimo: "<<puntaje_min<<endl;
+        // for (unsigned int i=0;i<generacion.size();i++) {cerr<<"P: "<<puntajes[i]<<" ";for(unsigned int j=0;j<(generacion)[i].size();j++ ){
+            // if(j == 13){cerr<<endl<<"      ";}cerr<<generacion[i][j]<<"  ";} cerr<<endl;}
         for(auto e : generacion[puntaje_max_ind] ){cerr<<e<<"  ";} cerr<<endl<<endl;
 
 
