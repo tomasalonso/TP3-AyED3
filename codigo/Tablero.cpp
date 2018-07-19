@@ -364,7 +364,7 @@ double Tablero::puntaje(Genoma genoma, bool enDerecha) {
     unsigned int cantJug = _jugadoresI.size();
     bool enPosesion = false;
 
-    const vector<Jugador> &js = (enDerecha) ? _jugadoresI : _jugadoresD;
+    const vector<Jugador> &js = (enDerecha) ? _jugadoresD : _jugadoresI;
 
     for (const Jugador& j : js) {
         if (_jugPelotaSig == &j) {
@@ -376,70 +376,71 @@ double Tablero::puntaje(Genoma genoma, bool enDerecha) {
     if (enPosesion) {
         // primeros 3 distAlArco si tengo la pelota
         for (const double& e : dist) {
-            puntaje += e * genoma.at(index++) * 10;
+            puntaje += e * genoma.at(index++) * 100;
         }
         index += cantJug; // salteo los siguientes 3
     } else {
         // segundos 3 distAlArco si no tengo la pelota
         index += cantJug; // salteo los primeros 3
         for (const double& e : dist) {
-            puntaje += e * genoma.at(index++) * 10;
+            puntaje += e * genoma.at(index++) * 100;
         }
     }
 
     const double d = distPelotaArco(enDerecha);
     if (enPosesion) {
-        puntaje += d * genoma.at(index++) * 10;
+        puntaje += d * genoma.at(index++) * 100;
         index++; // salteo el siguiente 1
     } else {
         index++; // salteo el primero 1
-        puntaje += d * genoma.at(index++) * 10;
+        puntaje += d * genoma.at(index++) * 100;
     }
 
     const vector<double> cercania = cercaniaARival(enDerecha);
     if (enPosesion) {
         for (const double& e : cercania) {
-            puntaje += e * genoma.at(index++) * 10;
+            puntaje += e * genoma.at(index++) * 100;
         }
         index += cantJug;
     } else {
         index += cantJug;
         for (const double& e : cercania) {
-            puntaje += e * genoma.at(index++) * 10;
+            puntaje += e * genoma.at(index++) * 100;
         }
     }
     const vector<double> aPelota = distJugadorAPelota(enDerecha);
     if (enPosesion) {
         for (const double& e : aPelota) {
-            puntaje += e * genoma.at(index++) * 10;
+            puntaje += e * genoma.at(index++) * 100;
         }
         index += cantJug;
     } else {
         index += cantJug;
         for (const double& e : cercania) {
-            puntaje += e * genoma.at(index++) * 10;
+            puntaje += e * genoma.at(index++) * 100;
         }
     }
     const vector<double> aLateral = distJugadorAlLateral(enDerecha);
     if (enPosesion) {
         for (const double& e : aLateral) {
-            puntaje += e * genoma.at(index++) * 10;
+            puntaje += e * genoma.at(index++) * 100;
         }
         index += cantJug;
     } else {
         index += cantJug;
         for (const double& e : cercania) {
-            puntaje += e * genoma.at(index++) * 10;
+            puntaje += e * genoma.at(index++) * 100;
         }
     }
 
-    puntaje += areaCubierta(enDerecha) * genoma.at(index++) * 10;
+    puntaje += areaCubierta(enDerecha) * genoma.at(index++) * 100;
 
-    puntaje += genoma.at(index++) * enPosesion * 10;
+    puntaje += genoma.at(index++) * enPosesion * 100;
+
 
     if ((enDerecha && _pelota.siguiente().x() < 0) ||
         (!enDerecha && _pelota.siguiente().x() > _n-1)) {
-        puntaje += 100;
+        puntaje += 1000;
     }
 
     return puntaje;
