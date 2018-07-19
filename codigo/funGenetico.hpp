@@ -18,6 +18,20 @@
 using namespace std;
 using namespace std::chrono;
 
+typedef function<vector<int>(vector<Genoma> &poblacion, unsigned int n, unsigned int m, unsigned int total)> fun_fitness_type;
+
+typedef function<pair<vector<Genoma>,vector<Genoma> > (vector<Genoma> &poblacion, vector<int> &puntajes, double fracc_poblacion)> fun_seleccion_type;
+
+typedef function<void(Genoma &individuo, double proba_mutacion)> fun_mutacion_type;
+
+typedef function<Genoma(Genoma &a, Genoma &b)> fun_crossover_type;
+
+typedef tuple<int, int, double, int, int, int, double,
+                fun_fitness_type, int, fun_seleccion_type, int,
+                fun_mutacion_type, int, fun_crossover_type, int> casos_type;
+
+
+
 Genoma hacer_genetico(  unsigned int generaciones,
                         unsigned int tamanio_poblacion,
                         double proba_mutacion,
@@ -25,13 +39,14 @@ Genoma hacer_genetico(  unsigned int generaciones,
                         unsigned int m,
                         unsigned int total,
                         double fracc_conservar,
-                        function<vector<int>(vector<Genoma> &poblacion, unsigned int n,
-                                unsigned int m, unsigned int total)> fitness,
-                        function<pair<vector<Genoma>,vector<Genoma> > (vector<Genoma> &poblacion,
-                                                vector<int> &puntajes,
-                                                double fracc_poblacion)> seleccion,
-                        function<void(Genoma &individuo, double proba_mutacion)> mutacion,
-                        function<Genoma(Genoma &a, Genoma &b)> crossover );
+                        fun_fitness_type fitness,
+                        unsigned int f_ind,
+                        fun_seleccion_type seleccion,
+                        unsigned int s_ind,
+                        fun_mutacion_type mutacion,
+                        unsigned int m_ind,
+                        fun_crossover_type crossover,
+                        unsigned int c_ind                    );
 
 vector<Genoma> poblacion_inicial(unsigned int tamanio_poblacion);
 
@@ -41,18 +56,20 @@ vector<int> fitness_dif_goles(vector<Genoma> &poblacion, unsigned int n,
                                 unsigned int m, unsigned int total);
 
 pair<vector<Genoma>,vector<Genoma> > seleccion_por_puntaje(vector<Genoma> &poblacion,
-                                                           vector<int> &puntajes, double varianza);
+                                                           vector<int> &puntajes,
+                                                           double varianza);
+
 pair<vector<Genoma>,vector<Genoma> > seleccion_por_cantidad(vector<Genoma> &poblacion,
-                                                            vector<int> &puntajes, double fracc_poblacion);
+                                                            vector<int> &puntajes,
+                                                            double fracc_poblacion);
 
 void mutacion_A(Genoma &individuo, double proba_mutacion);
 void mutacion_B(Genoma &individuo, double proba_mutacion);
 
 vector<Genoma> hacer_crossover( vector<Genoma> &poblacion,
-                                function<void(Genoma &individuo,
-                                                double proba_mutacion)> mutacion,
+                                fun_mutacion_type mutacion,
                                 double proba_mutacion,
-                                function<Genoma (Genoma &a,Genoma &b)> crossover,
+                                fun_crossover_type crossover,
                                 unsigned int best);
 
 Genoma crossover_BLOQUES(Genoma &a,Genoma &b);
