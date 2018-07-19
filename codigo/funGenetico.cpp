@@ -4,13 +4,51 @@
 
 int main()
 {
-    Genoma la_posta = hacer_genetico(20, 5, 0.7, 10, 5, 20, 0.2,
-                                     fitness_puntos, seleccion_por_cantidad,
-                                     mutacion_A, crossover_BLOQUES);
+
+    // string fit,sel,mut,cross;
+
+    // cin>>fit>>sel>>mut>>cross;
+
+    vector<
+        function<vector<int>(vector<Genoma> &poblacion, unsigned int n, unsigned int m, unsigned int total)>
+                > fitness = {fitness_puntos, fitness_dif_goles};
+
+    vector<
+        function<pair<vector<Genoma>,vector<Genoma> > (vector<Genoma> &poblacion, vector<int> &puntajes, double fracc_poblacion)>
+                > seleccion = {seleccion_por_puntaje, seleccion_por_cantidad};
+
+    vector<
+        function<void(Genoma &individuo, double proba_mutacion)>
+                > mutacion = {mutacion_A, mutacion_B};
+
+    vector<
+        function<Genoma(Genoma &a, Genoma &b)>
+                > crossover = {crossover_BLOQUES, crossover_RANDOM};
+
+
+    for (auto f : fitness){
+        for (auto s : seleccion){
+            for (auto m : mutacion){
+                for (auto c : crossover){
+
+                    Genoma la_posta = hacer_genetico(4, 5, 0.7, 10, 5, 30, 0.4, f, s, m, c);
+
+                    cerr<<"------------- ----------------- -------------  "<<endl<<endl;
+                    cerr<<"{ ";
+                    for (auto e: la_posta) {cerr<<e<<"  ";}
+                    cerr<<" }\n ------------- FIN EJECUCIÓN -------------  "<<endl<<endl<<endl;
+                }
+            }
+        }
+    }
+
+    // Genoma la_posta = hacer_genetico(5, 40, 0.7, 10, 5, 30, 0.3,
+    //                                  fitness_dif_goles, seleccion_por_puntaje,
+    //                                  mutacion_A, crossover_BLOQUES);
+
     // auto poblacion = poblacion_inicial(5);
         // for (unsigned int i=0;i<poblacion.size();i++) {for(auto e : (poblacion)[i] ){cerr<<e<<"  ";} cerr<<endl;}
     // Genoma copia = poblacion[0];
-    for (auto e: la_posta) {cerr<<e<<"  ";} cerr<<endl;
     // for (auto e: poblacion[1]) {cerr<<e<<"  ";} cerr<<endl;
     // Genoma cruza = crossover_BLOQUES(poblacion[0],poblacion[1], 1);
     // vector<int> puntos={202,200,198,140,120};
