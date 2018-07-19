@@ -13,7 +13,7 @@ para tomar la mejor y repetir el proceso hasta llegar a alguna que sea mejor que
 Nuestro espacio de soluciones es todas las combinaciones posibles de genes distintos en un genoma,
 son 30 genes que van en los reales entre $-1$ y $1$, entonces se comienza con un equipo aleatorio,
 es decir, con un genoma aleatorio, luego se define la vecindad como todos los genomas que tiene
-un solo gen cambiado en $\pm 0.05$ y saturando si llega a $-1$ o $1$. con estos genomas se lo hace
+un solo gen cambiado en $\pm 0.05$ y saturando si llega a $-1$ o $1$. Con estos genomas se lo hace
 jugar secuencialmente quedándose con el ganador siempre y, finalmente, con el ultimo ganador.
 Luego con el nuevo genoma mejor de todos los vecinos, se repite el proceso hasta que el ganador
 sea el mismo con el que se comenzó la iteración.
@@ -22,15 +22,15 @@ sea el mismo con el que se comenzó la iteración.
 \subsubsection{GRASP:}
 
 
-La lógica de GRASP es simplemente tener muchas soluciones randomizadas con búsqueda local y luego, con todos
+La lógica de GRASP es simplemente tener muchas soluciones aleatorias con búsqueda local y luego, con todos
 estos mejores de sus vecinos, se realiza un torneo para obtener el mejor de todos esos.
-El concepto se basa en que con la búsqueda local lo mas probable es solo obtener un máximo local y no
-el mejor de todos, entonces con GRASP la idea es aumentar la probabilidad de obtener el mejor real o
+El concepto se basa en que con la búsqueda local lo más probable es solo obtener un máximo local y no
+el mejor de todos, entonces con GRASP la idea es aumentar la probabilidad de obtener el mejor global o
 al menos obtener un buen máximo local.
-Este esta implementado simplemente como un ciclo de búsquedas locales.
+Este está implementado simplemente como un ciclo de búsquedas locales.
 \\
 \\
 
-Creemos que GRASP va a dar resultados utiles en pocas iteracions, pero que va 
-a ser mucho mas costoso obtener resultados mejores y realmente buenos en comparacion
-con los que pueda obetener el genetico con el mismo tiempo de ejecucion.
+Creemos que GRASP va a dar resultados útiles en pocas iteracions, pero que va
+a ser mucho mas costoso obtener resultados mejores y realmente buenos en comparacióon
+con los que pueda obetener el genético con el mismo tiempo de ejecución.
