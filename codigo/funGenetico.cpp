@@ -4,13 +4,86 @@
 
 int main()
 {
-    Genoma la_posta = hacer_genetico(20, 5, 0.7, 10, 5, 20, 0.2,
-                                     fitness_puntos, seleccion_por_cantidad,
-                                     mutacion_A, crossover_BLOQUES);
+
+    // string fit,sel,mut,cross;
+
+    // cin>>fit>>sel>>mut>>cross;
+
+    vector<
+        function<vector<int>(vector<Genoma> &poblacion, unsigned int n, unsigned int m, unsigned int total)>
+                > fitness = {fitness_puntos, fitness_dif_goles};
+
+    vector<
+        function<pair<vector<Genoma>,vector<Genoma> > (vector<Genoma> &poblacion, vector<int> &puntajes, double fracc_poblacion)>
+                > seleccion = {seleccion_por_puntaje, seleccion_por_cantidad};
+
+    vector<
+        function<void(Genoma &individuo, double proba_mutacion)>
+                > mutacion = {mutacion_A, mutacion_B};
+
+    vector<
+        function<Genoma(Genoma &a, Genoma &b)>
+                > crossover = {crossover_BLOQUES, crossover_RANDOM};
+
+    vector<string> f_names = {"fitness_puntos", "fitness_dif_goles"};
+    vector<string> s_names = {"seleccion_por_puntaje", "seleccion_por_cantidad"};
+    vector<string> m_names = {"mutacion_A", "mutacion_B"};
+    vector<string> c_names = {"crossover_BLOQUES", "crossover_RANDOM"};
+
+    vector<int> enes = { 10 };
+    vector<int> emes = { 5 };
+    vector<int> tiempos = { 70 };
+    vector<int> generaciones = { 30 };
+    vector<int> poblaciones = { 20 , 30 };
+
+    vector<double> fracciones = { 0.2 , 0.4 };
+    vector<double> probas = { 0.3 , 0.6 , 0.9 };
+
+
+    for (unsigned int i = 0; i < fitness.size(); i++) {
+        for (unsigned int j = 0; j < seleccion.size(); j++) {
+            for (unsigned int k = 0; k < mutacion.size(); k++) {
+                for (unsigned int l = 0; l < crossover.size(); l++) {
+                    for (int N : enes) {
+                    for (int M : emes) {
+                    for (int Tiempo : tiempos) {
+                    for (double Fraccion : fracciones) {
+                    for (double Proba : probas) {
+                    for (double pob : poblaciones) {
+
+                        cerr<<"Parametros:\n "<<"N\tM\tTiempo\tFitness\t\tSeleccion\t\tMutacion\tCrossover\t\tFraccion\tProba mutacion\n";
+                        cerr<<N<<"\t"<<M<<"\t"<<Tiempo<<"\t"<<f_names[i]<<"\t"<<s_names[j]<<"\t"<<m_names[k]<<"\t"<<c_names[l]<<"\t"<<Fraccion<<"\t\t"<<Proba<<"\n\n\n";
+
+                        Genoma la_posta = hacer_genetico(generaciones[0],
+                                                         pob,
+                                                         Proba,
+                                                         N,
+                                                         M,
+                                                         Tiempo,
+                                                         Fraccion,
+                                                         fitness[i],
+                                                         seleccion[j],
+                                                         mutacion[k],
+                                                         crossover[l]               );
+
+                        cerr<<"---------------------------------------------  "<<endl<<endl;
+                        cerr<<"{ ";
+                        for (auto e: la_posta) {cerr<<e<<"  ";}
+                        cerr<<" }\n ------------- FIN EJECUCIÓN -------------  "<<endl<<endl<<endl;
+
+                    }}}}}}
+                }
+            }
+        }
+    }
+
+    // Genoma la_posta = hacer_genetico(5, 40, 0.7, 10, 5, 30, 0.3,
+    //                                  fitness_dif_goles, seleccion_por_puntaje,
+    //                                  mutacion_A, crossover_BLOQUES);
+
     // auto poblacion = poblacion_inicial(5);
         // for (unsigned int i=0;i<poblacion.size();i++) {for(auto e : (poblacion)[i] ){cerr<<e<<"  ";} cerr<<endl;}
     // Genoma copia = poblacion[0];
-    for (auto e: la_posta) {cerr<<e<<"  ";} cerr<<endl;
     // for (auto e: poblacion[1]) {cerr<<e<<"  ";} cerr<<endl;
     // Genoma cruza = crossover_BLOQUES(poblacion[0],poblacion[1], 1);
     // vector<int> puntos={202,200,198,140,120};
@@ -51,14 +124,26 @@ Genoma hacer_genetico(  unsigned int generaciones,
 
         int puntaje_max = 0;
         int puntaje_max_ind = 0;
+        int puntaje_min = 99999999;
+        // int puntaje_min_ind = 0;
 
+        cerr<<"Puntajes:\n";
         for (unsigned int k = 0; k < puntajes.size(); k++) {
+            cerr<<puntajes[k]<<" ";
             if (puntajes[k] > puntaje_max) {
                 puntaje_max = puntajes[k];
-                puntaje_max_ind = k;
+                // puntaje_max_ind = k;
+            }
+            if (puntajes[k] < puntaje_min) {
+                puntaje_min = puntajes[k];
+                // puntaje_min_ind = k;
             }
         }
-        cerr<<"Generación: "<<i<<"\tTamaño: "<<generacion.size()<<"\tPuntaje máximo: "<<puntaje_max<<endl;
+        cerr<<endl<<endl;
+
+        cerr<<"Generación: "<<i<<"\tTamaño: "<<generacion.size()<<"\tPuntaje máximo: "<<puntaje_max<<"\tPuntaje mínimo: "<<puntaje_min<<endl;
+        // for (unsigned int i=0;i<generacion.size();i++) {cerr<<"P: "<<puntajes[i]<<" ";for(unsigned int j=0;j<(generacion)[i].size();j++ ){
+            // if(j == 13){cerr<<endl<<"      ";}cerr<<generacion[i][j]<<"  ";} cerr<<endl;}
         for(auto e : generacion[puntaje_max_ind] ){cerr<<e<<"  ";} cerr<<endl<<endl;
 
 
@@ -289,11 +374,21 @@ Genoma crossover_BLOQUES(Genoma &a,Genoma &b){ // por bloques semánticos
     std::uniform_int_distribution<int> _dist_discreta{0,1};
 
     Genoma cruza(genoma_size);
-    auto &d_j_a = (_dist_discreta(_generador))? a : b; // DISTANCIA JUGADOR ARCO
-    auto &d_p_a = (_dist_discreta(_generador))? a : b; // DISTANCIA PELOTA ARCO
-    auto &d_r = (_dist_discreta(_generador))? a : b; // DISTANCIA RIVAL
-    auto &area_ocupada = (_dist_discreta(_generador))? a : b; // AREA
-    auto &quite = (_dist_discreta(_generador))? a : b; // PROBABILIDADES DE QUITE
+
+    // DISTANCIA JUGADOR ARCO
+    auto &d_j_a = (_dist_discreta(_generador))? a : b;
+    // DISTANCIA PELOTA ARCO
+    auto &d_p_a = (_dist_discreta(_generador))? a : b;
+    // DISTANCIA RIVAL
+    auto &d_r = (_dist_discreta(_generador))? a : b;
+    // DISTANCIA JUGADOR PELOTA
+    auto &d_j_p = (_dist_discreta(_generador))? a : b;
+    // DISTANCIA JUGADOR LATERAL
+    auto &d_j_lat = (_dist_discreta(_generador))? a : b;
+    // AREA
+    auto &area_ocupada = (_dist_discreta(_generador))? a : b;
+    // PROBABILIDADES DE QUITE
+    auto &quite = (_dist_discreta(_generador))? a : b;
 
     for (int i = inicio_dist_j_a; i <= fin_dist_j_a; i++) {
         cruza[i] = d_j_a[i];
@@ -302,8 +397,17 @@ Genoma crossover_BLOQUES(Genoma &a,Genoma &b){ // por bloques semánticos
     for (int i = inicio_dist_p_a; i <= fin_dist_p_a; i++) {
         cruza[i] = d_p_a[i];
     }
+
     for (int i = inicio_dist_rival; i <= fin_dist_rival; i++) {
         cruza[i] = d_r[i];
+    }
+
+    for (int i = inicio_dist_j_p; i <= fin_dist_j_p; i++) {
+        cruza[i] = d_j_p[i];
+    }
+
+    for (int i = inicio_dist_j_lateral; i <= fin_dist_j_lateral; i++) {
+        cruza[i] = d_j_lat[i];
     }
 
     cruza[area] = area_ocupada[area];
