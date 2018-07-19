@@ -13,7 +13,7 @@ tp3: tp3.o Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.
 genetico:  Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o funGenetico.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-grid:  Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o GridSearch.o
+grid:  Equipo.o Tablero.o Jugador.o Pelota.o Posicion.o Movimiento.o extras.o GridSearch2.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o: %.cpp
