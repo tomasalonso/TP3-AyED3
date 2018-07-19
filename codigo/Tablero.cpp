@@ -87,6 +87,7 @@ void Tablero::gol() {
 void Tablero::mover(const vector<Movimiento> &movsI, const vector<Movimiento> &movsD) {
     // Pre: movimiento válido
 
+    _jugPelotaSig = _jugPelota;
     // MoverJugadores
     // Mueven a siguiente y si tiene la pelota la puede patear
     for (unsigned int i = 0; i < movsI.size(); i++) {
@@ -346,8 +347,6 @@ std::ostream& imprimirSiguiente(std::ostream& out, const Tablero &t) {
     return out;
 }
 
-// TODO
-// evalua tablero dado posible combinacion de movs
 double Tablero::puntaje(Genoma genoma, bool enDerecha) {
     double puntaje = 0;
     unsigned int index = 0;
