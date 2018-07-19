@@ -36,7 +36,7 @@ public:
 
 
     // Mover al estado siguiente
-    void mover(const vector<Movimiento> &movsI,
+    bool mover(const vector<Movimiento> &movsI,
                const vector<Movimiento> &movsD);
     // Actualizar estado actual
     void actualizar();

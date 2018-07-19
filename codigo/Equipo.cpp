@@ -50,27 +50,45 @@ vector<Movimiento> Equipo::fuerzaBruta(Tablero &t,
                                         const vector<Movimiento> &jugadaContrario,
                                         bool enDerecha) {
 
+    bool valido;
     vector<Movimiento> mejorJugada = jugadasPropias[0];
     // comparamos todos los movimientos
     if (enDerecha) {
-        t.mover(jugadaContrario, jugadasPropias[0]);
+        valido = t.mover(jugadaContrario, jugadasPropias[0]);
     } else {
-        t.mover(jugadasPropias[0], jugadaContrario);
+        valido = t.mover(jugadasPropias[0], jugadaContrario);
     }
 
     double puntajeMejor = t.puntaje(_genoma, enDerecha);
-    for (unsigned int i = 1; i < jugadasPropias.size(); i++) {  // Devuelve todas válidas
+
+    unsigned int i = 1;
+    while (!valido) {
+        mejorJugada = jugadasPropias[i];
+        // comparamos todos los movimientos
         if (enDerecha) {
-            t.mover(jugadaContrario, jugadasPropias[i]);
+            valido = t.mover(jugadaContrario, jugadasPropias[i]);
         } else {
-            t.mover(jugadasPropias[i], jugadaContrario);
+            valido = t.mover(jugadasPropias[i], jugadaContrario);
         }
 
-        const double puntajeActual = t.puntaje(_genoma, enDerecha);
+        puntajeMejor = t.puntaje(_genoma, enDerecha);
+        i++;
+    }
 
-        if (puntajeActual > puntajeMejor) {
-            puntajeMejor = puntajeActual;
-            mejorJugada = jugadasPropias[i];
+    for (; i < jugadasPropias.size(); i++) {  // Devuelve todas válidas
+        if (enDerecha) {
+            valido = t.mover(jugadaContrario, jugadasPropias[i]);
+        } else {
+            valido = t.mover(jugadasPropias[i], jugadaContrario);
+        }
+
+        if (valido) {
+            const double puntajeActual = t.puntaje(_genoma, enDerecha);
+
+            if (puntajeActual > puntajeMejor) {
+                puntajeMejor = puntajeActual;
+                mejorJugada = jugadasPropias[i];
+            }
         }
     }
 

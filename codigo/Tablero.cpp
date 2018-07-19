@@ -84,7 +84,7 @@ void Tablero::gol() {
     }
 }
 
-void Tablero::mover(const vector<Movimiento> &movsI, const vector<Movimiento> &movsD) {
+bool Tablero::mover(const vector<Movimiento> &movsI, const vector<Movimiento> &movsD) {
     // Pre: movimiento válido
 
     _jugPelotaSig = _jugPelota;
@@ -93,6 +93,15 @@ void Tablero::mover(const vector<Movimiento> &movsI, const vector<Movimiento> &m
     for (unsigned int i = 0; i < movsI.size(); i++) {
         moverJug(_jugadoresI[i], movsI[i]);
         moverJug(_jugadoresD[i], movsD[i]);
+    }
+
+    for (unsigned int i = 0; i < _jugadoresI.size()-1; i++) {
+        for (unsigned int j = i+1; j < _jugadoresI.size(); j++) {
+            if (_jugadoresI[i].siguiente() == _jugadoresI[j].siguiente() ||
+                _jugadoresD[i].siguiente() == _jugadoresD[j].siguiente()) {
+                return false;
+            }
+        }
     }
     // MoverPelota
     // En moverJugadores un jugador puede patear o mover la pelota
@@ -106,6 +115,8 @@ void Tablero::mover(const vector<Movimiento> &movsI, const vector<Movimiento> &m
         _pelota.mover();
     }
     disputaFinal();
+
+    return true;
 }
 
 void Tablero::moverJug(Jugador& j, Movimiento m) {
@@ -351,9 +362,15 @@ double Tablero::puntaje(Genoma genoma, bool enDerecha) {
     double puntaje = 0;
     unsigned int index = 0;
     unsigned int cantJug = _jugadoresI.size();
-    const bool enPosesion = pelotaEnPosesion() &&
-        ((!enDerecha && jugadorPelota().id() < 3) ||
-        (enDerecha && jugadorPelota().id() >= 3));
+    bool enPosesion = false;
+
+    const vector<Jugador> &js = (enDerecha) ? _jugadoresI : _jugadoresD;
+
+    for (const Jugador& j : js) {
+        if (_jugPelotaSig == &j) {
+            enPosesion = true;
+        }
+    }
     // para cada jugador mío
     const vector<double> dist = distJugadorAlArco(enDerecha);
     if (enPosesion) {
