@@ -11,7 +11,7 @@ vector<vector<T> > combinar(vector<vector<T> > &vs);
 
 typedef vector<double> Genoma;
 
-#define genoma_size 30
+#define genoma_size 31
 #define prob0 28
 #define prob1 17
 #define prob2 29
@@ -35,8 +35,10 @@ typedef vector<double> Genoma;
 
 #define area                    26
 
-#define inicio_probas           27
-#define fin_probas              29
+#define tenencia                27
+
+#define inicio_probas           28
+#define fin_probas              30
 
 #endif
 
