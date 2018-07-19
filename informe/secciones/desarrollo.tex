@@ -1,0 +1,37 @@
+
+El Juego básicamente consiste en un tablero rectangular de $n \times m$ donde
+$n$ es $2m$ y $m$ es impar, con un arco de tres posiciones, compiten dos equipos
+de tres jugadores un partido de fútbol con un numero de jugadas determinado.
+
+
+El objetivo principal es desarrollar un equipo que con una función parametrizable
+que evalúa posibles jugadas siguientes y con eso decida cual es la mejor a tomar
+la idea es, con las distintas heurísticas, decidir que parámetros son buenos para esa
+función evaluadora y así diagramar una buena estrategia de juego general.
+
+
+
+\subsection{Implementación}
+
+
+Para implementar el juego se decidió utilizar todas estructuras de diseño propio así poder
+detectar de mejor forma cualquier error que ocurriese, lo cual no fue el caso al intentar
+usar lo proveído por la cátedra.
+En primer lugar se decidió hacer un tablero, el mismo es el que tiene las dimensiones de la cancha y
+conoce todas las reglas del juego a ser respetadas por los equipos, también tiene consigo la pelota y los
+6 jugadores, el es el encargado de llevar la partida y el resultado así como también es el que tiene la
+función evaluadora de jugadas que toma los genomas (los parámetros de la función dependientes de cada equipo)
+y evalúa la jugada a realizar.
+Luego esta el equipo, que solo tiene identificadores para sus jugadores y el dicho genoma propio de cada equipo.
+
+
+Todas las estructuras que manejan una posición (jugadores y pelota) tienen en realidad, dos posiciones, actual, la que
+tiene actualmente luego de la ultima jugada, y también siguiente, la posición que, de acuerdo al
+movimiento elegido para evaluar, el tablero utiliza para poner la posición que va tener en la próxima jugada y así
+saber como quedaría configurado el terreno para evaluarlo
+El tablero usa esta variable siguiente para evaluar el puntaje de la jugada a tomar.
+luego el tablero le dice los puntajes de las jugadas propuestas al equipo y este decide cual realizar, confirmandole
+al tablero cual es, y este efectivamente realizando la jugada, que es básicamente actualizar la posición actual
+con la siguiente.
+
+\subsection{Algo mas?}
