@@ -64,10 +64,12 @@ Genoma generar() {
 Genoma busquedaLocal(const Genoma &g, const unsigned int n,
                      const unsigned int m, const unsigned int total) {
     Genoma actual = g;
-    Genoma viejo;
+    Genoma viejo = g;
+    Genoma anterior = g;
     do {
+        anterior = viejo;
         viejo = actual;
-        for(Genoma vecino : generar_vecinos(actual)) {
+        for(Genoma vecino : generar_vecinos(actual, anterior)) {
 
             // Los hacemo jugar
             pair<unsigned int, unsigned int> resultado = jugar(actual, vecino, n, m, total);
@@ -80,7 +82,7 @@ Genoma busquedaLocal(const Genoma &g, const unsigned int n,
     return actual;
 }
 
-vector<Genoma> generar_vecinos(Genoma actual) {
+vector<Genoma> generar_vecinos(Genoma actual, Genoma anterior) {
   vector<Genoma> vecinos;
   for(unsigned int i = 0; i < inicio_probas; i++) {
       Genoma nuevo = actual;
@@ -88,14 +90,18 @@ vector<Genoma> generar_vecinos(Genoma actual) {
       if(nuevo[i] > 1) {
           nuevo[i] = 1;
       }
-      vecinos.push_back(nuevo);
+      if (nuevo != anterior) {
+          vecinos.push_back(nuevo);
+      }
 
       nuevo = actual;
       nuevo[i] -= 0.1;
       if(nuevo[i] < -1) {
           nuevo[i] = -1;
       }
-      vecinos.push_back(nuevo);
+      if (nuevo != anterior) {
+          vecinos.push_back(nuevo);
+      }
   }
   for(unsigned int i = inicio_probas; i < genoma_size; i++) {
       Genoma nuevo = actual;
@@ -103,14 +109,18 @@ vector<Genoma> generar_vecinos(Genoma actual) {
       if(nuevo[i] > 1) {
           nuevo[i] = 1;
       }
-      vecinos.push_back(nuevo);
+      if (nuevo != anterior) {
+          vecinos.push_back(nuevo);
+      }
 
       nuevo = actual;
       nuevo[i] -= 0.1;
       if(nuevo[i] < 0) {
           nuevo[i] = 0;
       }
-      vecinos.push_back(nuevo);
+      if (nuevo != anterior) {
+          vecinos.push_back(nuevo);
+      }
   }
 
   return vecinos;
@@ -160,14 +170,14 @@ vector<int> fitness_puntos(vector<Genoma> &poblacion, unsigned int n,
 pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m, int total) {
 
     const vector<Jugador> jI({
-                          Jugador(0, Posicion(1,1), jugA[prob0]),
-                          Jugador(1, Posicion(1,4), jugA[prob1]),
-                          Jugador(2, Posicion(4,3), jugA[prob2])
+                              Jugador(0, Posicion(4,2), jugA[prob0]),
+                              Jugador(1, Posicion(1,1), jugA[prob1]),
+                              Jugador(2, Posicion(1,3), jugA[prob2])
     });
     const vector<Jugador> jD({
-                          Jugador(0, Posicion(6,3), jugB[prob0]),
-                          Jugador(1, Posicion(9,1), jugB[prob1]),
-                          Jugador(2, Posicion(9,4), jugB[prob2])
+                              Jugador(0, Posicion(5,2), jugB[prob0]),
+                              Jugador(1, Posicion(8,1), jugB[prob1]),
+                              Jugador(2, Posicion(8,3), jugB[prob2])
     });
 
 

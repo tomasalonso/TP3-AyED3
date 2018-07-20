@@ -30,7 +30,7 @@ Genoma grasp(const unsigned int cantIteraciones,
 
 Genoma generar();
 
-vector<Genoma> generar_vecinos(Genoma actual);
+vector<Genoma> generar_vecinos(Genoma actual, Genoma anterior);
 
 pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m, int total);
 
