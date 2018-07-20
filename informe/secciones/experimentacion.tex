@@ -1,5 +1,16 @@
 % Para cada generación tomamos la media y la varianza de los puntajes de todos los individuos. Creemos que es bueno tener un genoma que provenga de una generación cuya varianza sea baja, ya que esto significaría que los
 
+A lo largo de toda la experimentación nos encontramos con el problema de que los resultados de los partidos llegaban a depender
+fuertemente del lado que tenia cada equipo, no pudimos concluir por que sucedía esto exactamente y no disponemos del tiempo
+para revisar en profundidad el código, creemos que el error yace en el tablero en si (como implementamos las reglas del juego),
+ o en la función evaluadora de jugadas la cual puntúa distinto según el lado, lo cual no debería suceder.
+ esto fue tomado en cada una de las secciones siguientes para poder sortear los problemas que nos traía de la mejor forma posible.
+
+
+A parte de esto, se ecuentran por lo general buenos comportamientos de juego de algunos equipos.
+
+\subsection{Genetico}
+
 
 Iniciamos nuestra experimentación con el algoritmo genético.
 Tuvimos grandes complicaciones para experimentar con las distintas funciones de selección y crossover implementadas, pues constantemente encontramos errores o comportamientos no deseados en los partidos.
@@ -81,3 +92,16 @@ Contador de tiempo desde que la pelota se quedó quieta
 % Equilibrios en el tablero donde ningún movimiento suma puntaje
 
 
+
+\subsection{Grid-Search}
+
+La experimentación con \emph{Grid-Search} se basó en usar \emph{GRASP} ya que \emph{búsqueda local} es solo un caso particular
+de correr \emph{GRASP} en una sola iteracion.
+Primero se corrieron experimentos cortos para probar la efectividad del algoritmo y se obtuvieron equipos relativamente buenos,
+a pesar de algunas problemáticas presentadas por el juego y la función evaluadora ademas de los genomas en principio defectuosos.
+Luego, cuando se llego a una versión final del juego, nos encontramos con que el algoritmo, al generar los vecinos, nos generaba también
+el vecino anterior del que venia, esto junto con que también descubrimos que el resultado de los partidos dependía del lado en el
+que se jugaba, causo lo que seguro iba a pasar, el algoritmo se quedaba saltando entre $2$ vecinos que se ganaban mutuamente y no
+salia de ese ciclo.
+Para evitar esto se decidió no generar el vecino del que se venia. Esta solución es parcial y no es la mejor, pero como se dijo primero,
+no encontramos el error original y esta solución nos permitió seguir avanzando con el proceso de \emph{GRASP}.
