@@ -1,52 +1,122 @@
 
-El juego consiste en un tablero rectangular de $n \times m$ donde
-$n$ es $2m$ y $m$ es impar, con un arco de tres posiciones, compiten dos equipos
-de tres jugadores un partido de fútbol con un numero de jugadas determinado.
+El juego consiste en un tablero rectangular de $n \times m$ donde $n$ es mayor o
+igual a $2m$ y $m$ es impar, con un arco de tres posiciones, compiten dos
+equipos de tres jugadores un partido de fútbol con un número de jugadas
+determinado.
 
 
 El objetivo principal es desarrollar un equipo que con una función parametrizable
-que evalúa posibles jugadas siguientes y con eso decida cual es la mejor a tomar
-la idea es, con las distintas heurísticas, decidir que parámetros son buenos para esa
+que evalúa posibles jugadas siguientes, decida cual es la mejor a tomar
+. La idea es, con las distintas heurísticas, decidir que parámetros son buenos para esa
 función evaluadora y así diagramar una buena estrategia de juego general.\\
 
 \subsection{Implementación}
 
 
-Para implementar el juego se decidió utilizar todas estructuras de diseño propio así poder
-detectar de mejor forma cualquier error que ocurriese, lo cual no fue el caso al intentar
-usar lo proveído por la cátedra.
-En primer lugar se decidió hacer un tablero, el mismo es el que tiene las dimensiones de la cancha y
-conoce todas las reglas del juego a ser respetadas por los equipos, también tiene consigo la pelota y los
-6 jugadores, el es el encargado de llevar la partida y el resultado así como también es el que tiene la
-función evaluadora de jugadas que toma los genomas (los parámetros de la función dependientes de cada equipo)
-y evalúa la jugada a realizar.
-Luego esta el equipo, que solo tiene identificadores para sus jugadores y el dicho genoma propio de cada equipo.\\
+Para implementar el juego se decidió utilizar todas estructuras de diseño propio
+así poder detectar de mejor forma cualquier error que ocurriese, lo cual no fue
+el caso al intentar usar lo provisto por la cátedra. En primer lugar se decidió
+hacer un tablero, el mismo es el que tiene las dimensiones de la cancha y conoce
+todas las reglas del juego a ser respetadas por los equipos, también tiene
+consigo la pelota y los 6 jugadores, el es el encargado de llevar la partida y
+el resultado así como también es el que tiene la función evaluadora de jugadas
+que toma los genomas (los parámetros de la función dependientes de cada equipo,
+ver {\it Parametrización\/}) y evalúa la jugada a realizar. Luego está el
+equipo, que solo tiene identificadores para sus jugadores y el dicho genoma
+propio de cada equipo.
 
 
-Todas las estructuras que manejan una posición (jugadores y pelota) tienen en realidad, dos posiciones, actual, la que
-tiene actualmente luego de la ultima jugada, y también siguiente, la posición que, de acuerdo al
-movimiento elegido para evaluar, el tablero utiliza para poner la posición que va tener en la próxima jugada y así
-saber como quedaría configurado el terreno para evaluarlo
-El tablero usa esta variable siguiente para evaluar el puntaje de la jugada a tomar.
-luego el tablero le dice los puntajes de las jugadas propuestas al equipo y este decide cual realizar, confirmandole
-al tablero cual es, y este efectivamente realizando la jugada, que es básicamente actualizar la posición actual
-con la siguiente.\\
+La operatoria designada por el equipo para obtener una jugada es la siguiente:
+
+El equipo pide al tablero los movimientos válidos de ambos equipos y genera todas las
+posibles jugadas válidas a partir de combinaciones de los movimientos válidos de
+cada jugador. Como el tablero posee 2 estados, {\it actual\/} y {\it
+  siguiente}, donde siguiente se obtiene a partir del estado actual luego de
+aplicar una jugada, el equipo prueba cada jugada generada en el tablero,
+avanzando y evalúa su puntaje, quedándose con la jugada que posea el mayor
+puntaje. Dicha evaluación se realiza sobre el estado siguiente y una vez que se
+tienen los movimientos definitivos de ambos equipos, se actualiza el estado
+actual, que es básicamente actualizar la posición actual con la siguiente.
+
+Debido a que evaluar en cada paso todas las posibles combinaciones de jugadas de
+todos los jugadores es altamente costoso, se adoptó la siguiente estrategia. Se
+mantienen quietos los jugadores propios y se busca la mejor jugada de los
+contrarios; luego, se busca la mejor jugada de los jugadores propios, dada la
+mejor jugada de los contrarios obtenida anteriormente.
 
 \subsection{Parametrización}
 
-Se decidió utilizar un genoma de 30 parámetros los cuales varían entre $-1$ y $1$ simbolizando la importancia total
-que se le da a un dato del tablero ($-1$ si es muy malo que eso crezca, $0$ si es irrelevante, $1$ si es muy bueno que crezca)
-y también se utilizan algunos para cuando se tiene la pelota y otros distintos para los mismos datos
-cuando no se posee la pelota. El motivo de esto es poder permitirle a los equipos tomar estrategias distintas cuando están
-atacando o defendiendieno, se presento la idea de también permitir actuar distinto cuando se va perdiendo o ganando pero
-el tiempo no permitió implementar esto y ademas creemos que ya vamos a poder ver un buen comportamiento con solo esta
-diferenciacion.\\
+Se decidió utilizar un genoma de 30 parámetros los cuales varían entre $-1$ y
+$1$ simbolizando la importancia total que se le da a un dato del tablero ($-1$
+si es muy malo que eso crezca, $0$ si es irrelevante, $1$ si es muy bueno que
+crezca), donde valores negativos penalizan un propiedad y positivos la
+benefician, por ej\. representan maximizar o minimizar una distancia; también se
+separa en casos, creando genomas disjuntos que representen cuando se tiene la
+pelota y cuando no se posee la pelota para los mismo datos. El motivo de esto es
+poder permitirle a los equipos tomar estrategias distintas cuando están atacando
+o defendiendo, se presentó la idea de también permitir actuar distinto cuando se
+va perdiendo o ganando pero el tiempo no permitió implementarlo y además creemos
+que ya vamos a poder ver un buen comportamiento con solo esta diferenciación.
 
-Los últimos 3 genes del genoma no varían entre $-1$ y $1$, solo van de $0$ a $1$ y representan las probabilidades de quite
-de los 3 jugadores del equipo, supusimos que esto es importante para el juego y decidimos darle el poder de esto
-a los algoritmos de optimizacion.\\
+
+A continuación un esquema del genoma utilizado:
+
+\begin{tabular}{r|ccc|ccc|c|c|ccc|ccc|}
+\cline{2-15}
+                                 & \multicolumn{6}{c|}{Distancia del}                                                                        & \multicolumn{2}{c|}{Distancia de la} & \multicolumn{6}{c|}{Distancia al}                                                                             \\
+                                 & \multicolumn{6}{c|}{jugador al arco}                                                                      & \multicolumn{2}{c|}{pelota al arco}  & \multicolumn{6}{c|}{jugador rival más cercano}                                                                \\ \hline
+\multicolumn{1}{|r|}{posesión}   & \multicolumn{3}{c|}{con}                            & \multicolumn{3}{c|}{sin}                            & con               & sin              & \multicolumn{3}{c|}{con}                             & \multicolumn{3}{c|}{sin}                               \\ \hline
+\multicolumn{1}{|r|}{nº jugador} & 0                      & 1                      & 2 & 0                      & 1                      & 2 &                   &                  & 0                      & 1                      & 2  & 0                       & 1                       & 2  \\ \hline
+\multicolumn{1}{|r|}{nº gen}     & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & 2 & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{4} & 5 & 6                 & 7                & \multicolumn{1}{c|}{8} & \multicolumn{1}{c|}{9} & 10 & \multicolumn{1}{c|}{11} & \multicolumn{1}{c|}{12} & 13 \\ \hline
+\end{tabular}
+
+\vskip 1mm
+\begin{center}
+{Cuadro 1: Posiciones 0 a 13 del genoma}
+\end{center}
+
+\begin{tabular}{r|ccc|ccc|ccc|ccc|c|}
+\cline{2-14}
+ & \multicolumn{6}{c|}{Distancia a} & \multicolumn{6}{c|}{Distancia del jugador} & Tenencia de \\
+ & \multicolumn{6}{c|}{la pelota} & \multicolumn{6}{c|}{al lateral} & la pelota \\ \hline
+\multicolumn{1}{|r|}{posesión} & \multicolumn{3}{c|}{con} & \multicolumn{3}{c|}{sin} & \multicolumn{3}{c|}{con} & \multicolumn{3}{c|}{sin} &  \\ \hline
+\multicolumn{1}{|r|}{nº jugador} & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 & 0 & 1 & 2 &  \\ \hline
+\multicolumn{1}{|r|}{nº gen} & \multicolumn{1}{c|}{14} & \multicolumn{1}{c|}{15} & 16 & \multicolumn{1}{c|}{17} & \multicolumn{1}{c|}{18} & 19 & \multicolumn{1}{c|}{20} & \multicolumn{1}{c|}{21} & 22 & \multicolumn{1}{c|}{23} & \multicolumn{1}{c|}{24} & 25 & 26 \\ \hline
+\end{tabular}
+
+\vskip 1mm
+\begin{center}
+{Cuadro 2: Posiciones 14 a 26 del genoma}
+\end{center}
+
+\begin{tabular}{r|ccc|}
+\cline{2-4}
+ & \multicolumn{3}{c|}{Probabilidad} \\
+ & \multicolumn{3}{c|}{de quite} \\ \hline
+\multicolumn{1}{|r|}{nº jugador} & 0 & 1 & 2 \\ \hline
+\multicolumn{1}{|r|}{nº gen} & 27 & 28 & 29 \\ \hline
+\end{tabular}
+
+\vskip 1mm
+\begin{center}
+{Cuadro 3: 27 a 29 del genoma}
+\end{center}
+
+Como nota, los últimos 3 genes del genoma varían entre $0$ y $1$, es decir, no
+adoptan valores negativos, ya que representan las {\it probabilidades\/} de
+quite de los 3 jugadores del equipo, supusimos que esto es importante para el
+juego y decidimos darle la posibilidad de variar las probabilidades a los
+algoritmos de optimización.
 
 
-El tablero simplemente toma este genoma y dependiendo si el equipo esta en posesión o no, multiplica el valor del gen por
-el dato siendo considerado, como por ejemplo puede ser la distancia de un jugador al arco, al rival, la distancia de la pelota
-al arco contrario, la distancia a los borde, el área cubierta y si el siguiente paso es gol o no.
+El tablero posee una función {\it puntaje\/} que toma un genoma y
+multiplica cada valor del genoma por el dato con el que está relacionado,
+dependiendo si el equipo esta en posesión de la pelota o no. Por ejemplo,
+multiplica la distancia de un jugador al arco, al rival, la distancia de la
+pelota al arco contrario, la distancia a los borde, el área cubierta y si el
+siguiente paso es gol o no, cada uno con su respectivo gen.
+
+Como consideración adicional, se agregó una multiplicación por 100 en cada
+puntaje. Si bien los genes son de valores continuos.
+
+
