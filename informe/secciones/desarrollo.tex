@@ -6,8 +6,8 @@ determinado.
 
 
 El objetivo principal es desarrollar un equipo que con una función parametrizable
-que evalúa posibles jugadas siguientes, decida cual es la mejor a tomar
-. La idea es, con las distintas heurísticas, decidir que parámetros son buenos para esa
+que evalúa posibles jugadas siguientes, decida cual es la mejor a tomar.
+La idea es, con las distintas heurísticas, decidir que parámetros son buenos para esa
 función evaluadora y así diagramar una buena estrategia de juego general.\\
 
 \subsection{Implementación}
@@ -47,10 +47,10 @@ mejor jugada de los contrarios obtenida anteriormente.
 \subsection{Parametrización}
 
 Se decidió utilizar un genoma de 30 parámetros los cuales varían entre $-1$ y
-$1$ simbolizando la importancia total que se le da a un dato del tablero ($-1$
-si es muy malo que eso crezca, $0$ si es irrelevante, $1$ si es muy bueno que
-crezca), donde valores negativos penalizan un propiedad y positivos la
-benefician, por ej\. representan maximizar o minimizar una distancia; también se
+$1$ simbolizando la importancia total que se le da a un dato del tablero, donde valores
+ negativos penalizan una propiedad y positivos la benefician($-1$ si es muy malo
+ que eso crezca, $0$ si es irrelevante, $1$ si es muy bueno que
+crezca), por ej. representan maximizar o minimizar una distancia; también se
 separa en casos, creando genomas disjuntos que representen cuando se tiene la
 pelota y cuando no se posee la pelota para los mismo datos. El motivo de esto es
 poder permitirle a los equipos tomar estrategias distintas cuando están atacando
@@ -114,7 +114,7 @@ generaba equipos que se dispersaban por el campo de juego y al quedar la pelota
 quieta no evaluaban como beneficioso acercarse a buscarla. Al retirar el gen,
 se encontró más variedad de comportamientos en los equipos. Una mayor cantidad de
 genes e iteraciones de los algoritmos ayudaría a equilibrar este valor, pero
-debido al mal comportamiento exhibido, se descartó. 
+debido al mal comportamiento exhibido, se descartó.
 
 El tablero posee una función {\it puntaje\/} que toma un genoma y
 multiplica cada valor del genoma por el dato con el que está relacionado,
@@ -124,8 +124,16 @@ pelota al arco contrario, la distancia a los borde, el área cubierta y si el
 siguiente paso es gol o no, cada uno con su respectivo gen.
 
 
-% Como consideración adicional, se agregó una multiplicación por 100 en cada
-% puntaje. Esto se realizó con el fin de que la discretización.
+
+Como consideración adicional, si bien los genes se mueven en un espacio continuo entre $-1$ y $1$,
+lo cual significa que cualquier peso otorgado al valor del dato no deberia generar
+cambios de valor en los resultados finales sino solo de cantidad de puntos,
+nosotros en grid search, para aplicar busqueda local, discretizamos el valor de los
+genes haciendolos variar en $0,1$ por vez.
+
+
+A causa de esto se decidió se agregar una multiplicación por $100$ en cada
+puntaje, para poder disminuir el efecto de esa discretizacion en el resultado final.
 
 % Si bien los genes son de valores continuos y los algoritmos genéticos y
 % de búsqueda local, teóricamente encontrarían
