@@ -12,11 +12,12 @@ vector<string> c_names = {"crossover_BLOQUES", "crossover_RANDOM"};
 #define emes            5
 #define tiempos         70
 
-#define fracciones      0.3
+#define fracciones      0.14
+// #define fracciones      0.3
 #define probas          0.4
 
-#define gen     20
-#define pob      20
+#define gen             25
+#define pob             15
 
 int main()
 {
@@ -30,28 +31,29 @@ int main()
     // vector< fun_crossover_type > crossover = {crossover_BLOQUES, crossover_RANDOM};
 
     vector< casos_type > casos = {
-
+        //comparar crossover
         make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones, fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_BLOQUES, 0),
 
         make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones, fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_RANDOM, 1)
+                                };
 
-                                    };
+
 
     // vector< casos_type > casos = {
 
-    //     make_tuple(generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
-    //      fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_, )
+    //     make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
+    //      fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_BLOQUES, 0),
 
-    //     make_tuple(generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
-    //      fitness_puntos, 0, seleccion_por_puntaje, 0, mutacion_A, 0, crossover_ )
+    //     make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
+    //      fitness_puntos, 0, seleccion_por_puntaje, 0, mutacion_A, 0, crossover_BLOQUES, 0 )
     //                                 };
 
     // vector< casos_type > casos = {
 
-    //     make_tuple(generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
+    //     make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
     //      fitness_puntos, 0, seleccion_por_, , mutacion_A, 0, crossover_, ),
 
-    //     make_tuple(generaciones, poblaciones, probas, enes, emes, tiempos, fracciones,
+    //     make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
     //      fitness_dif_goles, 1, seleccion_por_, , mutacion_A, 0, crossover_, )
     //                                 };
 
@@ -388,9 +390,16 @@ vector<Genoma> hacer_crossover( vector<Genoma> &poblacion,
     std::uniform_int_distribution<int> _dist_discreta{0,ultimo_nindice};
 
     // map<int,vector<int> > pares;
-    int pob_size = (int)poblacion.size()- best;
+    int pob_size = (int)poblacion.size()- (2* best);
     vector<Genoma> nueva_gen;
-    for (int i = 0; i < pob_size; i++) {
+
+    // genero tantos random como individuos que preserva
+    for (unsigned int i = 0; i < best; i++) {
+        nueva_gen.push_back(generar());
+    }
+
+    for (int i = 0; i < (pob_size/2); i++) {
+        nueva_gen.push_back(crossover(poblacion[i], poblacion[(i+1)%pob_size]));
         nueva_gen.push_back(crossover(poblacion[i], poblacion[(i+1)%pob_size]));
     }
 
@@ -521,4 +530,30 @@ pair<double,double> calcular_estimadores(vector<int> muestra) {
         double stdev = sqrt(accum / (muestra.size()-1));
 
         return make_pair(media, stdev);
+}
+
+
+Genoma generar() {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+    std::default_random_engine generador (seed);
+    std::uniform_real_distribution<double> distribucion1{-1.0, 1.0};
+    std::uniform_real_distribution<double> distribucion2{0, 1.0};
+
+    Genoma random;
+
+    for (unsigned int j = 0; j < inicio_probas; ++j) {
+        const double rand_num = distribucion1(generador);
+
+        random.push_back(rand_num);
+        // cerr << rand_num << endl;
+    }
+    for (unsigned int j = inicio_probas; j < genoma_size; ++j) {
+        const double rand_num = distribucion2(generador);
+
+        random.push_back(rand_num);
+        // cerr << rand_num << endl;
+    }
+
+    return random;
 }
