@@ -423,7 +423,7 @@ Genoma crossover_BLOQUES(Genoma &a,Genoma &b){ // por bloques semánticos
     // DISTANCIA JUGADOR LATERAL
     auto &d_j_lat = (_dist_discreta(_generador))? a : b;
     // AREA
-    auto &area_ocupada = (_dist_discreta(_generador))? a : b;
+    // auto &area_ocupada = (_dist_discreta(_generador))? a : b;
     // TENENCIA
     auto &tener_pelota = (_dist_discreta(_generador))? a : b;
     // PROBABILIDADES DE QUITE
@@ -449,7 +449,7 @@ Genoma crossover_BLOQUES(Genoma &a,Genoma &b){ // por bloques semánticos
         cruza[i] = d_j_lat[i];
     }
 
-    cruza[area] = area_ocupada[area];
+    // cruza[area] = area_ocupada[area];
     cruza[tenencia] = tener_pelota[tenencia];
 
     for (int i = inicio_probas; i <= fin_probas; i++) {
@@ -479,15 +479,15 @@ pair<unsigned int, unsigned int> jugar(Genoma &jugA, Genoma &jugB, int n, int m,
     // auto inicio = high_resolution_clock::now();
 
     const vector<Jugador> jI({
-                          Jugador(0, Posicion(1,1), jugA[prob0]),
-                          Jugador(1, Posicion(1,4), jugA[prob1]),
-                          Jugador(2, Posicion(4,3), jugA[prob2])
-    });
+                              Jugador(0, Posicion(4,2), jugA[prob0]),
+                              Jugador(1, Posicion(1,1), jugA[prob1]),
+                              Jugador(2, Posicion(1,3), jugA[prob2])
+        });
     const vector<Jugador> jD({
-                          Jugador(0, Posicion(6,3), jugB[prob0]),
-                          Jugador(1, Posicion(9,1), jugB[prob1]),
-                          Jugador(2, Posicion(9,4), jugB[prob2])
-    });
+                              Jugador(0, Posicion(5,2), jugB[prob0]),
+                              Jugador(1, Posicion(8,1), jugB[prob1]),
+                              Jugador(2, Posicion(8,3), jugB[prob2])
+        });
 
 
     Equipo equipoI(jugA, false);

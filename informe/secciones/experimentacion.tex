@@ -4,7 +4,7 @@
 Iniciamos nuestra experimentación con el algoritmo genético.
 Tuvimos grandes complicaciones para experimentar con las distintas funciones de selección y crossover implementadas, pues constantemente encontramos errores o comportamientos no deseados en los partidos.
 Por ejemplo, nos dimos cuenta de que se llegaba a un momento en que los jugadores maximizaban el aŕea ocupada por su equipo y estaban muy cerca del rival, pero la pelota se encontraba sola y nadie iba a buscarla.
-Agregamos entonces el genoma que relaciona a los jugadores con su distancia a la pelota, para que tuvieran una mejor visión del campo de juego.
+Agregamos entonces el genoma que relaciona a los jugadores con su distancia a la pelota, para que tuvieran una mejor visión del campo de juego y quitamos el que mide el área cubierta por los jugadores de un mismo equipo.
 Una gran barrera también fue el tiempo, pues aumenta muy rápidamente el al agrandar las poblaciones.
 
 Consideramos entonces una población de 15 individuos y 30 generaciones. A esto se le agregan los parámetros 0,2 y 0,4 como fracción de selección y probabilidad de mutación respectivamente (explicadas en AGERGAR LABEL A LA SECCION).
@@ -24,6 +24,8 @@ El nivel del equipo era muy similar, pero por el tiempo de juego esta vez tenemo
 \subsubsection*{Selección: Cantidad vs. Puntaje (3 - 0)}
 
 
+\todo[inline]{Decir que nos dimos cuenta de que los equipos daban resultados distintos dependiendo de qué lado de la cancha empezaban. Pensamos que era por las posiciones en el entrenamiento: no eran simétricas. lo cambiamos y volvimos a correr.}
+\todo[inline]{Creemos que área cubierta no valía la pena y lo sacamos como genoma.}
 \todo[inline]{COSAS A MENCIONAR}
 \begin{itemize}
     \item fijarse qué pasa con más iteraciones
