@@ -11,10 +11,10 @@ vector<vector<T> > combinar(vector<vector<T> > &vs);
 
 typedef vector<double> Genoma;
 
-#define genoma_size 31
-#define prob0 28
-#define prob1 29
-#define prob2 30
+#define genoma_size 30
+#define prob0 27
+#define prob1 28
+#define prob2 29
 
 //  @TODO: arreglar los indices con el esquema difinitivo de los genomas
 
@@ -33,12 +33,12 @@ typedef vector<double> Genoma;
 #define inicio_dist_j_lateral   20
 #define fin_dist_j_lateral      25
 
-#define area                    26
+// #define area                    26
 
-#define tenencia                27
+#define tenencia                26
 
-#define inicio_probas           28
-#define fin_probas              30
+#define inicio_probas           27
+#define fin_probas              29
 
 #endif
 
