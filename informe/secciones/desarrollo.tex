@@ -108,6 +108,13 @@ quite de los 3 jugadores del equipo, supusimos que esto es importante para el
 juego y decidimos darle la posibilidad de variar las probabilidades a los
 algoritmos de optimización.
 
+Se incluyó en primera instancia un gen adicional que aportaba información sobre
+el área cubierta por el equipo, sin embargo,  fue descartado debido a que
+generaba equipos que se dispersaban por el campo de juego y al quedar la pelota
+quieta no evaluaban como beneficioso acercarse a buscarla. Al retirar el gen,
+se encontró más variedad de comportamientos en los equipos. Una mayor cantidad de
+genes e iteraciones de los algoritmos ayudaría a equilibrar este valor, pero
+debido al mal comportamiento exhibido, se descartó. 
 
 El tablero posee una función {\it puntaje\/} que toma un genoma y
 multiplica cada valor del genoma por el dato con el que está relacionado,
@@ -116,7 +123,13 @@ multiplica la distancia de un jugador al arco, al rival, la distancia de la
 pelota al arco contrario, la distancia a los borde, el área cubierta y si el
 siguiente paso es gol o no, cada uno con su respectivo gen.
 
-Como consideración adicional, se agregó una multiplicación por 100 en cada
-puntaje. Si bien los genes son de valores continuos.
 
+% Como consideración adicional, se agregó una multiplicación por 100 en cada
+% puntaje. Esto se realizó con el fin de que la discretización.
 
+% Si bien los genes son de valores continuos y los algoritmos genéticos y
+% de búsqueda local, teóricamente encontrarían
+
+Por último, se tomó la decisión de otorgar puntaje a un movimiento que termina
+en gol y restar mucho puntaje en caso de gol en contra para beneficiar y
+prohibir dichos movimientos respectivos.
