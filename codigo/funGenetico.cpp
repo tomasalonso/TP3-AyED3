@@ -30,13 +30,12 @@ int main()
 
     // vector< fun_crossover_type > crossover = {crossover_BLOQUES, crossover_RANDOM};
 
-    vector< casos_type > casos = {
-        //comparar crossover
-        make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones, fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_BLOQUES, 0),
+    // vector< casos_type > casos = {
+    //     //comparar crossover
+    //     make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones, fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_BLOQUES, 0),
 
-        make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones, fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_RANDOM, 1)
-                                };
-
+    //     make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones, fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_RANDOM, 1)
+    //                             };
 
 
     // vector< casos_type > casos = {
@@ -45,17 +44,18 @@ int main()
     //      fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_BLOQUES, 0),
 
     //     make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
-    //      fitness_puntos, 0, seleccion_por_puntaje, 0, mutacion_A, 0, crossover_BLOQUES, 0 )
+    //      fitness_dif_goles, 1, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_BLOQUES, 0)
     //                                 };
 
-    // vector< casos_type > casos = {
+    vector< casos_type > casos = {
 
-    //     make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
-    //      fitness_puntos, 0, seleccion_por_, , mutacion_A, 0, crossover_, ),
+        make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
+         fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_BLOQUES, 0),
 
-    //     make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
-    //      fitness_dif_goles, 1, seleccion_por_, , mutacion_A, 0, crossover_, )
-    //                                 };
+        make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
+         fitness_puntos, 0, seleccion_por_puntaje, 0, mutacion_A, 0, crossover_BLOQUES, 0 )
+                                    };
+
 
     for (auto e : casos) {
 
