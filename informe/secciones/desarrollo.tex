@@ -126,14 +126,14 @@ siguiente paso es gol o no, cada uno con su respectivo gen.
 
 
 Como consideración adicional, si bien los genes se mueven en un espacio continuo entre $-1$ y $1$,
-lo cual significa que cualquier peso otorgado al valor del dato no deberia generar
+lo cual significa que cualquier peso otorgado al valor del dato no debería generar
 cambios de valor en los resultados finales sino solo de cantidad de puntos,
-nosotros en grid search, para aplicar busqueda local, discretizamos el valor de los
-genes haciendolos variar en $0,1$ por vez.
+nosotros en grid search, para aplicar búsqueda local, discretizamos el valor de los
+genes haciéndolos variar en $0,1$ por vez.
 
 
 A causa de esto se decidió se agregar una multiplicación por $100$ en cada
-puntaje, para poder disminuir el efecto de esa discretizacion en el resultado final.
+puntaje, para poder disminuir el efecto de esa discretización en el resultado final.
 
 % Si bien los genes son de valores continuos y los algoritmos genéticos y
 % de búsqueda local, teóricamente encontrarían
