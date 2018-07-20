@@ -12,11 +12,11 @@ vector<string> c_names = {"crossover_BLOQUES", "crossover_RANDOM"};
 #define emes            5
 #define tiempos         70
 
-#define fracciones      0.14
+#define fracciones      0.2
 // #define fracciones      0.3
 #define probas          0.4
 
-#define gen             25
+#define gen             30
 #define pob             15
 
 int main()
@@ -436,6 +436,8 @@ Genoma crossover_BLOQUES(Genoma &a,Genoma &b){ // por bloques semánticos
     auto &d_j_lat = (_dist_discreta(_generador))? a : b;
     // AREA
     auto &area_ocupada = (_dist_discreta(_generador))? a : b;
+    // TENENCIA
+    auto &tener_pelota = (_dist_discreta(_generador))? a : b;
     // PROBABILIDADES DE QUITE
     auto &quite = (_dist_discreta(_generador))? a : b;
 
@@ -460,6 +462,7 @@ Genoma crossover_BLOQUES(Genoma &a,Genoma &b){ // por bloques semánticos
     }
 
     cruza[area] = area_ocupada[area];
+    cruza[tenencia] = tener_pelota[tenencia];
 
     for (int i = inicio_probas; i <= fin_probas; i++) {
         cruza[i] = quite[i];
