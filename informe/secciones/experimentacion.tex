@@ -1,0 +1,43 @@
+Iniciamos nuestra experimentación con el algoritmo genético. Tomamos poblaciones de 20 individuos, dado que a partir de ese tamaño las iteraciones se volvían demasiado costosas en tiempo. Por ese motivo, además decidimos llegar hasta 20 generaciones de nuestro algoritmo.
+
+Para cada generación tomamos la media y la varianza de los puntajes de todos los individuos. Creemos que es bueno tener un genoma que provenga de
+
+
+
+
+
+
+
+
+
+
+
+\todo[inline]{COSAS A MENCIONAR}
+\begin{itemize}
+    \item fijarse qué pasa con más iteraciones
+    \item Notar que en algun momento, por ejemplo, cubren mucha área y están cercad e los rivales, pero la pelota quedó sola en algún lado y no se mueven para buscarla.
+    \item notar que si hacíamos todas las combinaciones posibles de las funciones eran muchas y no se llegaba a ejecutar.
+    \item nos pasa que los jugadores se quedan quietos a partir de algún momento. esto podría ser por algún error en la función evaluadora, algún bug de tablero o algúna cosa que podríamos haber medido y se nos pasó.
+\end{itemize}
+
+Tenencia de la pelota, se quedaban quietos porque no había beneficios por ir a buscar la pelota -> agregamos un gen que te da beneficio por tener la pelota
+
+Gol siempre, si se implementaran más metricas como gol seguro, chance que la intercepten, etc. seria mejor
+
+Decir por qué agregamos cada genoma que inicialmente no estaba
+
+distJugador al arco, antes no había ninguna información que vinculara a los jugadores con la posición de la pelota
+
+por ejemplo agregamos puntaje si una jugada mete gol para que siempre metan gol
+
+Pesos negativos para sacarle penalizar una acción (para no duplicar genomas)-> agregar valores negativos al genoma
+
+Partidos muy variados, entre que algunos son ajustados y con muchos robos, otros se meten gol siempre. O se quedan estáticos y no se mueven más.
+
+Forzar que si el jugador con la mínima distancia a la pelota, achica esa distancia cuando la pelota está quieta, suma puntaje
+
+Contador de tiempo desde que la pelota se quedó quieta
+
+Equilibrios en el tablero donde ningún movimiento suma puntaje
+
+
