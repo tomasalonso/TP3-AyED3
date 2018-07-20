@@ -35,13 +35,13 @@ de selección.
 
 Utilizamos 2 funciones de \emph{Selección}:\\
 
-En principio se diseñó una llamada \emph{selección\_por\_cantidad}, esta es muy simple consiste en decirle como un parámetro cuantos
-sujetos queremos tomar sin modificar, y el resto son enviados a las funciones de \emph{Crossover} y \emph{Mutación} para que
-los modifiquen e introduzcan en la siguiente población.\\
+En principio se diseñó una llamada \emph{selección\_por\_cantidad}, esta consiste en decirle por parámetro cuántos
+sujetos queremos preservar en la siguiente generación, y el resto son enviados a las funciones de \emph{Crossover} y \emph{Mutación} para que
+los modifiquen e introduzcan en la siguiente población.
+Por ejemplo, con una población de 20 individuos y un parámetro de 0,2 se preservan $20 \times 0,2 = 4$ genomas.\\
 
-La otra alternativa de nombre \emph{selección\_por\_puntaje} funciona con una varianza pasada por parámetro, entonces se toma el genoma
-mejor puntuado y también se toman todos los que tengan un puntaje a una distancia menor a esa varianza del puntaje del mejor. y el resto
-son enviados a las funciones de \emph{Crossover} y \emph{Mutación} como en el otro caso.
+La otra alternativa, de nombre \emph{selección\_por\_puntaje}, también funciona con un parámetro $f$. En este caso, se calcula un puntaje umbral a partir del cual se preservan los genomas. Si llamamos $p_{MAX}$ al mayor puntaje de la población, vamos a guardar los genomas $i$ tales que $p_{i} \geq p_{MAX} - (p_{MAX} \times )$.
+El resto son enviados a las funciones de \emph{Crossover} y \emph{Mutación} como en el otro caso.
 
 
 Ambas selecciones son muy simples y parte de la misma se da dentro de las funciones de \emph{Crossover}.
