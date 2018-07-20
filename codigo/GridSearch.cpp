@@ -11,12 +11,12 @@
 int main()
 {
 
-    Genoma mejor = grasp(50, 10, 5, 50);
+    Genoma mejor = grasp(50, 10, 5, 60);
     cout << " El mejor es: " << endl;
     for (const double g : mejor) {
       cout << g << ", ";
     }
-  
+
     cout << endl;
 
     return 0;
