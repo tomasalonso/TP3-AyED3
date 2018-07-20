@@ -13,8 +13,8 @@ typedef vector<double> Genoma;
 
 #define genoma_size 31
 #define prob0 28
-#define prob1 17
-#define prob2 29
+#define prob1 29
+#define prob2 30
 
 //  @TODO: arreglar los indices con el esquema difinitivo de los genomas
 
