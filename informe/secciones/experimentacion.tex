@@ -12,11 +12,19 @@ En cuanto a parámetros del juego en sí, tenemos un tablero de $5\times10$ y ti
 Fijamos las posiciones iniciales de los jugadores de manera simétrica, ya que creemos que ubicarlos de otra manera daría diferencias entre los equipos dependiendo del lado en que comiencen.
 Dada la cantidad de funciones distintas que implementamos para un mismo fin, como dos de selección de individuos, dos de crossover de genomas y dos de mutaciones, realizar todas las posibles combinaciones fue temporalmente inviable. Siguiendo el espíritu futbolísitico del trabajo, decidimos diagramar un pequeño ``torneo'' de funciones. En el mismo pensamos comparar primero las funciones de selección, observando el partido entre los equipos con esos genomas.
 
-Notamos que si bien los equipos hacían goles y algún equipo ganaba, al invertir
+\todo[inline]{Notamos que si bien los equipos hacían goles y algún equipo ganaba, al hacerlos empezar del lado contrario al tablero}
+
+
 
 % \todo[inline]{VER POR QUÉ CAMBIA EL RESULTADO DE LOS PARTIDOS DEPENDIENDO DEL LADO EN QUE EMPIECEN}
 
-% \subsubsection*{Crossover: Bloques vs. Random (6 - 5)}
+\subsubsection*{Crossover: Bloques vs. Aleatoio (6 (Izq) - 4(Der))}
+
+Los equipos no tienen mucho problema para anotar goles.
+Si bien ambos tienen un jugador que se queda en una esquina parado, en cada oportunidad que un equipo tiene la pelota logra meter un gol, con algún oponente marcando de cerca.
+Sucede dos veces que el equipo izquierdo (el generado por crossover en bloques) logra robar la pelota y arruinar los planes de gol del equipo contrario. De esta manera logra sacar dos puntos de diferencia.
+
+
 
 % Genoma bloque:-0.775167, -0.268792, -0.904803, 0.509839, 0.0429661, -0.749711, -0.330696, -0.72851, 0.402388, -0.690626, -0.925932, -0.548266, -0.311845, 0.474691, 0.0257145, 0.784108, -0.86784, -0.262816, 0.852761, -0.65904, 0.515403, 0.490343, 0.458956, -0.679425, -0.982449, -0.845339, 0.519684, 0.749116, 0.0456578, 0.550204, 0.0943544
 
@@ -25,7 +33,9 @@ Notamos que si bien los equipos hacían goles y algún equipo ganaba, al inverti
 % Se observó que ambos equipos puedieron anotar goles de manera pareja, pero que tuvieron ciertas dificultades para robar la pelota al adversario, a pesar de cruzarlo alguna vez. Los equipos parecían tener una táctica bien definida dirigiéndose directamente al arco del oponente, aunque dependió en gran medida de estrellas, que llevaron el juego en sus espaldas. No faltó en ninguno de los dos grupos el jugador desorientado que se quedó parado en una esquina del campo de juego.
 % El nivel del equipo era muy similar, pero por el tiempo de juego esta vez tenemos una victoria del crossover por bloques y se consagra ganador de las funciones de crossover.
 
-% \subsubsection*{Selección: Cantidad vs. Puntaje (3 - 0)}
+\subsubsection*{Fitness: Puntos (torneo) vs. Diferencia de goles ( - )}
+\subsubsection*{Selección: Cantidad vs. Puntaje ( - )}
+\subsubsection*{Mutación: Aleatorio vs. Valor opuesto ( - )}
 
 ----------------------------------------------------------------------------------------------------------------------------------
 \todo[inline]{Decir que nos dimos cuenta de que los equipos daban resultados distintos dependiendo de qué lado de la cancha empezaban. Pensamos que era por las posiciones en el entrenamiento: no eran simétricas. lo cambiamos y volvimos a correr.}
