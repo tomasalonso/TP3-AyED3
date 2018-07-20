@@ -1,30 +1,27 @@
-Iniciamos nuestra experimentación con el algoritmo genético.
-\textbf{ACTUALIZAR CON LAS POBLACIONES}Tomamos poblaciones de 20 individuos, dado que a partir de ese tamaño las iteraciones se volvían demasiado costosas en tiempo. Por ese motivo, además decidimos llegar hasta 20 generaciones de nuestro algoritmo.
-
 % Para cada generación tomamos la media y la varianza de los puntajes de todos los individuos. Creemos que es bueno tener un genoma que provenga de una generación cuya varianza sea baja, ya que esto significaría que los
 
 
-
-
-Tuvimos grandes complicaciones para experimentar con las distintas funciones de seleccion y crossover implementadas, pues constantemente encontramos errores o comportamientos no deseados en los partidos.
+Iniciamos nuestra experimentación con el algoritmo genético.
+Tuvimos grandes complicaciones para experimentar con las distintas funciones de selección y crossover implementadas, pues constantemente encontramos errores o comportamientos no deseados en los partidos.
 Por ejemplo, nos dimos cuenta de que se llegaba a un momento en que los jugadores maximizaban el aŕea ocupada por su equipo y estaban muy cerca del rival, pero la pelota se encontraba sola y nadie iba a buscarla.
 Agregamos entonces el genoma que relaciona a los jugadores con su distancia a la pelota, para que tuvieran una mejor visión del campo de juego.
-Una gran barrera también fue el tiempo, pues aumenta muy rápidamente el requerido por cada generación si se agrandan las poblaciones.
+Una gran barrera también fue el tiempo, pues aumenta muy rápidamente el al agrandar las poblaciones.
 
 Consideramos entonces una población de 15 individuos y 30 generaciones. A esto se le agregan los parámetros 0,2 y 0,4 como fracción de selección y probabilidad de mutación respectivamente (explicadas en AGERGAR LABEL A LA SECCION).
 Dada la cantidad de funciones distintas que implementamos para un mismo fin, como dos de selección de individuos, dos de crossover de genomas y dos de mutaciones, realizar todas las posibles combinaciones fue temporalmente inviable. Siguiendo el espíritu futbolísitico del trabajo, decidimos diagramar un pequeño ``torneo'' de funciones. En el mismo vamos a comparar primero las funciones de selección, observando el partido entre los equipos con esos genomas.
 
+\todo[inline]{VER POR QUÉ CAMBIA EL RESULTADO DE LOS PARTIDOS DEPENDIENDO DEL LADO EN QUE EMPIECEN}
 
+\subsubsection*{Crossover: Bloques vs. Random (6 - 5)}
 
-crossover bloque/random
+% Genoma bloque:-0.775167, -0.268792, -0.904803, 0.509839, 0.0429661, -0.749711, -0.330696, -0.72851, 0.402388, -0.690626, -0.925932, -0.548266, -0.311845, 0.474691, 0.0257145, 0.784108, -0.86784, -0.262816, 0.852761, -0.65904, 0.515403, 0.490343, 0.458956, -0.679425, -0.982449, -0.845339, 0.519684, 0.749116, 0.0456578, 0.550204, 0.0943544
 
-Genoma bloque:-0.775167, -0.268792, -0.904803, 0.509839, 0.0429661, -0.749711, -0.330696, -0.72851, 0.402388, -0.690626, -0.925932, -0.548266, -0.311845, 0.474691, 0.0257145, 0.784108, -0.86784, -0.262816, 0.852761, -0.65904, 0.515403, 0.490343, 0.458956, -0.679425, -0.982449, -0.845339, 0.519684, 0.749116, 0.0456578, 0.550204, 0.0943544
-Genoma random: -0.709169, 0.36851, -0.520018, 0.6342, -0.0282138, 0.322789, -0.616418, -0.854534, -0.545993, 0.164261, 0.16543, 0.492899, -0.592142, -0.209919, -0.923623, 0.584831, 0.381569, -0.133004, -0.995532, -0.254421, 0.639068, 0.0105143, 0.494118, -0.125545, -0.821469, -0.731869, 0.141382, 0.793763, 0.388867, 0.428832, 0.170146
+% Genoma random: -0.709169, 0.36851, -0.520018, 0.6342, -0.0282138, 0.322789, -0.616418, -0.854534, -0.545993, 0.164261, 0.16543, 0.492899, -0.592142, -0.209919, -0.923623, 0.584831, 0.381569, -0.133004, -0.995532, -0.254421, 0.639068, 0.0105143, 0.494118, -0.125545, -0.821469, -0.731869, 0.141382, 0.793763, 0.388867, 0.428832, 0.170146
 
-B- R
-6-5
-Se observó que ambos equipos puedieron anotar goles de manera pareja, pero que tuvieron ciertas dificultades para robar la pelota al adversario, a pesar de cruzarlo alguna vez. Los equipos parecían tener una táctica bien definida dirigiéndose directamente al arco del oponente, aunque dependió en gran medida de estrellas, que llevaron el juego en sus espaldas. No faltó en ninguno de los dos grupos el jugador que no cazaba una y se quedaba parado en una esquina del campo de juego.
+Se observó que ambos equipos puedieron anotar goles de manera pareja, pero que tuvieron ciertas dificultades para robar la pelota al adversario, a pesar de cruzarlo alguna vez. Los equipos parecían tener una táctica bien definida dirigiéndose directamente al arco del oponente, aunque dependió en gran medida de estrellas, que llevaron el juego en sus espaldas. No faltó en ninguno de los dos grupos el jugador desorientado que se quedó parado en una esquina del campo de juego.
 El nivel del equipo era muy similar, pero por el tiempo de juego esta vez tenemos una victoria del crossover por bloques y se consagra ganador de las funciones de crossover.
+
+\subsubsection*{Selección: Cantidad vs. Puntaje (3 - 0)}
 
 
 \todo[inline]{COSAS A MENCIONAR}
