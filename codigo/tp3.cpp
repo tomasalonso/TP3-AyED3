@@ -20,17 +20,18 @@ const vector<double> gD({
 int main() {
     const int m = 5;
     const int n = 10;
-    const unsigned int total = 100;
+    const unsigned int total = 70;
+    // const unsigned int total = 100;
 
     const vector<Jugador> jI({
-                              Jugador(0, Posicion(1,1), gI[27]),
-                              Jugador(1, Posicion(1,4), gI[28]),
-                              Jugador(2, Posicion(4,3), gI[29])
+                              Jugador(0, Posicion(4,2), gI[prob0]),
+                              Jugador(1, Posicion(1,1), gI[prob1]),
+                              Jugador(2, Posicion(1,3), gI[prob2])
         });
     const vector<Jugador> jD({
-                              Jugador(0, Posicion(6,4), gD[27]),
-                              Jugador(1, Posicion(9,1), gD[28]),
-                              Jugador(2, Posicion(9,4), gD[29])
+                              Jugador(0, Posicion(5,2), gD[prob0]),
+                              Jugador(1, Posicion(8,1), gD[prob1]),
+                              Jugador(2, Posicion(8,3), gD[prob2])
         });
 
     Equipo equipoI(gI, false);
