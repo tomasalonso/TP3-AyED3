@@ -11,8 +11,10 @@ De todo esto se va a hablar en las próximas partes:
 
 \subsubsection{Fitness:}
 
+Se realizaron dos funciones de \emph{Fitness}:\\
 
-La primera, \emph{fitness\_puntos} , se basa en la idea de un torneo de fútbol del mundo real, simplemente hace jugar a todos
+
+La primera, \emph{fitness\_puntos}, se basa en la idea de un torneo de fútbol del mundo real, simplemente hace jugar a todos
 los equipos entre si (como en una liga) y les suma $3$ puntos por ganar, $1$ por el empate y $0$ por perder.
 Esperamos que esto presente un buen método de evaluación ya que se basa en algo real, y es simple en cuanto a que solo importa ganar
 mas partidos, lo cual, a fin de cuentas, es lo mas importante.\\
@@ -22,19 +24,68 @@ puntos como diferencia de gol tenga con el contrario, por ejemplo, si gano $3$ a
 la victoria.
 
 Esta función intenta reforzar a los equipos que hagan muchos goles, lo cual podría llegar a indicar que juegan mucho mejor que el
-contrario y podría significar que va a jugar mejor también contra otros potenciales adversarios.\\
+contrario y podría significar que va a jugar mejor también contra otros potenciales adversarios.
+
 
 Al final de la ejecución, ambas funciones ordenan la población de acuerdo a los puntajes para facilitar el trabajo de las funciones
-de selección
+de selección.
 
 
 \subsubsection{Selección:}
 
+Utilizamos 2 funciones de \emph{Selección}:\\
+
+En principio se diseñó una llamada \emph{selección\_por\_cantidad}, esta es muy simple consiste en decirle como un parámetro cuantos
+sujetos queremos tomar sin modificar, y el resto son enviados a las funciones de \emph{Crossover} y \emph{Mutación} para que
+los modifiquen e introduzcan en la siguiente población.\\
+
+La otra alternativa de nombre \emph{selección\_por\_puntaje} funciona con una varianza pasada por parámetro, entonces se toma el genoma
+mejor puntuado y también se toman todos los que tengan un puntaje a una distancia menor a esa varianza del puntaje del mejor. y el resto
+son enviados a las funciones de \emph{Crossover} y \emph{Mutación} como en el otro caso.
+
+
+Ambas selecciones son muy simples y parte de la misma se da dentro de las funciones de \emph{Crossover}.
 
 \subsubsection{Crossover:}
+Se programaron 2 funciones de \emph{Crossover}:\\
+
+la primera, llamada \emph{crossover\_BLOQUES} consiste en trabajar con bloques, con una distribución uniforme que da $0$ o $1$
+la función elige de que progenitor tomar cada bloque, los cuales son los grupos de genes que tratan una misma propiedad para los
+3 jugadores. Por ejemplo, un bloque es el que consiste de las 6 probabilidades que definen la importancia de estar cerca de un rival
+para cada jugador, dependiendo si están atacando o defendiendo.\\
+
+La segunda es muy similar, se llama \emph{crossover\_RANDOM} esta funciona idénticamente a la anterior, solo que realiza el proceso
+de selección de progenitor para cada gen particular, mezclado mas las propiedades de estos dos.\\
+
+estas dos funciones son utilizadas por una mas grande llamada \emph{hacer\_crossover} esta función se encarga de separar los salvados
+por la \emph{Selección}, luego también descarta de los peores la misma cantidad de salvados, y luego con los restantes, les realiza
+\emph{Crossover} con alguna de las dos funciones (decide según un parámetro) recorriendo la población como una lista circular,
+realizando la operación con el genoma $i$ y el $i+1$.
+
+Luego de este \emph{Crossover} se los pasa la función de \emph{Mutación} para luego ser unidos con los que se mantuvieron
+intactos y se envían a la función global para repetir el proceso.
 
 
 \subsubsection{Mutaciones:}
 
+También se presentan 2 funciones de \emph{Mutación}:\\
+
+La primera, llamada \emph{Mutación\_A}, utiliza una distribución uniforme para, con un parámetro de entrada que va entre $0$ y $1$,
+decidir si se modifica cada gen. Por ejemplo, si yo paso un $0.4$, solo se van a modificar cuando
+la distribución de un resultado mayor a $0.4$, osea, el $40\%$ de las veces. y el gen, si es modificado toma,
+con otra distribución uniforme entre $-1$ y $1$, un numero aleatorio y se pasa al próximo gen repitiendo
+el procedimiento.
+
+
+Es la primera mutación que se viene a la mente y suponemos que con el parámetro de entrada es fácil controlar si queremos
+mucho o poco cambio.\\
+
+La segunda de nombre \emph{Mutación\_A}, consiste en el mismo método para decidir si muta, un parámetro  entre $0$ y $1$
+y una distribución uniforme, pero en caso de mutar, muta un solo gen, decidido aleatoriamente y lo que se hace es simplemente
+invertir el valor del mismo. Por ejemplo, si era $0.314$ se convierten en $-0.314$ lo cual no siempre causa un cambio
+directamente proporcional.
+
+Es fácil ver también que esta mutación genera muchos menos cambios que la anterior ya que, en caso de mutar, solo muta un gen.
+Fue solo diseñada a fines de experimentar y se cree mas útil e importante la anterior.
 
 \todo[inline]{alguna conclusion previa sobre lo que creiamos que iba a pasar}
