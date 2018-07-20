@@ -194,24 +194,12 @@ Genoma hacer_genetico(  unsigned int generaciones,
 }
 
 vector<Genoma> poblacion_inicial(unsigned int tamanio_poblacion) {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine _generador (seed);
-
-
-    // std::default_random_engine _generador;
-    std::uniform_real_distribution<double> _distribucion{ min_gen, max_gen };
 
     vector<Genoma> poblacion;
 
     for (unsigned int i = 0; i < tamanio_poblacion; ++i) {
-        Genoma actual;
-        for (int j = 0; j < genoma_size; ++j) {
-            double rand_num = _distribucion(_generador);
-            actual.push_back(rand_num);
-            // cerr<<rand_num<<endl;
-        }
 
-        poblacion.push_back(actual);
+        poblacion.push_back(generar());
     }
     return poblacion;
 }
