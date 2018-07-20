@@ -411,7 +411,7 @@ double Tablero::puntaje(Genoma genoma, bool enDerecha) {
     const vector<double> aPelota = distJugadorAPelota(enDerecha);
     if (enPosesion) {
         for (const double& e : aPelota) {
-            puntaje += e * genoma.at(index++) * 100;
+            puntaje += e * genoma.at(index++) * 400;
         }
         index += cantJug;
     } else {
@@ -441,6 +441,10 @@ double Tablero::puntaje(Genoma genoma, bool enDerecha) {
     if ((enDerecha && _pelota.siguiente().x() < 0) ||
         (!enDerecha && _pelota.siguiente().x() > _n-1)) {
         puntaje += 1000;
+    }
+    if ((enDerecha && _pelota.siguiente().x() > _n-1) ||
+        (!enDerecha && _pelota.siguiente().x() < 0)) {
+        puntaje -= 1000;
     }
 
     return puntaje;
