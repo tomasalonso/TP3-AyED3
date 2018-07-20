@@ -18,11 +18,10 @@ Dada la cantidad de funciones distintas que implementamos para un mismo fin, com
 
 % \todo[inline]{VER POR QUÉ CAMBIA EL RESULTADO DE LOS PARTIDOS DEPENDIENDO DEL LADO EN QUE EMPIECEN}
 
-\subsubsection*{Crossover: Bloques vs. Aleatoio (6 (Izq) - 4(Der))}
+\subsubsection*{Crossover: Bloques vs. Aleatorio (6 (Izq) - 4(Der))}
 
-Los equipos no tienen mucho problema para anotar goles.
-Si bien ambos tienen un jugador que se queda en una esquina parado, en cada oportunidad que un equipo tiene la pelota logra meter un gol, con algún oponente marcando de cerca.
-Sucede dos veces que el equipo izquierdo (el generado por crossover en bloques) logra robar la pelota y arruinar los planes de gol del equipo contrario. De esta manera logra sacar dos puntos de diferencia.
+\textbf{Funciones usadas: } fitness$\_$puntos, seleccion$\_$por$\_$cantidad, mutacion$\_$A.
+
 
 
 
@@ -30,10 +29,22 @@ Sucede dos veces que el equipo izquierdo (el generado por crossover en bloques) 
 
 % Genoma random: -0.709169, 0.36851, -0.520018, 0.6342, -0.0282138, 0.322789, -0.616418, -0.854534, -0.545993, 0.164261, 0.16543, 0.492899, -0.592142, -0.209919, -0.923623, 0.584831, 0.381569, -0.133004, -0.995532, -0.254421, 0.639068, 0.0105143, 0.494118, -0.125545, -0.821469, -0.731869, 0.141382, 0.793763, 0.388867, 0.428832, 0.170146
 
-% Se observó que ambos equipos puedieron anotar goles de manera pareja, pero que tuvieron ciertas dificultades para robar la pelota al adversario, a pesar de cruzarlo alguna vez. Los equipos parecían tener una táctica bien definida dirigiéndose directamente al arco del oponente, aunque dependió en gran medida de estrellas, que llevaron el juego en sus espaldas. No faltó en ninguno de los dos grupos el jugador desorientado que se quedó parado en una esquina del campo de juego.
-% El nivel del equipo era muy similar, pero por el tiempo de juego esta vez tenemos una victoria del crossover por bloques y se consagra ganador de las funciones de crossover.
+Los equipos no tienen mucho problema para anotar goles, aunque sí para robar la pelota.
+Si bien ambos tienen un jugador que se queda en una esquina parado, en cada oportunidad que un equipo tiene la pelota logra meter un gol, con algún oponente marcando de cerca.
+Sucede dos veces que el equipo izquierdo (el generado por crossover en bloques) logra robar la pelota y arruinar los planes de gol del equipo contrario. De esta manera logra sacar dos puntos de diferencia.
 
-\subsubsection*{Fitness: Puntos (torneo) vs. Diferencia de goles ( - )}
+
+\subsubsection*{Fitness: Puntos (torneo) vs. Diferencia de goles (4 (Izq) - 2(Der))}
+
+\textbf{Funciones usadas: } seleccion$\_$por$\_$cantidad, crossover$\_$BLOQUES, mutacion$\_$A.
+
+% Genoma puntaje: -0.0912428, 0.441283, 0.526057, -0.24552, -0.495963, -0.44873, -0.994717, -0.158943, 0.652438, 0.664869, 0.230037, 0.374349, -0.995683, 0.800342, -0.515715, 0.741213, 0.356681, 0.0936855, -0.615283, -0.43112, 0.101387, 0.222677, -0.500011, 0.0475549, -0.874837, 0.190928, -0.818234, 0.50323, 0.514024, 0.230156
+
+% Genoma dif_goles: 0.0354922, -0.347757, -0.00128968, -0.454219, -0.352621, -0.698883, -0.959573, -0.730346, -0.451026, -0.855564, -0.898217, 0.594382, -0.377874, -0.126251, -0.297974, 0.196175, 0.964436, -0.592206, -0.578612, 0.277421, -0.015946, -0.471911, -0.019213, -0.182925, -0.847654, -0.218569, 0.730436, 0.622654, 0.912127, 0.818418
+
+A diferencia del partido anterior, se observan muchas jugadas frustradas por quites.
+
+
 \subsubsection*{Selección: Cantidad vs. Puntaje ( - )}
 \subsubsection*{Mutación: Aleatorio vs. Valor opuesto ( - )}
 
