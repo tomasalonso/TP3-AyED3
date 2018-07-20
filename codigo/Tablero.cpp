@@ -433,7 +433,7 @@ double Tablero::puntaje(Genoma genoma, bool enDerecha) {
         }
     }
 
-    puntaje += areaCubierta(enDerecha) * genoma.at(index++) * 100;
+    // puntaje += areaCubierta(enDerecha) * genoma.at(index++) * 100;
 
     puntaje += genoma.at(index++) * enPosesion * 100;
 
@@ -550,6 +550,7 @@ void Tablero::jugadasValidasJug(const Jugador& j, vector<Movimiento>& movs) {
 vector<double> Tablero::distJugadorAlArco(const bool enDerecha) const {
     const vector<Jugador> &js = (enDerecha) ? _jugadoresD : _jugadoresI;
     const double xArco = (enDerecha) ? -1 : _n;
+    const unsigned int medio = (unsigned int) _m/2;
 
     vector<double> dist;
 
@@ -557,12 +558,12 @@ vector<double> Tablero::distJugadorAlArco(const bool enDerecha) const {
         const double x = j.siguiente().x();
         const double y = j.siguiente().y();
 
-        if (y > _m/2) {
-            dist.push_back(distancia(x, y, xArco, _m/2+1));
-        } else if (y == _m/2) {
+        if (y > medio) {
+            dist.push_back(distancia(x, y, xArco, medio+1));
+        } else if (y == medio) {
             dist.push_back(abs(double(x - xArco)));
         } else {
-            dist.push_back(distancia(x, y, xArco, _m/2-1));
+            dist.push_back(distancia(x, y, xArco, medio-1));
         }
     }
 
@@ -573,26 +574,27 @@ double Tablero::distPelotaArco(const bool enDerecha) const {
     const double xArco = (enDerecha) ? -1 : _n;
     const double x = _pelota.siguiente().x();
     const double y = _pelota.siguiente().y();
+    const unsigned int medio = (unsigned int) _m/2;
 
-    if (y > (unsigned int) (_m/2)) {
-        return distancia(x, y, xArco, _m/2+1);
-    } else if (y == _m/2) {
+    if (y > medio) {
+        return distancia(x, y, xArco, medio+1);
+    } else if (y == medio) {
         int res = abs(double(x - xArco));
         return res;
     } else {
-        return distancia(x, y, xArco, _m/2-1);
+        return distancia(x, y, xArco, medio-1);
     }
 }
 
 vector<double> Tablero::cercaniaARival(const bool enDerecha) const {
     const vector<Jugador> &js = (enDerecha) ? _jugadoresD : _jugadoresI;
+    const vector<Jugador> &rivales = (enDerecha) ?
+        _jugadoresI : _jugadoresD;
 
     vector<double> cercania;
     for (const Jugador& j : js) {
         const double x = j.siguiente().x();
         const double y = j.siguiente().y();
-        const vector<Jugador> &rivales = (j.id() < _jugadoresI.size()) ?
-            _jugadoresD : _jugadoresI;
 
         double min = distancia(x, y,
                                      rivales[0].siguiente().x(),
@@ -621,7 +623,7 @@ double Tablero::areaCubierta(const bool enDerecha) const {
 
     const double h = altura(js[0].siguiente(), js[1].siguiente(), js[2].siguiente());
 
-    return (b*h)/2;
+    return (b*h)/2.0;
 }
 
 vector<double> Tablero::distJugadorAPelota(const bool enDerecha) const {

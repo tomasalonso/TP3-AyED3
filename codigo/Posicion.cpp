@@ -28,25 +28,25 @@ void Posicion::mover(Movimiento &m) {
 void Posicion::mover(Movimiento &m, const int i) {
     if (m.intensidad() > 0) {
         m.bajarIntensidad(i);
-    switch(m.dir()) {
-    case QUIETO: break;
-    case ARRIBA:
-        _y += i; break;
-    case ABAJO:
-        _y -= i; break;
-    case IZQUIERDA:
-        _x -= i; break;
-    case DERECHA:
-        _x += i; break;
-    case ARRIBA_IZQUIERDA:
-        _y += i; _x -= i; break;
-    case ARRIBA_DERECHA:
-        _y += i; _x += i; break;
-    case ABAJO_IZQUIERDA:
-        _y -= i; _x -= i; break;
-    case ABAJO_DERECHA:
-        _y -= i; _x += i; break;
-    }
+        switch(m.dir()) {
+        case QUIETO: break;
+        case ARRIBA:
+            _y += i; break;
+        case ABAJO:
+            _y -= i; break;
+        case IZQUIERDA:
+            _x -= i; break;
+        case DERECHA:
+            _x += i; break;
+        case ARRIBA_IZQUIERDA:
+            _y += i; _x -= i; break;
+        case ARRIBA_DERECHA:
+            _y += i; _x += i; break;
+        case ABAJO_IZQUIERDA:
+            _y -= i; _x -= i; break;
+        case ABAJO_DERECHA:
+            _y -= i; _x += i; break;
+        }
     }
 }
 
