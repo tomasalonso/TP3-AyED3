@@ -60,7 +60,6 @@ Observamos que los equipos y sus jugadas van mejorando a medida que avanza este 
 Por esto creemos que lograremos un equipo relativamente bueno para el final de las comparaciones.
 
 
-
 \subsubsection*{Selección: Cantidad vs. Puntaje (4 (Izq) - 3(Der))}
 \textbf{Funciones usadas: } fitness$\_$puntos, crossover$\_$BLOQUES, mutacion$\_$A,.
 
@@ -69,35 +68,14 @@ Los demás raramente se mueven, aunque uno de los del equipo izquierdo estuvo do
 
 Nos gustaría decir que seleccionando los individuos por una cantidad fija se logra mayor estabilidad en la estrategia de juego, pero ambos equipos tienen un comportamiento muy parecido: un único jugador muy activo que se encarga de anotar goles, quitar la pelota y marcar al oponente. Atribuimos la victoria del equipo izquierdo en gran parte al azar, pero esto es suficiente para que la combinación de funciones utilizadas para generarlo pasen a la siguiente instancia.
 
-\subsubsection*{Mutación: Aleatorio vs. Valor opuesto ( - )}
+\subsubsection*{Mutación: Aleatorio vs. Valor opuesto (1 - 1)}
 \textbf{Funciones usadas: } fitness$\_$puntos, seleccion$\_$por$\_$cantidad, crossover$\_$BLOQUES.
 
-----------------------------------------------------------------------------------------------------------------------------------
-\todo[inline]{COSAS A MENCIONAR}
-\begin{itemize}
-    \item fijarse qué pasa con más iteraciones
-    \item ver que pasa con mutacionA y mutacion B // mutación A tardó 41 minutos!!
-\end{itemize}
+De manera parecida al partido anterior, se observan un jugador protagonista de cada equipo. Los demás jamás tocan la pelota y se mantienen casi siempre en el mismo lugar. Quienes sí manejan la pelota se mueven casi siempre en el mismo casillero, constantemente disputando la pelota. Hay muchos quites, idas y vueltas. Es tal la situación que en los mismos 70 tiempos en los que en otros partidos se anotaron 10 goles, en este se anotaron solamente 2, uno para cada equipo. Sucedió algo llamativo, que fue que uno de los jugadores se quedó parado con la pelota al lado de su arco hasta que el opontente se la quitó y anotó un gol.
 
-% Tenencia de la pelota, se quedaban quietos porque no había beneficios por ir a buscar la pelota -> agregamos un gen que te da beneficio por tener la pelota
+Además de probar algunas instancias de las distintas partes del esquema de algoritmo genético pudimos ver que existieron variadas estrategias que igualmente ganaron. Cada una de ellas se relaciona a un genoma, para el cual no vimos convergencias claras. Sí pudimos observar que ciertas coordenadas tomaron siempre valores negativos, como por ejemplo la distancia de los primeros jugadores al arco cuando tienen la pelota. Como se explica en la sección de parametrización, esto significa que el equipo va a elegir las jugadas que minimicen esa distancia. No es casualidad que en todos los genomas obtenidos estos valores hayan sucedido para los jugadores número 0 y que los demás tengan valores positivos para la misma distancia en casi todos los genomas, ya que esos jugadores con valores positivos eran quienes no participaban tanto en la ejecución de los goles.
 
-Gol siempre, si se implementaran más metricas como gol seguro, chance que la intercepten, etc. seria mejor
-
-% Decir por qué agregamos cada genoma que inicialmente no estaba
-
-% distJugador al arco, antes no había ninguna información que vinculara a los jugadores con la posición de la pelota
-
-% por ejemplo agregamos puntaje si una jugada mete gol para que siempre metan gol
-
-Pesos negativos para sacarle penalizar una acción (para no duplicar genomas)-> agregar valores negativos al genoma
-
-% Partidos muy variados, entre que algunos son ajustados y con muchos robos, otros se meten gol siempre. O se quedan estáticos y no se mueven más.
-
-Forzar que si el jugador con la mínima distancia a la pelota, achica esa distancia cuando la pelota está quieta, suma puntaje
-
-Contador de tiempo desde que la pelota se quedó quieta
-
-% Equilibrios en el tablero donde ningún movimiento suma puntaje
+Esta curiosidad de los valores se repitió para el gen 13, que se relaciona con la distancia del rival cuando no se tiene la pelota. Esto tiene sentido, pues cuando no se tiene la pelota es conveniente acercarse al oponente. En siete de los ocho genomas este valor fue negativo y en cinco el valor estuvo entre -0.995683 y -0.829386. Podríamos esperar que con más generaciones este gen efectivamente converja a un valor similar.
 
 
 

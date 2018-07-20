@@ -13,7 +13,7 @@ vector<string> c_names = {"crossover_BLOQUES", "crossover_RANDOM"};
 #define tiempos         70
 
 #define fracciones      0.2
-// #define fracciones      0.3
+
 #define probas          0.4
 
 #define gen             30
