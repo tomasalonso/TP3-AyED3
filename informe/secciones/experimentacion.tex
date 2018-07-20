@@ -9,21 +9,20 @@ para revisar en profundidad el código, creemos que el error yace en el tablero 
 
 A parte de esto, se ecuentran por lo general buenos comportamientos de juego de algunos equipos.
 
-\subsection{Genetico}
+\subsection{Genético}
 
 
 Iniciamos nuestra experimentación con el algoritmo genético.
 Tuvimos grandes complicaciones para experimentar con las distintas funciones de selección y crossover implementadas, pues constantemente encontramos errores o comportamientos no deseados en los partidos.
 Por ejemplo, nos dimos cuenta de que se llegaba a un momento en que los jugadores maximizaban el aŕea ocupada por su equipo y estaban muy cerca del rival, pero la pelota se encontraba sola y nadie iba a buscarla.
 Agregamos entonces el genoma que relaciona a los jugadores con su distancia a la pelota, para que tuvieran una mejor visión del campo de juego, y quitamos el que mide el área cubierta por los jugadores de un mismo equipo.
-Una gran barrera también fue el tiempo, pues aumenta muy rápidamente al agrandar las poblaciones.
+No se presenta en detalle en este informe, pero se observan mejoras respecto a esa situación: los jugadores ya no se quedan trabados, sino que en casi todo momento alguno tiene la pelota.
 
+Una gran barrera también fue el tiempo, pues aumenta muy rápidamente al agrandar las poblaciones.
 Consideramos entonces una población de 15 individuos y 30 generaciones. A esto se le agregan los parámetros 0,2 y 0,4 como fracción de selección y probabilidad de mutación respectivamente (explicadas en la Sección \ref{genetico-seleccion}).
 En cuanto a parámetros del juego en sí, tenemos un tablero de $5\times10$ y tiempo 70.
-Fijamos las posiciones iniciales de los jugadores de manera simétrica, ya que creemos que ubicarlos de otra manera daría diferencias entre los equipos dependiendo del lado en que comiencen.
+Fijamos las posiciones iniciales de los jugadores de manera simétrica, intentando tener la menor cantidad de diferencias entre los que comiencen de un lado y de otro.
 Dada la cantidad de funciones distintas que implementamos para un mismo fin, como dos de selección de individuos, dos de crossover de genomas y dos de mutaciones, realizar todas las posibles combinaciones fue temporalmente inviable. Siguiendo el espíritu futbolísitico del trabajo, decidimos diagramar un pequeño ``torneo'' de funciones. En el mismo pensamos comparar primero las funciones de selección, observando el partido entre los equipos con esos genomas.
-
-\todo[inline]{Notamos que si bien los equipos hacían goles y algún equipo ganaba, al hacerlos empezar del lado contrario al tablero}
 
 
 
@@ -57,23 +56,20 @@ A diferencia del partido anterior, se observan muchas jugadas frustradas por qui
 Se ve también que el jugador que tiene la pelota siempre está marcado por un oponente, lo cual está íntimamente relacionado con la gran cantidad de quites ocurridos.
 Fue un partido muy emocionante, ya que además hubo pases.
 Una estrategia muy repetida del equipo izquierdo (el generado con fitness$\_$puntos) fue sacarle la pelota al oponente bien cerca de su propio arco y hacer un pase a un jugador que estaba cerca.
-El mismo se encargaba luego de llevar la pelota hasta la otra punta de la cancha y meter gol.
+El mismo se encargaba luego de llevar la pelota hasta la otra punta de la cancha y meter gol.\\
 
 Observamos que los equipos y sus jugadas van mejorando a medida que avanza este torneo: más quites, pases entre jugadores, algunos que marcan y en este partido no hubo jugadores que se quedaran quietos o que alternaran entre dos posiciones contiguas.
 Por esto creemos que lograremos un equipo relativamente bueno para el final de las comparaciones.
 
 
 
-\subsubsection*{Selección: Cantidad vs. Puntaje ( - )}
+\subsubsection*{Selección: Cantidad vs. Puntaje (4 (Izq) - 3(Der))}
 \subsubsection*{Mutación: Aleatorio vs. Valor opuesto ( - )}
 
 ----------------------------------------------------------------------------------------------------------------------------------
-\todo[inline]{Decir que nos dimos cuenta de que los equipos daban resultados distintos dependiendo de qué lado de la cancha empezaban. Pensamos que era por las posiciones en el entrenamiento: no eran simétricas. lo cambiamos y volvimos a correr.}
-\todo[inline]{Creemos que área cubierta no valía la pena y lo sacamos como genoma.}
 \todo[inline]{COSAS A MENCIONAR}
 \begin{itemize}
     \item fijarse qué pasa con más iteraciones
-    \item Notar que en algun momento, por ejemplo, cubren mucha área y están cercad e los rivales, pero la pelota quedó sola en algún lado y no se mueven para buscarla.
     \item ver que pasa con mutacionA y mutacion B
     \item notar que si hacíamos todas las combinaciones posibles de las funciones eran muchas y no se llegaba a ejecutar.
     \item nos pasa que los jugadores se quedan quietos a partir de algún momento. esto podría ser por algún error en la función evaluadora, algún bug de tablero o algúna cosa que podríamos haber medido y se nos pasó.

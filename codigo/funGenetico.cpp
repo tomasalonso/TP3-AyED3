@@ -47,15 +47,22 @@ int main()
     //      fitness_dif_goles, 1, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_BLOQUES, 0)
     //                                 };
 
+    // vector< casos_type > casos = {
+
+    //     make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
+    //      fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_BLOQUES, 0),
+
+    //     make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
+    //      fitness_puntos, 0, seleccion_por_puntaje, 0, mutacion_A, 0, crossover_BLOQUES, 0 )
+    //                                 };
+
     vector< casos_type > casos = {
 
         make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
          fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_A, 0, crossover_BLOQUES, 0),
-
         make_tuple(gen, pob, probas, enes, emes, tiempos, fracciones,
-         fitness_puntos, 0, seleccion_por_puntaje, 0, mutacion_A, 0, crossover_BLOQUES, 0 )
-                                    };
-
+         fitness_puntos, 0, seleccion_por_cantidad, 1, mutacion_B, 0, crossover_BLOQUES, 0)
+    };
 
     for (auto e : casos) {
 
