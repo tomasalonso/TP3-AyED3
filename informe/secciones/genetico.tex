@@ -1,12 +1,34 @@
 \subsection{Implementación del Algoritmo Genético:}
 
-\todo[inline]{intro a la idea?}
+La idea del algoritmo genético se basa en la teoría de la evolución, consiste en generar una población,
+en principio aleatoria, de muchos genomas, con estos se testea cuan buena solución son para el problema dado.
+En este caso, como se trata de un juego, se prueba en un torneo con una función puntuadora
+(\emph{Fitness}) cuales ganan mas partidos o juegan mejor, luego, en base a esto se eligen cuales van a permanecer
+cuales van a reproducirse y cuales desaparecen \emph{Selección} y con los que tienen descendencia se utilizan
+las funciones de \emph{Crossover} y de \emph{Mutación}.
 
+De todo esto se va a hablar en las próximas partes:
 
 \subsubsection{Fitness:}
 
 
-\subsubsection{Seleccióon:}
+La primera, \emph{fitness\_puntos} , se basa en la idea de un torneo de fútbol del mundo real, simplemente hace jugar a todos
+los equipos entre si (como en una liga) y les suma $3$ puntos por ganar, $1$ por el empate y $0$ por perder.
+Esperamos que esto presente un buen método de evaluación ya que se basa en algo real, y es simple en cuanto a que solo importa ganar
+mas partidos, lo cual, a fin de cuentas, es lo mas importante.\\
+
+La segunda función, \emph{fitness\_diff\_goles} trabaja de la siguiente forma, si gana le suma un punto y luego le suma tantos
+puntos como diferencia de gol tenga con el contrario, por ejemplo, si gano $3$ a $1$, le suma $2$ puntos mas al obtenido por
+la victoria.
+
+Esta función intenta reforzar a los equipos que hagan muchos goles, lo cual podría llegar a indicar que juegan mucho mejor que el
+contrario y podría significar que va a jugar mejor también contra otros potenciales adversarios.\\
+
+Al final de la ejecución, ambas funciones ordenan la población de acuerdo a los puntajes para facilitar el trabajo de las funciones
+de selección
+
+
+\subsubsection{Selección:}
 
 
 \subsubsection{Crossover:}
