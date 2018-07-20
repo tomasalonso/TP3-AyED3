@@ -10,9 +10,13 @@
 
 int main()
 {
-    for (const double g : grasp(15, 10, 5, 50)) {
+
+    Genoma mejor = grasp(50, 10, 5, 50);
+    cout << " El mejor es: " << endl;
+    for (const double g : mejor) {
       cout << g << ", ";
     }
+  
     cout << endl;
 
     return 0;
@@ -27,7 +31,9 @@ Genoma grasp(const unsigned int cantIteraciones,
     for (unsigned int i = 0; i < cantIteraciones; i++) {
         const Genoma random = generar();
         const Genoma local = busquedaLocal(random, n, m, total);
-
+        cout << " el de la busqueda " << i << ": " << endl;
+        for(double d : local) {cout << d << ", ";}
+        cout << endl;
         maximos.push_back(local);
     }
 

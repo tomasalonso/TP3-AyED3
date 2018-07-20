@@ -102,10 +102,26 @@ Contador de tiempo desde que la pelota se quedó quieta
 La experimentación con \emph{Grid-Search} se basó en usar \emph{GRASP} ya que \emph{búsqueda local} es solo un caso particular
 de correr \emph{GRASP} en una sola iteracion.
 Primero se corrieron experimentos cortos para probar la efectividad del algoritmo y se obtuvieron equipos relativamente buenos,
-a pesar de algunas problemáticas presentadas por el juego y la función evaluadora ademas de los genomas en principio defectuosos.
+a pesar de algunas problemáticas presentadas por el juego y la función evaluadora ademas de los genomas en principio defectuosos,
+estos jugaban y metian goles.\\
+
 Luego, cuando se llego a una versión final del juego, nos encontramos con que el algoritmo, al generar los vecinos, nos generaba también
 el vecino anterior del que venia, esto junto con que también descubrimos que el resultado de los partidos dependía del lado en el
 que se jugaba, causo lo que seguro iba a pasar, el algoritmo se quedaba saltando entre $2$ vecinos que se ganaban mutuamente y no
 salia de ese ciclo.
 Para evitar esto se decidió no generar el vecino del que se venia. Esta solución es parcial y no es la mejor, pero como se dijo primero,
-no encontramos el error original y esta solución nos permitió seguir avanzando con el proceso de \emph{GRASP}.
+no encontramos el error original y esta solución nos permitió seguir avanzando con el proceso de \emph{GRASP}.\\
+
+
+La experimentación de este procedimiento no es muy variada ya que solo consiste en dar una cantidad de iteraciones y dejar que
+busque localmente varios resultados para luego hacerlos competir, se puede decir que el tiempo que tarda en encontrar
+cada resultado es corto, no pasa por lo general de entre $1$ minuto y $5$ minutos y como máximo ha llegado a tardar $10$ minutos, sin tener en cuenta
+los diversos casos en los que no terminaba.
+
+
+Se corrió un grasp de 50 iteraciones con la ultima versión y el genoma encontrado es el utilizada para competir contra el mejor que se logro encontrar
+corriendo el genético. No se encuentra mucha mas experimentación que esta ya que el concepto bajo el que trabaja \emph{GRASP}
+es simple y no presenta muchas posibilidades de variación en su idea para compararlas, lo primero que se ocurre para realizar
+experimentación es un cambio en la vecindad utilizada para buscar localmente pero no hemos logrado diseñarla por cuestiones
+de tiempo y priorizacion del método genético, sin embargo
+creemos que la propuesta es una buena decisión que ademas fue discutida con un profesor.
