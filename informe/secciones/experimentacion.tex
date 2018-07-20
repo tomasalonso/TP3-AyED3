@@ -22,7 +22,7 @@ Una gran barrera también fue el tiempo, pues aumenta muy rápidamente al agrand
 Consideramos entonces una población de 15 individuos y 30 generaciones. A esto se le agregan los parámetros 0,2 y 0,4 como fracción de selección y probabilidad de mutación respectivamente (explicadas en la Sección \ref{genetico-seleccion}).
 En cuanto a parámetros del juego en sí, tenemos un tablero de $5\times10$ y tiempo 70.
 Fijamos las posiciones iniciales de los jugadores de manera simétrica, intentando tener la menor cantidad de diferencias entre los que comiencen de un lado y de otro.
-Dada la cantidad de funciones distintas que implementamos para un mismo fin, como dos de selección de individuos, dos de crossover de genomas y dos de mutaciones, realizar todas las posibles combinaciones fue temporalmente inviable. Siguiendo el espíritu futbolísitico del trabajo, decidimos diagramar un pequeño ``torneo'' de funciones. En el mismo pensamos comparar primero las funciones de selección, observando el partido entre los equipos con esos genomas.
+Dada la cantidad de funciones distintas que implementamos para un mismo fin, como dos de selección de individuos, dos de crossover de genomas y dos de mutaciones, realizar todas las posibles combinaciones fue temporalmente inviable. Siguiendo el espíritu futbolísitico del trabajo, decidimos diagramar un pequeño ``torneo'' de funciones. En el mismo pensamos comparar cada tipo de función, partiendo de una combinación arbitraria, y observar el partido entre los equipos resultantes. El equipo ganador determinará qué función se utilizará en la siguiente instancia. Los genomas resultantes pueden verse y probarse en el archivo \texttt{tp3.cpp}.
 
 
 
@@ -31,8 +31,6 @@ Dada la cantidad de funciones distintas que implementamos para un mismo fin, com
 \subsubsection*{Crossover: Bloques vs. Aleatorio (6 (Izq) - 4(Der))}
 
 \textbf{Funciones usadas: } fitness$\_$puntos, seleccion$\_$por$\_$cantidad, mutacion$\_$A.
-
-
 
 
 % Genoma bloque:-0.775167, -0.268792, -0.904803, 0.509839, 0.0429661, -0.749711, -0.330696, -0.72851, 0.402388, -0.690626, -0.925932, -0.548266, -0.311845, 0.474691, 0.0257145, 0.784108, -0.86784, -0.262816, 0.852761, -0.65904, 0.515403, 0.490343, 0.458956, -0.679425, -0.982449, -0.845339, 0.519684, 0.749116, 0.0456578, 0.550204, 0.0943544
@@ -64,26 +62,32 @@ Por esto creemos que lograremos un equipo relativamente bueno para el final de l
 
 
 \subsubsection*{Selección: Cantidad vs. Puntaje (4 (Izq) - 3(Der))}
+\textbf{Funciones usadas: } fitness$\_$puntos, crossover$\_$BLOQUES, mutacion$\_$A,.
+
+En este partido se ven muchos quites también, pero resalta en ambos equipos que las jugadas son llevadas a cabo por un único jugador.
+Los demás raramente se mueven, aunque uno de los del equipo izquierdo estuvo donde tenía que estar para quitar la pelota al oponente, evitar un gol y pasársela a su compañero goleador.
+
+Nos gustaría decir que seleccionando los individuos por una cantidad fija se logra mayor estabilidad en la estrategia de juego, pero ambos equipos tienen un comportamiento muy parecido: un único jugador muy activo que se encarga de anotar goles, quitar la pelota y marcar al oponente. Atribuimos la victoria del equipo izquierdo en gran parte al azar, pero esto es suficiente para que la combinación de funciones utilizadas para generarlo pasen a la siguiente instancia.
+
 \subsubsection*{Mutación: Aleatorio vs. Valor opuesto ( - )}
+\textbf{Funciones usadas: } fitness$\_$puntos, seleccion$\_$por$\_$cantidad, crossover$\_$BLOQUES.
 
 ----------------------------------------------------------------------------------------------------------------------------------
 \todo[inline]{COSAS A MENCIONAR}
 \begin{itemize}
     \item fijarse qué pasa con más iteraciones
-    \item ver que pasa con mutacionA y mutacion B
-    \item notar que si hacíamos todas las combinaciones posibles de las funciones eran muchas y no se llegaba a ejecutar.
-    \item nos pasa que los jugadores se quedan quietos a partir de algún momento. esto podría ser por algún error en la función evaluadora, algún bug de tablero o algúna cosa que podríamos haber medido y se nos pasó.
+    \item ver que pasa con mutacionA y mutacion B // mutación A tardó 41 minutos!!
 \end{itemize}
 
-Tenencia de la pelota, se quedaban quietos porque no había beneficios por ir a buscar la pelota -> agregamos un gen que te da beneficio por tener la pelota
+% Tenencia de la pelota, se quedaban quietos porque no había beneficios por ir a buscar la pelota -> agregamos un gen que te da beneficio por tener la pelota
 
 Gol siempre, si se implementaran más metricas como gol seguro, chance que la intercepten, etc. seria mejor
 
-Decir por qué agregamos cada genoma que inicialmente no estaba
+% Decir por qué agregamos cada genoma que inicialmente no estaba
 
-distJugador al arco, antes no había ninguna información que vinculara a los jugadores con la posición de la pelota
+% distJugador al arco, antes no había ninguna información que vinculara a los jugadores con la posición de la pelota
 
-por ejemplo agregamos puntaje si una jugada mete gol para que siempre metan gol
+% por ejemplo agregamos puntaje si una jugada mete gol para que siempre metan gol
 
 Pesos negativos para sacarle penalizar una acción (para no duplicar genomas)-> agregar valores negativos al genoma
 
