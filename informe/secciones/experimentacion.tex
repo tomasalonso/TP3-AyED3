@@ -1,9 +1,13 @@
-Iniciamos nuestra experimentación con el algoritmo genético. Tomamos poblaciones de 20 individuos, dado que a partir de ese tamaño las iteraciones se volvían demasiado costosas en tiempo. Por ese motivo, además decidimos llegar hasta 20 generaciones de nuestro algoritmo.
+Iniciamos nuestra experimentación con el algoritmo genético.
+\textbf{ACTUALIZAR CON LAS POBLACIONES}Tomamos poblaciones de 20 individuos, dado que a partir de ese tamaño las iteraciones se volvían demasiado costosas en tiempo. Por ese motivo, además decidimos llegar hasta 20 generaciones de nuestro algoritmo.
 
-Para cada generación tomamos la media y la varianza de los puntajes de todos los individuos. Creemos que es bueno tener un genoma que provenga de
+% Para cada generación tomamos la media y la varianza de los puntajes de todos los individuos. Creemos que es bueno tener un genoma que provenga de una generación cuya varianza sea baja, ya que esto significaría que los
 
 
 
+
+Tuvimos grandes complicaciones para experimentar con las distintas funciones de seleccion y crossover implementadas, pues constantemente encontramos errores o comportamientos no deseados en los partidos.
+Por ejemplo, nos dimos cuenta de que se llegaba a un momento en que los jugadores maximizaban el aŕea ocupada por su equipo y estaban muy cerca del rival, pero la pelota se encontraba sola y nadie iba a buscarla. Una gran barrera también fue el tiempo, pues aumenta muy rápidamente el requerido por cada generación si se agrandan las poblaciones.
 
 
 
