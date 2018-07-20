@@ -3,12 +3,19 @@
 La idea del algoritmo genético se basa en la teoría de la evolución, consiste en generar una población,
 en principio aleatoria, de muchos genomas, con estos se testea cuan buena solución son para el problema dado.
 En este caso, como se trata de un juego, se prueba en un torneo con una función puntuadora
-(\emph{Fitness}) cuales ganan mas partidos o juegan mejor, luego, en base a esto se eligen cuales van a permanecer
-cuales van a reproducirse y cuales desaparecen \emph{Selección} y con los que tienen descendencia se utilizan
-las funciones de \emph{Crossover} y de \emph{Mutación}.
+(\emph{Fitness})en la que se evalua cuales ganan mas partidos o juegan mejor, luego, en base a esto se eligen cuales van a
+permanecer intactos, cuales van a reproducirse y cuales desaparecen en la funcion de \emph{Selección}, y con los que tienen
+ descendencia se utilizan las funciones de \emph{Crossover} y de \emph{Mutación}.
 
-De todo esto se va a hablar en las próximas partes:
-\todo[inline]{Faltaría contar cómo generamos la población inicial.}
+
+Todo esto ocurre en la función genética global que es la que toma todos los parámetros utilizados en las funciones especificas
+y también se encarga de devolver los resultados y generar la primera población.
+Esto ultimo se logra simplemente generando genes aleatoriamente con una distribución uniforme que va entre $-1$ y $1$
+y otra que va entre $0$ y $1$ (para los genes enteros como son las probabilidades de quite de los jugadores) y armando
+así tantos genomas como indique el parámetro de población.
+
+De todo esto se va a hablar en las próximas partes:\\
+
 \subsubsection{Fitness:}
 
 Se realizaron dos funciones de \emph{Fitness}:\\
@@ -40,7 +47,9 @@ sujetos queremos preservar en la siguiente generación, y el resto son enviados 
 los modifiquen e introduzcan en la siguiente población.
 Por ejemplo, con una población de 20 individuos y un parámetro de 0,2 se preservan $20 \times 0,2 = 4$ genomas.\\
 
-La otra alternativa, de nombre \emph{selección\_por\_puntaje}, también funciona con un parámetro $f$. En este caso, se calcula un puntaje umbral a partir del cual se preservan los genomas. Si llamamos $p_{MAX}$ al mayor puntaje de la población, vamos a guardar los genomas $i$ tales que $p_{i} \geq p_{MAX} - (p_{MAX} \times )$.
+La otra alternativa, de nombre \emph{selección\_por\_puntaje}, también funciona con un parámetro $f$. En este caso, se calcula un puntaje umbral
+ a partir del cual se preservan los genomas. Si llamamos $p_{MAX}$ al mayor puntaje de la población, vamos a guardar
+ los genomas $i$ tales que $p_{i} \geq p_{MAX} - (p_{MAX} \times f)$.
 El resto son enviados a las funciones de \emph{Crossover} y \emph{Mutación} como en el otro caso.
 
 
