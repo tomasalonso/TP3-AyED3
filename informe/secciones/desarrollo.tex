@@ -116,13 +116,30 @@ se encontró más variedad de comportamientos en los equipos. Una mayor cantidad
 genes e iteraciones de los algoritmos ayudaría a equilibrar este valor, pero
 debido al mal comportamiento exhibido, se descartó.
 
+\subsection{Complejidad}
+
 El tablero posee una función {\it puntaje\/} que toma un genoma y
 multiplica cada valor del genoma por el dato con el que está relacionado,
-dependiendo si el equipo esta en posesión de la pelota o no. Por ejemplo,
-multiplica la distancia de un jugador al arco, al rival, la distancia de la
-pelota al arco contrario, la distancia a los borde, el área cubierta y si el
-siguiente paso es gol o no, cada uno con su respectivo gen.
+dependiendo si el equipo esta en posesión de la pelota o no. Por ejemplo,todos
+los datos que obtiene la funcion son:
 
+
+la distancia de un jugador al arco, al rival, la distancia de la
+pelota al arco contrario, la distancia a los borde, el área cubierta (este fue eliminado mas adelante)
+, la cercanía del jugador a la pelota, puntaje si se posee o no la pelota y si el
+siguiente paso es gol o no, cada uno con su respectivo gen segun jugador y si es ataque o defensa.
+
+En cuanto a complejidad podemos observar que, como tenemos tantos genes en cada categoría como jugadores en un
+equipo, el tiempo de ejecución de la función puntuadora depende de la cantidad de jugadores,
+pero debido a que en el trabajo solo jugamos con 3 integrantes por equipo, no tomamos esto en cuenta.
+Luego la función consiste en multiplicar todos los datos hallados, según un condicional, por un gen u otro,
+todas estas operaciones son $\BigO{1}$, y finalmente todos los procedimientos para obtener los datos de distancias
+son cuentas geométricas simples que dependen, si toman valores máximos, de cálculos lineales sobre $n$ y $m$, todas
+las cuentas son realizadas por la función distancia, la cual solamente calcula la distancia con pitágoras en una sola
+cuenta, es $\BigO{1}$ y esto define todas las otras funciones.
+
+%// |-con pelota-|-sin pelota|-con pelota|-sin pelota|-con pelota|-sin pelota|-con pelota|-sin pelota|-con pelota|-sin pelota|      |         |           |
+%// |----dist jug al arco----|---dist pelota arco----|-----cercania rival----|---cercania a pelota---|---cercania a lateral--| area |tenencia |---probas--|
 
 
 Como consideración adicional, si bien los genes se mueven en un espacio continuo entre $-1$ y $1$,
@@ -132,8 +149,8 @@ nosotros en grid search, para aplicar búsqueda local, discretizamos el valor de
 genes haciéndolos variar en $0,1$ por vez.
 
 
-A causa de esto se decidió se agregar una multiplicación por $100$ en cada
-puntaje, para poder disminuir el efecto de esa discretización en el resultado final.
+A causa de esto se decidió agregar una multiplicación por $100$ en cada puntaje,
+para poder disminuir el efecto de esa discretización en el resultado final.
 
 % Si bien los genes son de valores continuos y los algoritmos genéticos y
 % de búsqueda local, teóricamente encontrarían
@@ -238,3 +255,10 @@ genoma(25) \times 100$ \COMMENT{$\BigO{1}$}
 
 \end{algorithmic}
 \hrule \vskip 0.1em
+
+Podemos notar que en los casos donde se posee un gen de la misma característica
+para el caso con pelota y sin pelota, solo 1 de los 2 incide en el puntaje al
+mismo tiempo, sin tenerse en cuenta el otro.
+
+% Como todas las funciones, salvo el gen 26 que asigna puntaje de acuerdo a si se
+% tiene o no la pelota, calculan la distancia,
