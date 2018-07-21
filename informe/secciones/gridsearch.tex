@@ -1,3 +1,12 @@
+Buscar jugadas es $\BigO{1}$ debido a que la cantidad de movimientos que puede
+hacer cada jugador es acotada, luego las combinaciones de movimientos posibles
+son acotadas. Como mover jugadores en el tablero, en el peor caso, significa
+mover todos los jugadores, más la pelota y los cálculos de disputa y de gol son
+constantes, mover tablero es constante. Luego, cada paso del juego es constante.
+Entonces, la complejidad de un partido varía en base al tiempo de juego, dando
+una complejidad de $\BigO{\textrm{tiempo de juego}}$, a lo largo del tp
+llamaremos $t$ al tiempo de juego.
+
 \subsection{Grid-Search:}
 
 La lógica de grid-search es plantear todo el espacio de soluciones posibles,
@@ -22,6 +31,11 @@ quedándose con el ganador siempre y, finalmente con el último ganador. Como
 criterio para finalizar la búsqueda, se itera hasta que un genoma sea
 mejor que todos sus vecinos, es decir, gane a todos sus vecinos.
 
+\paragraph{Complejidad:} Debido a que el espacio de soluciones se discretizó, la
+cantidad de soluciones es acotada, en particular es de 21 posibilidades por cada
+genoma y 11 posibilidades para las probabilidades, lo que da un número de
+$21^{27}+11^3$. Como en el peor caso se recorrería todo el espacio de busqueda,
+la complejidad es $\BigO{\textrm{t}}$
 
 \subsubsection{GRASP:}
 
@@ -39,3 +53,5 @@ Creemos que GRASP va a dar resultados útiles en pocas iteracions, pero que va a
 ser mucho mas costoso obtener resultados mejores y realmente buenos en
 comparación con los que pueda obetener el genético con el mismo tiempo de
 ejecución.
+
+
