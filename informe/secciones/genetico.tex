@@ -101,3 +101,16 @@ Fue solo diseñada a fines de experimentar y se cree mas útil e importante la a
 Creemos que las funciones diseñadas presentan buenas diferencias entre las del mismo tipo y ademas tienen criterios lógicos que
 nos deberían llevar a buenos resultados, aunque a simple vista el tiempo necesario para experimentar todas las combinaciones
  en profundidad quizás exceda el que disponemos, esto será abordado en la próxima sección.
+
+ \subsubsection*{Complejidad:}
+
+ Se puede ver que la complejidad de las funciones de \emph{Mutación} y de \emph{Crossover} es $\BigO{1}$ que depende del tamaño del genoma que es acotado.\\
+
+ Las funciones de \emph{Selección} tienen una complejidad igual a $\BigO{|\textrm{población}|}$ ya que recorren una población ya ordenada por \emph{Fitness}
+ y solamente le aplican mutaciones y cruzas a los genomas.\\
+
+ Las funciones de \emph{Fitness} tienen una complejidad de $\BigO{|\textrm{población}|^2 \times t}$ porque, por cada equipo, se lo hace jugar
+ un partido con todos los otros equipos, la complejidad es la misma a pesar de que por partido juegan 2 equipos.\\
+
+ La complejidad global del algoritmo genético es $\BigO{Fitness \times |\textrm{generaciones}|}$ ya que la complejidad mas grande es la de la función
+ de \emph{Fitness} y esta se ejecuta tantas veces como generaciones se hagan.
