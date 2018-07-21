@@ -262,3 +262,14 @@ mismo tiempo, sin tenerse en cuenta el otro.
 
 % Como todas las funciones, salvo el gen 26 que asigna puntaje de acuerdo a si se
 % tiene o no la pelota, calculan la distancia,
+
+
+Por último, buscar jugadas es $\BigO{1}$ debido a que la cantidad de movimientos que puede
+hacer cada jugador es acotada, luego las combinaciones de movimientos posibles
+son acotadas. Como mover jugadores en el tablero, en el peor caso, significa
+mover todos los jugadores, más la pelota y los cálculos de disputa y de gol son
+constantes, mover tablero es constante y evaluar puntaje por lo dicho
+anteriormente es constante. Luego, cada paso del juego es constante. Entonces,
+la complejidad de un partido varía en base al tiempo de juego, dando una
+complejidad de $\BigO{\textrm{tiempo de juego}}$, a lo largo del tp llamaremos
+$t$ al tiempo de juego.
