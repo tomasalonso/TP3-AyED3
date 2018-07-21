@@ -114,3 +114,29 @@ bajo el que trabaja \emph{GRASP} es simple y no presenta muchas posibilidades de
 lo primero que se ocurre para realizar experimentación es un cambio en la vecindad utilizada para buscar localmente
  pero no hemos logrado diseñarla por cuestiones de tiempo y priorizacion del método genético, sin embargo
 creemos que la propuesta es una buena decisión que ademas fue discutida con un profesor.
+
+
+
+\subsection{Partidos Finales}
+
+
+\subsubsection*{Mutación: Valor opuesto vs. GRASP (2 (izq) - 2 (der))}
+
+En este partido se pudo ver una buena estrategia de parte de la mutación que siempre intento robarla y hacer goles pero el algoritmo de GRASP
+di comportamientos adversos, el mismo en ocasiones tomó la pelota y fue inevitablemente al arco contrario a convertir gol y en otras
+se encargaba de robarla y llevarla a una esquina del campo, y generalmente la robaba con un jugador con probabilidad de quite de $0,95$,
+se la pasaba a otro con probabilidad $0$ y este, con probabilidad nula, casi no tenia chances de perder la pelota, y este era el encargado
+de llevarla y retenerla en una esquina.
+
+A pesar de esto la mutación logro recuperar alguna pelota y convertir un gol mas, GRASP siempre fue por detrás en el marcador.
+
+
+
+\subsubsection*{Mutación: Valor aleatorio vs. GRASP (0 (der) - 1 (izq))}
+
+De nuevo GRASP se comporto de forma similar, comenzó con la pelota, convirtió un gol en la primera jugada y luego rápidamente la robo con
+el jugador de probabilidad $0,95$ en un solo pase se la alcanzó al de probabilidad $0$ y este se la llevo y la retuvo en un costado de la cancha
+por todo el partido. La mutación nunca tuvo chance de recuperarla y así es como el partido fue para GRASP.
+
+
+Después de todo podríamos decir que, en este TP, triunfo la mas antigua táctica del fútbol, hacer un gol y aguantarlo atrás.
