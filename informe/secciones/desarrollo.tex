@@ -158,3 +158,100 @@ puntaje, para poder disminuir el efecto de esa discretización en el resultado f
 Por último, se tomó la decisión de otorgar puntaje a un movimiento que termina
 en gol y restar mucho puntaje en caso de gol en contra para beneficiar y
 prohibir dichos movimientos respectivos.
+
+\hrule \vskip 0.1em
+\noindent Función de evaluación de tablero -- Puntaje
+\vskip 0.1em \hrule
+\begin{algorithmic}[1] \REQUIRE \ 
+
+  genoma $:=$ lista de reales
+
+  enDerecha $:=$ lado de juego del equipo
+
+\ENSURE puntaje del tablero
+
+\STATE determinar si el equipo tiene la pelota\COMMENT{$\BigO{cant. jugadores} =
+  \BigO{1}$}
+\STATE $puntaje \leftarrow 0$ \COMMENT{$\BigO{1}$}
+
+
+\IF[$\BigO{1}$]{en posesión de la pelota}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 0 al arco} \times genoma(0)
+\times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 1 al arco} \times genoma(1)
+\times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 2 al arco} \times genoma(2)
+\times 100$ \COMMENT{$\BigO{1}$}
+\ELSE
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 0 al arco} \times genoma(3)
+\times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 1 al arco} \times genoma(4)
+\times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 2 al arco} \times genoma(5)
+\times 100$ \COMMENT{$\BigO{1}$}
+\ENDIF
+
+\IF[$\BigO{1}$]{en posesión de la pelota}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia pelota al arco} \times genoma(6)
+\times 100$ \COMMENT{$\BigO{1}$}
+\ELSE
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia pelota al arco} \times genoma(7)
+\times 100$ \COMMENT{$\BigO{1}$}
+\ENDIF
+
+\IF[$\BigO{1}$]{en posesión de la pelota}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 0 al rival mas cercano}
+\times genoma(8) \times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 1 al rival mas cercano}
+\times genoma(9) \times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 2 al rival mas cercano}
+\times genoma(10) \times 100$ \COMMENT{$\BigO{1}$}
+\ELSE
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 0 al rival mas cercano}
+\times genoma(11) \times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 1 al rival mas cercano}
+\times genoma(12) \times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 2 al rival mas cercano}
+\times genoma(13) \times 100$ \COMMENT{$\BigO{1}$}
+\ENDIF
+
+\IF[$\BigO{1}$]{en posesión de la pelota}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 0 a la pelota} \times
+genoma(14) \times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 1 a la pelota} \times
+genoma(15) \times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 2 a la pelota} \times
+genoma(16) \times 100$ \COMMENT{$\BigO{1}$}
+\ELSE
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 0 a la pelota} \times
+genoma(17) \times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 1 a la pelota} \times
+genoma(18) \times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 2 a la pelota} \times
+genoma(19) \times 100$ \COMMENT{$\BigO{1}$}
+\ENDIF
+
+\IF[$\BigO{1}$]{en posesión de la pelota}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 0 al lateral} \times
+genoma(20) \times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 1 al lateral} \times
+genoma(21) \times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 2 al lateral} \times
+genoma(22) \times 100$ \COMMENT{$\BigO{1}$}
+\ELSE
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 0 al lateral} \times
+genoma(23) \times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 1 al lateral} \times
+genoma(24) \times 100$ \COMMENT{$\BigO{1}$}
+\STATE $puntaje \leftarrow puntaje + \textrm{distancia jugador 2 al lateral} \times
+genoma(25) \times 100$ \COMMENT{$\BigO{1}$}
+\ENDIF
+
+\IF[$\BigO{1}$]{en posesión de la pelota}
+\STATE $puntaje \leftarrow puntaje + genoma(26) \times 100 \times 100$ \COMMENT{$\BigO{1}$}
+\ENDIF
+
+\RETURN $puntaje$
+
+\end{algorithmic}
+\hrule \vskip 0.1em
