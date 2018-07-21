@@ -149,8 +149,8 @@ nosotros en grid search, para aplicar búsqueda local, discretizamos el valor de
 genes haciéndolos variar en $0,1$ por vez.
 
 
-A causa de esto se decidió se agregar una multiplicación por $100$ en cada
-puntaje, para poder disminuir el efecto de esa discretización en el resultado final.
+A causa de esto se decidió agregar una multiplicación por $100$ en cada puntaje,
+para poder disminuir el efecto de esa discretización en el resultado final.
 
 % Si bien los genes son de valores continuos y los algoritmos genéticos y
 % de búsqueda local, teóricamente encontrarían
@@ -255,3 +255,10 @@ genoma(25) \times 100$ \COMMENT{$\BigO{1}$}
 
 \end{algorithmic}
 \hrule \vskip 0.1em
+
+Podemos notar que en los casos donde se posee un gen de la misma característica
+para el caso con pelota y sin pelota, solo 1 de los 2 incide en el puntaje al
+mismo tiempo, sin tenerse en cuenta el otro.
+
+% Como todas las funciones, salvo el gen 26 que asigna puntaje de acuerdo a si se
+% tiene o no la pelota, calculan la distancia,
