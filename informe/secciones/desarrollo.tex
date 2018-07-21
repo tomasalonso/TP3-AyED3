@@ -6,7 +6,7 @@ determinado.
 
 
 El objetivo principal es desarrollar un equipo que con una función parametrizable
-que evalúa posibles jugadas siguientes, decida cual es la mejor a tomar.
+que evalúa posibles jugadas siguientes, decida cuál es la mejor a tomar.
 La idea es, con las distintas heurísticas, decidir que parámetros son buenos para esa
 función evaluadora y así diagramar una buena estrategia de juego general.\\
 
@@ -18,7 +18,7 @@ así poder detectar de mejor forma cualquier error que ocurriese, lo cual no fue
 el caso al intentar usar lo provisto por la cátedra. En primer lugar se decidió
 hacer un tablero, el mismo es el que tiene las dimensiones de la cancha y conoce
 todas las reglas del juego a ser respetadas por los equipos, también tiene
-consigo la pelota y los 6 jugadores, el es el encargado de llevar la partida y
+consigo la pelota y los 6 jugadores, él es el encargado de llevar la partida y
 el resultado así como también es el que tiene la función evaluadora de jugadas
 que toma los genomas (los parámetros de la función dependientes de cada equipo,
 ver {\it Parametrización\/}) y evalúa la jugada a realizar. Luego está el
@@ -33,13 +33,13 @@ posibles jugadas válidas a partir de combinaciones de los movimientos válidos 
 cada jugador. Como el tablero posee 2 estados, {\it actual\/} y {\it
   siguiente}, donde siguiente se obtiene a partir del estado actual luego de
 aplicar una jugada, el equipo prueba cada jugada generada en el tablero,
-avanzando y evalúa su puntaje, quedándose con la jugada que posea el mayor
+avanzando y lo evalúa, quedándose con la jugada que posea el mayor
 puntaje. Dicha evaluación se realiza sobre el estado siguiente y una vez que se
 tienen los movimientos definitivos de ambos equipos, se actualiza el estado
 actual, que es básicamente actualizar la posición actual con la siguiente.
 
 Debido a que evaluar en cada paso todas las posibles combinaciones de jugadas de
-todos los jugadores es altamente costoso, se adoptó la siguiente estrategia. Se
+todos los jugadores es altamente costoso, se adoptó la siguiente estrategia: se
 mantienen quietos los jugadores propios y se busca la mejor jugada de los
 contrarios; luego, se busca la mejor jugada de los jugadores propios, dada la
 mejor jugada de los contrarios obtenida anteriormente.
@@ -50,13 +50,13 @@ Se decidió utilizar un genoma de 30 parámetros los cuales varían entre $-1$ y
 $1$ simbolizando la importancia total que se le da a un dato del tablero, donde valores
  negativos penalizan una propiedad y positivos la benefician($-1$ si es muy malo
  que eso crezca, $0$ si es irrelevante, $1$ si es muy bueno que
-crezca), por ej. representan maximizar o minimizar una distancia; también se
-separa en casos, creando genomas disjuntos que representen cuando se tiene la
+crezca). Por ejemplo, representan maximizar o minimizar una distancia. También se
+separa en casos, creando genomas disjuntos que representen cuándo se tiene la
 pelota y cuando no se posee la pelota para los mismo datos. El motivo de esto es
 poder permitirle a los equipos tomar estrategias distintas cuando están atacando
 o defendiendo, se presentó la idea de también permitir actuar distinto cuando se
 va perdiendo o ganando pero el tiempo no permitió implementarlo y además creemos
-que ya vamos a poder ver un buen comportamiento con solo esta diferenciación.
+que ya vamos a poder ver un buen comportamiento con sólo esta diferenciación.
 
 
 A continuación un esquema del genoma utilizado:
@@ -109,7 +109,7 @@ juego y decidimos darle la posibilidad de variar las probabilidades a los
 algoritmos de optimización.
 
 Se incluyó en primera instancia un gen adicional que aportaba información sobre
-el área cubierta por el equipo, sin embargo,  fue descartado debido a que
+el área cubierta por el equipo, sin embargo, fue descartado debido a que
 generaba equipos que se dispersaban por el campo de juego y al quedar la pelota
 quieta no evaluaban como beneficioso acercarse a buscarla. Al retirar el gen,
 se encontró más variedad de comportamientos en los equipos. Una mayor cantidad de
@@ -121,21 +121,19 @@ debido al mal comportamiento exhibido, se descartó.
 El tablero posee una función {\it puntaje\/} que toma un genoma y
 multiplica cada valor del genoma por el dato con el que está relacionado,
 dependiendo si el equipo esta en posesión de la pelota o no. Por ejemplo,todos
-los datos que obtiene la funcion son:
-
-
+los datos que obtiene la función son:
 la distancia de un jugador al arco, al rival, la distancia de la
-pelota al arco contrario, la distancia a los borde, el área cubierta (este fue eliminado mas adelante)
+pelota al arco contrario, la distancia a los borde, el área cubierta (este fue eliminado más adelante)
 , la cercanía del jugador a la pelota, puntaje si se posee o no la pelota y si el
-siguiente paso es gol o no, cada uno con su respectivo gen segun jugador y si es ataque o defensa.
+siguiente paso es gol o no, cada uno con su respectivo gen según jugador y si es ataque o defensa.
 
 En cuanto a complejidad podemos observar que, como tenemos tantos genes en cada categoría como jugadores en un
 equipo, el tiempo de ejecución de la función puntuadora depende de la cantidad de jugadores,
-pero debido a que en el trabajo solo jugamos con 3 integrantes por equipo, no tomamos esto en cuenta.
+pero debido a que en el trabajo sólo jugamos con 3 integrantes por equipo, no tomamos esto en cuenta.
 Luego la función consiste en multiplicar todos los datos hallados, según un condicional, por un gen u otro,
 todas estas operaciones son $\BigO{1}$, y finalmente todos los procedimientos para obtener los datos de distancias
 son cuentas geométricas simples que dependen, si toman valores máximos, de cálculos lineales sobre $n$ y $m$, todas
-las cuentas son realizadas por la función distancia, la cual solamente calcula la distancia con pitágoras en una sola
+las cuentas son realizadas por la función distancia, la cual solamente calcula la distancia con Pitágoras en una sola
 cuenta, es $\BigO{1}$ y esto define todas las otras funciones.
 
 %// |-con pelota-|-sin pelota|-con pelota|-sin pelota|-con pelota|-sin pelota|-con pelota|-sin pelota|-con pelota|-sin pelota|      |         |           |
@@ -145,7 +143,7 @@ cuenta, es $\BigO{1}$ y esto define todas las otras funciones.
 Como consideración adicional, si bien los genes se mueven en un espacio continuo entre $-1$ y $1$,
 lo cual significa que cualquier peso otorgado al valor del dato no debería generar
 cambios de valor en los resultados finales sino solo de cantidad de puntos,
-nosotros en grid search, para aplicar búsqueda local, discretizamos el valor de los
+nosotros en \emph{grid search}, para aplicar búsqueda local, discretizamos el valor de los
 genes haciéndolos variar en $0,1$ por vez.
 
 
@@ -162,7 +160,7 @@ prohibir dichos movimientos respectivos.
 \hrule \vskip 0.1em
 \noindent Función de evaluación de tablero -- Puntaje
 \vskip 0.1em \hrule
-\begin{algorithmic}[1] \REQUIRE \ 
+\begin{algorithmic}[1] \REQUIRE \
 
   genoma $:=$ lista de reales
 

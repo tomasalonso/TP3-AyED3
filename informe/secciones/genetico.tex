@@ -1,7 +1,7 @@
 \subsection{Implementación del Algoritmo Genético:}
 
 La idea del algoritmo genético se basa en la teoría de la evolución, consiste en generar una población,
-en principio aleatoria, de muchos genomas, con estos se testea cuan buena solución son para el problema dado.
+en principio aleatoria, de muchos genomas. Con estos se testea cuan buena solución son para el problema dado.
 En este caso, como se trata de un juego, se prueba en un torneo con una función puntuadora
 (\emph{Fitness})en la que se evalua cuales ganan mas partidos o juegan mejor, luego, en base a esto se eligen cuales van a
 permanecer intactos, cuales van a reproducirse y cuales desaparecen en la funcion de \emph{Selección}, y con los que tienen
@@ -22,9 +22,9 @@ Se realizaron dos funciones de \emph{Fitness}:\\
 
 
 La primera, \emph{fitness\_puntos}, se basa en la idea de un torneo de fútbol del mundo real, simplemente hace jugar a todos
-los equipos entre si (como en una liga) y les suma $3$ puntos por ganar, $1$ por el empate y $0$ por perder.
+los equipos entre sí (como en una liga) y les suma $3$ puntos por ganar, $1$ por el empate y $0$ por perder.
 Esperamos que esto presente un buen método de evaluación ya que se basa en algo real, y es simple en cuanto a que solo importa ganar
-mas partidos, lo cual, a fin de cuentas, es lo mas importante.\\
+mas partidos, lo cual, a fin de cuentas, es lo más importante.\\
 
 La segunda función, \emph{fitness\_diff\_goles} trabaja de la siguiente forma, si gana le suma un punto y luego le suma tantos
 puntos como diferencia de gol tenga con el contrario, por ejemplo, si gano $3$ a $1$, le suma $2$ puntos mas al obtenido por
@@ -81,15 +81,15 @@ También se presentan 2 funciones de \emph{Mutación}:\\
 
 La primera, llamada \emph{Mutación\_A}, utiliza una distribución uniforme para, con un parámetro de entrada que va entre $0$ y $1$,
 decidir si se modifica cada gen. Por ejemplo, si yo paso un $0.4$, solo se van a modificar cuando
-la distribución de un resultado mayor a $0.4$, osea, el $40\%$ de las veces. y el gen, si es modificado toma,
-con otra distribución uniforme entre $-1$ y $1$, un numero aleatorio y se pasa al próximo gen repitiendo
+la distribución de un resultado mayor a $0.4$, osea, el $40\%$ de las veces. Si el gen es modificado toma,
+con otra distribución uniforme entre $-1$ y $1$, un número aleatorio y se pasa al próximo gen repitiendo
 el procedimiento.
 
 
 Es la primera mutación que se viene a la mente y suponemos que con el parámetro de entrada es fácil controlar si queremos
 mucho o poco cambio.\\
 
-La segunda de nombre \emph{Mutación\_B}, consiste en el mismo método para decidir si muta, un parámetro  entre $0$ y $1$
+La segunda de nombre \emph{Mutación\_B}, consiste en el mismo método para decidir si muta, un parámetro entre $0$ y $1$
 y una distribución uniforme, pero en caso de mutar, muta un solo gen, decidido aleatoriamente y lo que se hace es simplemente
 invertir el valor del mismo. Por ejemplo, si era $0.314$ se convierten en $-0.314$ lo cual no siempre causa un cambio
 directamente proporcional.
@@ -100,4 +100,4 @@ Fue solo diseñada a fines de experimentar y se cree mas útil e importante la a
 
 Creemos que las funciones diseñadas presentan buenas diferencias entre las del mismo tipo y ademas tienen criterios lógicos que
 nos deberían llevar a buenos resultados, aunque a simple vista el tiempo necesario para experimentar todas las combinaciones
- en profundidad quizás exceda el que disponemos, esto sera abordado en la próxima sección.
+ en profundidad quizás exceda el que disponemos, esto será abordado en la próxima sección.
