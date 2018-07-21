@@ -35,7 +35,7 @@ mejor que todos sus vecinos, es decir, gane a todos sus vecinos.
 cantidad de soluciones es acotada, en particular es de 21 posibilidades por cada
 genoma y 11 posibilidades para las probabilidades, lo que da un número de
 $21^{27}+11^3$. Como en el peor caso se recorrería todo el espacio de busqueda,
-la complejidad es $\BigO{\textrm{t}}$
+la complejidad es $\BigO{\textrm{t}}$.
 
 \subsubsection{GRASP:}
 
@@ -54,4 +54,9 @@ ser mucho mas costoso obtener resultados mejores y realmente buenos en
 comparación con los que pueda obetener el genético con el mismo tiempo de
 ejecución.
 
-
+\paragraph{Complejidad:} Cada búsqueda local tiene complejidad $\BigO{t}$, luego
+se realizan $k$ búsquedas locales, donde $k$ es la cantidad de iteraciones de
+GRASP, dando una complejidad de $\BigO{t\times k}$. Por último, se realiza un
+torneo entre todos los máximos locales, siendo la complejidad la de {\it
+  fitness\_puntos} (ver complejidad en genético), dando por resultado una
+complejidad de $\BigO{t\times k + k^2\times t} = \BigO{k^2\times t}$.
